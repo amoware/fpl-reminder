@@ -18,11 +18,11 @@ public class AlarmsManager {
         this.gameweekTime = gameweekTime;
     }
 
-    public void updateReminderTime(Date newReminderTime){
+    public void updateReminderTime(Date newReminderTime) {
 
     }
 
-    public void updateGameweekTime(Date newGameweekTime){
+    public void updateGameweekTime(Date newGameweekTime) {
 
     }
 }
