@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by amoware on 2019-12-29.
  */
 public class Gameweek {
+
     private String name;
     private Date deadlineTime;
 

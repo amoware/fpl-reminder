@@ -6,8 +6,9 @@ import java.util.Date;
  * Created by amoware on 2019-12-12.
  */
 public class NotificationSettings {
+
     private Date notificationTime;
-    private Date deadLineTime;
+    private Date deadlineTime;
     private Time scrollTime;
     private boolean notificationSound;
     private boolean notificationVibration;
@@ -20,12 +21,12 @@ public class NotificationSettings {
         this.notificationTime = notificationTime;
     }
 
-    public Date getDeadLineTime() {
-        return deadLineTime;
+    public Date getDeadlineTime() {
+        return deadlineTime;
     }
 
-    public void setDeadLineTime(Date deadLineTime) {
-        this.deadLineTime = deadLineTime;
+    public void setDeadlineTime(Date deadlineTime) {
+        this.deadlineTime = deadlineTime;
     }
 
     public Time getScrollTime() {
@@ -56,7 +57,7 @@ public class NotificationSettings {
      * Calculates the date for the notification to be set. The date depends on the deadline of a
      * particular gameweek and a desired time before the deadline.
      */
-    public Date calcNotificationTime(Date deadLineTime, Time scrollTime) {
+    public Date calculateNotificationTime(Date deadlineTime, Time scrollTime) {
         return null;
     }
 }

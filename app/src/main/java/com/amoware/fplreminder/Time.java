@@ -4,6 +4,7 @@ package com.amoware.fplreminder;
  * Created by amoware on 2019-12-12.
  */
 public class Time {
+
     private int hours;
     private int minutes;
 
