@@ -8,7 +8,7 @@ import java.util.List;
 public class GameweekManager {
 
     private Gameweek currentGameweek;
-    private List Gameweek;
+    private List<Gameweek> gameweeks;
     private GameweekClient gameweekClient;
 
 
