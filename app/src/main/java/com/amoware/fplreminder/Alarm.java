@@ -2,6 +2,9 @@ package com.amoware.fplreminder;
 
 import java.util.Date;
 
+/**
+ * Created by amoware on 2019-12-29.
+ */
 public class Alarm {
 
     private int id;
