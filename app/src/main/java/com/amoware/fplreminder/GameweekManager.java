@@ -11,7 +11,7 @@ public class GameweekManager {
     private List<Gameweek> gameweeks;
     private GameweekClient gameweekClient;
 
-    public static void initialize() {
+    public void initialize() {
     }
 
     public Gameweek getCurrentGameweek() {
