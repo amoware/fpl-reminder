@@ -11,22 +11,21 @@ public class GameweekManager {
     private List<Gameweek> gameweeks;
     private GameweekClient gameweekClient;
 
-
-    public static void initialize(){
+    public static void initialize() {
     }
 
     public Gameweek getCurrentGameweek() {
         return currentGameweek;
     }
 
-    public static void refreshGameweek(){
+    public void refreshGameweek() {
     }
 
-    public List readGameweeksFromDatabase(){
+    public List<Gameweek> readGameweeksFromDatabase() {
         return gameweeks;
     }
 
-    public static void saveGameweeksToDatabase(Gameweek gameweeks){
+    public void saveGameweeksToDatabase(List<Gameweek> gameweeks) {
     }
 }
 
