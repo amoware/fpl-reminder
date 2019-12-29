@@ -23,7 +23,7 @@ public class GameweekManager {
     }
 
     public List readGameweeksFromDatabase(){
-        return Gameweek;
+        return gameweeks;
     }
 
     public static void saveGameweeksToDatabase(Gameweek gameweeks){
