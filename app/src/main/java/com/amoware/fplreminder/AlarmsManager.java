@@ -4,12 +4,11 @@ import java.util.Date;
 
 public class AlarmsManager {
 
-    private Alarm reminerTime;
+    private Alarm reminderTime;
     private Alarm gameweekTime;
 
-
-    public void setReminerTime(Alarm reminerTime) {
-        this.reminerTime = reminerTime;
+    public void setReminderTime(Alarm reminderTime) {
+        this.reminderTime = reminderTime;
     }
 
     public void setGameweekTime(Alarm gameweekTime) {

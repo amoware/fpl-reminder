@@ -7,7 +7,6 @@ public class Alarm {
     private int id;
     private Date time;
 
-
     public int getId() {
         return id;
     }
