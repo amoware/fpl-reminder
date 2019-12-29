@@ -2,9 +2,12 @@ package com.amoware.fplreminder;
 
 import java.util.List;
 
+/**
+ * Created by amoware on 2019-12-29.
+ */
 public class GameweekManager {
 
-    private Gameweek currentGaneweek;
+    private Gameweek currentGameweek;
     private List Gameweek;
     private GameweekClient gameweekClient;
 
@@ -12,8 +15,8 @@ public class GameweekManager {
     public static void Initialize(){
     }
 
-    public Gameweek getCurrentGaneweek() {
-        return currentGaneweek;
+    public Gameweek getCurrentGameweek() {
+        return currentGameweek;
     }
 
     public static void refreshGameweek(){
