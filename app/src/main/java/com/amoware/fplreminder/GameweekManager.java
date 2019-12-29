@@ -12,7 +12,7 @@ public class GameweekManager {
     private GameweekClient gameweekClient;
 
 
-    public static void Initialize(){
+    public static void initialize(){
     }
 
     public Gameweek getCurrentGameweek() {
