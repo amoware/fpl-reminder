@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Todo remove temporary code
         AlarmsManager alarmsManager = new AlarmsManager(this);
         alarmsManager.setAlarmForGameweekDeadline(generateDate(30));
         alarmsManager.setAlarmForGameweekDeadline(generateDate(15)); // Overwrites alarm above
