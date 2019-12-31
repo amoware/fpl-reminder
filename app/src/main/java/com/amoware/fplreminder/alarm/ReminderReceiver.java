@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * Is used to show the user a notification. Is triggered when a specific alarm is set.
+ * Is used to show the user a notification and the onReceive method is called when the time of the
+ * alarm, that the user has set, occurs.
  * Created by amoware on 2019-12-30.
  */
 public class ReminderReceiver extends BroadcastReceiver {
