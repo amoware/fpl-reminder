@@ -15,6 +15,7 @@ public class GameweekReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        // Todo update the list with gameweek deadlines
         Log.d("AlarmsManager", "Hello from GameweekReceiver..");
     }
 }

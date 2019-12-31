@@ -14,6 +14,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        // Todo show the user a notification
         Log.d("AlarmsManager", "Hello from ReminderReceiver..");
     }
 }
