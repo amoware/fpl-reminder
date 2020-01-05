@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
-
+/**
+ * Created by amoware on 2019-12-29.
+ */
 public class HttpClient {
 
     public static void main(String[] args) throws Exception {
