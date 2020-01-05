@@ -40,12 +40,7 @@ public class AlarmsManager {
      */
     private void setAlarm(Date date, int id) {
         Log.d("AlarmsManager", "Setting an alarm (id=" + id + ") at: " + date);
-        Class receiverClass = null;
-        if (id == ALARM_GAMEWEEK_ID) {
-            receiverClass = GameweekReceiver.class;
-        } else if (id == ALARM_REMINDER_ID) {
-            receiverClass = ReminderReceiver.class;
-        }
+        Class receiverClass = getReceiverClass(id);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (receiverClass != null && alarmManager != null) {
@@ -53,5 +48,20 @@ public class AlarmsManager {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
             alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
         }
+    }
+
+    /**
+     * Gets one of the app's BroadcastReceiver classes based on an id that matches an alarm.
+     * @param id unique id for the alarm
+     * @return class that extends BroadcastReceiver
+     */
+    private Class getReceiverClass(int id) {
+        Class receiverClass = null;
+        if (id == ALARM_GAMEWEEK_ID) {
+            receiverClass = GameweekReceiver.class;
+        } else if (id == ALARM_REMINDER_ID) {
+            receiverClass = ReminderReceiver.class;
+        }
+        return receiverClass;
     }
 }
