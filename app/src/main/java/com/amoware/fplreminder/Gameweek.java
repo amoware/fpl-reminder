@@ -1,5 +1,7 @@
 package com.amoware.fplreminder;
 
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 
 /**
@@ -9,6 +11,11 @@ public class Gameweek {
 
     private String name;
     private Date deadlineTime;
+
+    public Gameweek(String name, Date deadlineTime) {
+        this.name = name;
+        this.deadlineTime = deadlineTime;
+    }
 
     public String getName() {
         return name;
@@ -24,5 +31,11 @@ public class Gameweek {
 
     public void setDeadlineTime(Date deadlineTime) {
         this.deadlineTime = deadlineTime;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Gameweek{name='" + name + "\', deadlineTime=" + deadlineTime + '}';
     }
 }

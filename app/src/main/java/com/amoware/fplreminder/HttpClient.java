@@ -11,11 +11,6 @@ import java.net.URL;
  */
 public class HttpClient {
 
-    public static void main(String[] args) throws Exception {
-        HttpClient httpClient = new HttpClient();
-        System.out.println(httpClient.sendGetRequest("https://fantasy.premierleague.com/api/bootstrap-static/"));
-    }
-
     public String sendGetRequest(String url) throws Exception {
         BufferedReader reader = null;
         StringBuilder stringBuilder;
@@ -29,12 +24,12 @@ public class HttpClient {
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");
             }
-            return stringBuilder.toString();
         } finally {
             if (reader != null) {
                 reader.close();
             }
         }
+        return stringBuilder.toString();
     }
 
     private HttpURLConnection createHttpURLConnection(String url) throws IOException {
