@@ -1,7 +1,6 @@
 package com.amoware.fplreminder;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class GameweeksTask extends AsyncTask<Void,Void,List<Gameweek>> {
 
     private GameweeksTaskInterface gInterface;
 
-    public GameweeksTask(GameweeksTaskInterface gInterface) {
+    GameweeksTask(GameweeksTaskInterface gInterface) {
         this.gInterface = gInterface;
     }
 
