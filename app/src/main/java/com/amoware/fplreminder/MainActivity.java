@@ -1,15 +1,10 @@
 package com.amoware.fplreminder;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 
-import com.amoware.fplreminder.alarm.AlarmsManager;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +32,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
+        GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
+            @Override
+            public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
+                Log.d("GameweekClient", "Gameweeks from FPL: " + gameweeks);
+            }
+        });
+        task.execute();
+
+
+        /*try {
             // https://stackoverflow.com/questions/22395417/error-strictmodeandroidblockguardpolicy-onnetwork
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -59,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
         AlarmsManager alarmsManager = new AlarmsManager(this);
         alarmsManager.setAlarmForGameweekDeadline(generateDate(30));
         alarmsManager.setAlarmForGameweekDeadline(generateDate(15)); // Overwrites alarm above
-        alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));
+        alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));*/
     }
 
-    private Date generateDate(int seconds) {
+    /*private Date generateDate(int seconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND,seconds);
         return calendar.getTime();
-    }
+    }*/
 }
