@@ -1,16 +1,31 @@
 package com.amoware.fplreminder;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.List;
+
+import static com.amoware.fplreminder.App.CHANNEL_1_ID;
 
 /**
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private NotificationManagerCompat notificationManager;
+    private EditText editTextTitle;
+    //private EditText editTextMessage;
 
     private NotificationSettings notificationSettings;
     private GameweekManager gameweekManager;
@@ -32,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        notificationManager = NotificationManagerCompat.from(this);
+
+        editTextTitle = findViewById(R.id.edit_text_title);
+       // editTextMessage = findViewById(R.id.edit);
+
+        /*
         GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
             @Override
             public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
@@ -39,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         task.execute();
+         */
+
 
 
         /*try {
@@ -64,6 +87,19 @@ public class MainActivity extends AppCompatActivity {
         alarmsManager.setAlarmForGameweekDeadline(generateDate(30));
         alarmsManager.setAlarmForGameweekDeadline(generateDate(15)); // Overwrites alarm above
         alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));*/
+    }
+
+
+    public void sendOnChannel1(View v){
+        String title = editTextTitle.getText().toString();
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_1)
+                .setContentTitle(title)
+                .setContentText(title)
+                .build();
+
+        notificationManager.notify(1, notification);
     }
 
     /*private Date generateDate(int seconds) {
