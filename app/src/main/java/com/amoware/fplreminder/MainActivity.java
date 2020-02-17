@@ -98,7 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void sendOnChannel1(View v){
-        String title = editTextTitle.getText().toString();
+        String title = null;
+        if (editTextTitle != null) {
+            title = editTextTitle.getText().toString();
+        }
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_1)
@@ -107,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         notificationManager.notify(1, notification);
+
+        VibratorService service = new VibratorService(this);
+        service.vibrate();
     }
 
     private Date generateDate(int seconds) {
