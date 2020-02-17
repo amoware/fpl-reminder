@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.amoware.fplreminder.alarm.AlarmsManager;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
@@ -87,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         alarmsManager.setAlarmForGameweekDeadline(generateDate(30));
         alarmsManager.setAlarmForGameweekDeadline(generateDate(15)); // Overwrites alarm above
         alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));*/
+
+        AlarmsManager alarmsManager = new AlarmsManager(this);
+        alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));
     }
 
 
@@ -102,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(1, notification);
     }
 
-    /*private Date generateDate(int seconds) {
+    private Date generateDate(int seconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND,seconds);
         return calendar.getTime();
-    }*/
+    }
 }
