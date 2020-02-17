@@ -1,13 +1,8 @@
 package com.amoware.fplreminder;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +13,6 @@ import com.amoware.fplreminder.alarm.AlarmsManager;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
 

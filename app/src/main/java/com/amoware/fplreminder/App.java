@@ -16,15 +16,19 @@ public class App extends Application {
 
 
     private void createNotificationChannels(){
-        NotificationChannel channel1 = new NotificationChannel(
-                CHANNEL_1_ID,
-                "Channel 1",
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
-        channel1.setDescription("This is Channel 1");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel1 = new NotificationChannel(
+                    CHANNEL_1_ID,
+                    "Channel 1",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
 
-        NotificationManager manager = getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(channel1);
+            channel1.setDescription("This is Channel 1");
 
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel1);
+            }
+        }
     }
 }
