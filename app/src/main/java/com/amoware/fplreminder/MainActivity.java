@@ -2,6 +2,7 @@ package com.amoware.fplreminder;
 
 import android.app.Notification;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,6 +14,7 @@ import com.amoware.fplreminder.alarm.AlarmsManager;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
 
@@ -45,10 +47,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        notificationManager = NotificationManagerCompat.from(this);
+        // Koden för att ladda ner gameweeks
+        GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
+            @Override
+            public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
+                // Hit kommer vi när vi har laddat ner och tolkat våra gameweeks
+                Log.d("GameweekClient", "Gameweeks from FPL: " + gameweeks);
 
-        editTextTitle = findViewById(R.id.edit_text_title);
-       // editTextMessage = findViewById(R.id.edit);
+                Date currentDeadlineTime;
+                Date todaysDate = new Date();
+                AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
+
+                for (Gameweek gameweek : gameweeks) {
+                    if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
+                        currentDeadlineTime = new Date(gameweek.getDeadlineTime().getTime());
+                        alarmsManager.setAlarmForGameweekDeadline(currentDeadlineTime);
+                        break;
+                    }
+                }
+            }
+        });
+        task.execute();
+
+        //notificationManager = NotificationManagerCompat.from(this);
+
+        //editTextTitle = findViewById(R.id.edit_text_title);
+        // editTextMessage = findViewById(R.id.edit);
 
         /*
         GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
@@ -86,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         alarmsManager.setAlarmForGameweekDeadline(generateDate(15)); // Overwrites alarm above
         alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));*/
 
-        AlarmsManager alarmsManager = new AlarmsManager(this);
-        alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));
+        /*AlarmsManager alarmsManager = new AlarmsManager(this);
+        alarmsManager.setAlarmForNotificationToBeShown(generateDate(30));*/
     }
 
 
