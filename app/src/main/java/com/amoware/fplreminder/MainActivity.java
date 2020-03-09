@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
+import com.amoware.fplreminder.dialog.ReminderDialog;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -137,5 +138,12 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND,seconds);
         return calendar.getTime();
+    }
+
+    public void showReminderDialog(View view) {
+        ReminderDialog dialog = new ReminderDialog(this);
+        dialog.show();
+
+        dialog.setTime(10, 5);
     }
 }

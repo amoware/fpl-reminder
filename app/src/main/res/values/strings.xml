@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FPL Reminder</string>
+    <string name="dialog_message">You will get a reminder %1$s hours and %2$s minutes before a gameweek\'s deadline.</string>
 </resources>
