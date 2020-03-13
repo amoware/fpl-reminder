@@ -11,7 +11,7 @@ import android.text.style.TypefaceSpan;
 import androidx.annotation.NonNull;
 
 /**
- * Created by Jonas Eiselt on 2020-03-09.
+ * Created by amoware on 2020-03-09.
  */
 public class SpannableString {
 

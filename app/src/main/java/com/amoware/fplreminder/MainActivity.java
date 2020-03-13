@@ -18,11 +18,17 @@ import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
+import static com.amoware.fplreminder.Constants.tagger;
 
 /**
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private Date currentDeadlineTime;
+    private Time timeBeforeDeadlineTime;
+
+    private ReminderDialog dialog;
 
     private NotificationManagerCompat notificationManager;
     private EditText editTextTitle;
@@ -53,9 +59,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
                 // Hit kommer vi när vi har laddat ner och tolkat våra gameweeks
-                Log.d("GameweekClient", "Gameweeks from FPL: " + gameweeks);
+                Log.d(tagger(MainActivity.class), "Gameweeks from FPL: " + gameweeks);
 
-                Date currentDeadlineTime;
                 Date todaysDate = new Date();
                 AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
 
@@ -141,9 +146,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showReminderDialog(View view) {
-        ReminderDialog dialog = new ReminderDialog(this);
-        dialog.show();
+        if (dialog == null || !dialog.isShowing()) {
+            dialog = new ReminderDialog(this);
+            dialog.show();
 
-        dialog.setTime(10, 5);
+            dialog.setTime(timeBeforeDeadlineTime);
+            dialog.setOnTimeSelected((time) -> {
+                setAlarmBasedOnSelectedTime(time);
+                updateGraphicalUserInterface(); // Todo
+            });
+        }
+    }
+
+    private void setAlarmBasedOnSelectedTime(Time time) {
+        this.timeBeforeDeadlineTime = time;
+        Log.d(tagger(getClass()), "Gameweek deadline: " + currentDeadlineTime
+                + ", time selected: " + time);
+
+        Date notificationDate = DateUtil.subtractTime(currentDeadlineTime, timeBeforeDeadlineTime);
+        AlarmsManager alarmsManager = new AlarmsManager(this);
+        alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
+    }
+
+    private void updateGraphicalUserInterface() {
+
     }
 }

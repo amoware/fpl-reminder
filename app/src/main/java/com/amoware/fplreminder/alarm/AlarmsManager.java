@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.util.Date;
 
+import static com.amoware.fplreminder.Constants.tagger;
+
 /**
  * Manages alarms. There are two type of alarms: one for notification to be shown to the user and
  * a second one which is triggered when a gameweek's deadline occurs.
@@ -39,7 +41,7 @@ public class AlarmsManager {
      * @param id unique id for the alarm
      */
     private void setAlarm(Date date, int id) {
-        Log.d("AlarmsManager", "Setting an alarm (id=" + id + ") at: " + date);
+        Log.d(tagger(getClass()), "Setting an alarm (id=" + id + ") at: " + date);
         Class receiverClass = getReceiverClass(id);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

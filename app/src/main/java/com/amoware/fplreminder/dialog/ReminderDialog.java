@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amoware.fplreminder.R;
+import com.amoware.fplreminder.Time;
 
 import static com.amoware.fplreminder.Constants.NUNITO_REGULAR;
 import static com.amoware.fplreminder.Constants.NUNITO_SEMIBOLD;
@@ -23,12 +24,18 @@ import static com.amoware.fplreminder.Constants.TAG;
  */
 public class ReminderDialog {
 
+    private OnTimeSelectedListener onTimeSelectedListener;
+
+    public interface OnTimeSelectedListener {
+        void onTimeSelected(Time time);
+    }
+
     private Context context;
     private AlertDialog dialog;
 
     private boolean isShowing;
 
-    private final int TEXT_SIZE = 17;
+    private final int TEXT_SIZE = 18;
 
     private NumberPicker hoursNumberPicker;
     private NumberPicker minutesNumberPicker;
@@ -61,12 +68,14 @@ public class ReminderDialog {
         builder.setTitle(semiboldSS.getType("Reminder", TEXT_SIZE + 1));
         builder.setView(getContentView());
 
-        builder.setPositiveButton(semiboldSS.getType("Cancel"), (dialogInterface, i) -> {
-            Log.d(TAG, "Pressed on cancel...");
-        });
+        builder.setPositiveButton(semiboldSS.getType("Cancel"), null);
 
         builder.setNegativeButton(semiboldSS.getType("Set reminder"), (dialogInterface, i) -> {
-            Log.d(TAG, "Pressed on select...");
+            if (onTimeSelectedListener != null) {
+                onTimeSelectedListener.onTimeSelected(
+                        new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue())
+                );
+            }
         });
 
         return builder.create();
@@ -132,13 +141,13 @@ public class ReminderDialog {
         return dialog != null && isShowing;
     }
 
-    public void setTime(int hours, int minutes) {
-        if (hoursNumberPicker != null) {
-            hoursNumberPicker.setValue(hours);
+    public void setTime(Time time) {
+        if (time != null && hoursNumberPicker != null) {
+            hoursNumberPicker.setValue(time.getHours());
         }
 
-        if (minutesNumberPicker != null) {
-            minutesNumberPicker.setValue(minutes);
+        if (time != null && minutesNumberPicker != null) {
+            minutesNumberPicker.setValue(time.getMinutes());
         }
 
         updateDialogMessage();
@@ -150,6 +159,10 @@ public class ReminderDialog {
                     Integer.toString(hoursNumberPicker.getValue()),
                     Integer.toString(minutesNumberPicker.getValue())));
         }
+    }
+
+    public void setOnTimeSelected(OnTimeSelectedListener onTimeSelectedListener) {
+        this.onTimeSelectedListener = onTimeSelectedListener;
     }
 }
 

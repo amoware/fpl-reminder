@@ -11,7 +11,7 @@
         android:id="@+id/dialog_message_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="17sp"
         android:textColor="@color/white" />
 
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:text="Hours"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <com.amoware.fplreminder.dialog.NumberPicker
                 android:id="@+id/dialog_hours_numberpicker"
@@ -59,7 +59,7 @@
                 android:text="Minutes"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <com.amoware.fplreminder.dialog.NumberPicker
                 android:id="@+id/dialog_minutes_numberpicker"

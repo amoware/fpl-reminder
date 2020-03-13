@@ -16,7 +16,7 @@ import com.amoware.fplreminder.R;
 import static com.amoware.fplreminder.Constants.TAG;
 
 /**
- * Created by Jonas Eiselt on 2020-03-09.
+ * Created by amoware on 2020-03-09.
  */
 public class NumberPicker extends android.widget.NumberPicker {
 
@@ -56,7 +56,6 @@ public class NumberPicker extends android.widget.NumberPicker {
     }
 
     private void updateView(View view) {
-        Log.d(TAG, "updateView");
         if (view instanceof EditText) {
             Typeface typeface = getTypeface();
 
