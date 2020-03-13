@@ -8,6 +8,14 @@ import java.util.Date;
  */
 public class DateUtil {
     public static Date subtractTime(Date date, Time timeBeforeDate) {
+        if (timeBeforeDate == null) {
+            return date;
+        }
+
+        if (date == null) {
+            return null;
+        }
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
