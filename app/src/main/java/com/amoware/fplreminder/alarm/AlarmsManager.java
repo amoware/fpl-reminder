@@ -45,7 +45,7 @@ public class AlarmsManager {
         Class receiverClass = getReceiverClass(id);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (receiverClass != null && alarmManager != null) {
+        if (date != null && receiverClass != null && alarmManager != null) {
             Intent intent = new Intent(context, receiverClass);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
             alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
