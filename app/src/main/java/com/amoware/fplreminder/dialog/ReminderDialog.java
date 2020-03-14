@@ -13,11 +13,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amoware.fplreminder.R;
-import com.amoware.fplreminder.Time;
+import com.amoware.fplreminder.common.Time;
 
-import static com.amoware.fplreminder.Constants.NUNITO_REGULAR;
-import static com.amoware.fplreminder.Constants.NUNITO_SEMIBOLD;
-import static com.amoware.fplreminder.Constants.TAG;
+import static com.amoware.fplreminder.common.Constants.NUNITO_REGULAR;
+import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
+import static com.amoware.fplreminder.common.Constants.TAG;
 
 /**
  * Created by amoware on 2020-03-09.

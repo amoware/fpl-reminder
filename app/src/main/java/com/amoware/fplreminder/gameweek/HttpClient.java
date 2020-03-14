@@ -1,4 +1,4 @@
-package com.amoware.fplreminder;
+package com.amoware.fplreminder.gameweek;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.net.URL;
 /**
  * Created by amoware on 2019-12-29.
  */
+@SuppressWarnings("WeakerAccess")
 public class HttpClient {
 
     public String sendGetRequest(String url) throws Exception {

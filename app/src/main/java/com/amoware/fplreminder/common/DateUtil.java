@@ -1,4 +1,4 @@
-package com.amoware.fplreminder;
+package com.amoware.fplreminder.common;
 
 import java.util.Calendar;
 import java.util.Date;

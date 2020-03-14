@@ -1,5 +1,7 @@
 package com.amoware.fplreminder;
 
+import com.amoware.fplreminder.common.Time;
+
 import java.util.Date;
 
 /**
@@ -51,13 +53,5 @@ public class NotificationSettings {
 
     public void setNotificationVibration(boolean notificationVibration) {
         this.notificationVibration = notificationVibration;
-    }
-
-    /**
-     * Calculates the date for the notification to be set. The date depends on the deadline of a
-     * particular gameweek and a desired time before the deadline.
-     */
-    public Date calculateNotificationTime(Date deadlineTime, Time scrollTime) {
-        return null;
     }
 }

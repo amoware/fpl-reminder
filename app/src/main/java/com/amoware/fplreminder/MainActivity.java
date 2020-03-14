@@ -11,14 +11,20 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
+import com.amoware.fplreminder.common.DateUtil;
+import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.dialog.ReminderDialog;
+import com.amoware.fplreminder.gameweek.Gameweek;
+import com.amoware.fplreminder.gameweek.GameweekManager;
+import com.amoware.fplreminder.gameweek.GameweeksTask;
+import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
-import static com.amoware.fplreminder.Constants.tagger;
+import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Created by amoware on 2019-12-29.

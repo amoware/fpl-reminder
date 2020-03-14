@@ -1,7 +1,7 @@
 package com.amoware.fplreminder.unit;
 
-import com.amoware.fplreminder.DateUtil;
-import com.amoware.fplreminder.Time;
+import com.amoware.fplreminder.common.DateUtil;
+import com.amoware.fplreminder.common.Time;
 
 import org.junit.Assert;
 import org.junit.Test;

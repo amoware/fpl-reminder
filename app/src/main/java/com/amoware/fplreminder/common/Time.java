@@ -1,4 +1,4 @@
-package com.amoware.fplreminder;
+package com.amoware.fplreminder.common;
 
 import androidx.annotation.NonNull;
 

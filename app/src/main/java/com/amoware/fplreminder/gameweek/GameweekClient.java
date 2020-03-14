@@ -1,9 +1,6 @@
-package com.amoware.fplreminder;
-
-import android.util.Log;
+package com.amoware.fplreminder.gameweek;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -13,13 +10,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.amoware.fplreminder.common.Constants.API_URL;
+
 /**
  * Created by amoware on 2019-12-29.
  */
 public class GameweekClient {
 
     private HttpClient httpClient;
-    private static final String API_DATA = "https://fantasy.premierleague.com/api/bootstrap-static/";
     private SimpleDateFormat simpleDateFormat;
 
     public GameweekClient() {
@@ -28,13 +26,13 @@ public class GameweekClient {
 
     public List<Gameweek> getGameweeksFromFPL() throws Exception {
         // Hämta api-datan
-        String apiString = httpClient.sendGetRequest(API_DATA);
+        String apiString = httpClient.sendGetRequest(API_URL);
 
         // Hämta ut gameweeks från api-datan
-        return stringToListConverter(apiString);
+        return convertStringToGameweeks(apiString);
     }
 
-    public List<Gameweek> stringToListConverter(String gameweeksString) throws JSONException, ParseException {
+    public List<Gameweek> convertStringToGameweeks(String gameweeksString) throws Exception {
         Locale locale = new Locale("en");
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", locale);
         //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));

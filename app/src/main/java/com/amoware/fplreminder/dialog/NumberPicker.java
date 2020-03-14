@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.amoware.fplreminder.R;
 
-import static com.amoware.fplreminder.Constants.TAG;
+import static com.amoware.fplreminder.common.Constants.TAG;
 
 /**
  * Created by amoware on 2020-03-09.

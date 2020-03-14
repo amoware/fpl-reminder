@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.amoware.fplreminder.R;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
-import static com.amoware.fplreminder.Constants.tagger;
+import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Is used to show the user a notification and the onReceive method is called when the time of an

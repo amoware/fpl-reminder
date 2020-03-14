@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.Date;
 
-import static com.amoware.fplreminder.Constants.tagger;
+import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Manages alarms. There are two type of alarms: one for notification to be shown to the user and
