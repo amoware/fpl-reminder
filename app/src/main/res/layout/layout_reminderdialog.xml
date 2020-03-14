@@ -31,7 +31,7 @@
                 android:id="@+id/dialog_hours_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hours"
+                android:text="@string/dialog_text_hours"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
@@ -56,7 +56,7 @@
                 android:id="@+id/dialog_minutes_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Minutes"
+                android:text="@string/dialog_text_minutes"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="13sp" />

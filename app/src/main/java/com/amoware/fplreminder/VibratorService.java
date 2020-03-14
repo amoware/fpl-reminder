@@ -6,7 +6,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 
 /**
- * Created by Jonas Eiselt on 2020-02-17.
+ * Created by amoware on 2020-02-17.
  */
 public class VibratorService {
 

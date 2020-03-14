@@ -1,5 +1,9 @@
-package com.amoware.fplreminder;
+package com.amoware.fplreminder.unit;
 
+import com.amoware.fplreminder.DateUtil;
+import com.amoware.fplreminder.Time;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -26,7 +30,7 @@ public class DateUtilUnitTest {
         Time time3 = new Time(47, 59);
         Date expectedDate3 = getDate(2020, 3, 12, 0, 0);
 
-        assertEquals(DateUtil.subtractTime(date, time1), expectedDate1);
+        Assert.assertEquals(DateUtil.subtractTime(date, time1), expectedDate1);
         assertEquals(DateUtil.subtractTime(date, time2), expectedDate2);
         assertEquals(DateUtil.subtractTime(date, time3), expectedDate3);
     }

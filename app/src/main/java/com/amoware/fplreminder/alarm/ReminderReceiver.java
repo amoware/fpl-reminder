@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.amoware.fplreminder.R;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
+import static com.amoware.fplreminder.Constants.tagger;
 
 /**
  * Is used to show the user a notification and the onReceive method is called when the time of an
@@ -23,7 +24,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Todo show the user a notification
-        Log.d("AlarmsManager", "Hello from ReminderReceiver..");
+        Log.d(tagger(getClass()), "Hello from ReminderReceiver..");
 
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_1)
