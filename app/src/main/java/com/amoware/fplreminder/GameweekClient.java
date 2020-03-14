@@ -11,9 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * https://codeshare.io/GkMZJO
  * Created by amoware on 2019-12-29.
  */
 public class GameweekClient {
@@ -35,7 +35,8 @@ public class GameweekClient {
     }
 
     public List<Gameweek> stringToListConverter(String gameweeksString) throws JSONException, ParseException {
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        Locale locale = new Locale("en");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", locale);
         //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         // 1. Läs in vår data i ett json-objekt (eftersom det e ett json-objekt)
