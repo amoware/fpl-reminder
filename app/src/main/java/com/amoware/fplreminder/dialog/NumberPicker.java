@@ -62,7 +62,7 @@ public class NumberPicker extends android.widget.NumberPicker {
             if (typeface != null) {
                 ((EditText) view).setTypeface(typeface);
                 ((EditText) view).setTextSize(17);
-                ((EditText) view).setTextColor(getResources().getColor(R.color.white));
+                ((EditText) view).setTextColor(getResources().getColor(R.color.dialog_foreground));
             }
         }
     }

@@ -17,7 +17,7 @@ import com.amoware.fplreminder.common.Time;
 
 import static com.amoware.fplreminder.common.Constants.NUNITO_REGULAR;
 import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
-import static com.amoware.fplreminder.common.Constants.TAG;
+import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Created by amoware on 2020-03-09.
@@ -68,15 +68,15 @@ public class ReminderDialog {
         builder.setTitle(semiboldSS.getType("Reminder", TEXT_SIZE + 1));
         builder.setView(getContentView());
 
-        builder.setPositiveButton(semiboldSS.getType("Cancel"), null);
-
-        builder.setNegativeButton(semiboldSS.getType("Set reminder"), (dialogInterface, i) -> {
+        builder.setPositiveButton(semiboldSS.getType("Set reminder"), (dialogInterface, i) -> {
             if (onTimeSelectedListener != null) {
                 onTimeSelectedListener.onTimeSelected(
                         new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue())
                 );
             }
         });
+
+        builder.setNegativeButton(semiboldSS.getType("Cancel"), null);
 
         return builder.create();
     }
@@ -123,7 +123,7 @@ public class ReminderDialog {
         try {
             typeface = Typeface.createFromAsset(context.getAssets(), path);
         } catch (Exception e) {
-            Log.e(TAG, "Unable to load typeface: " + e.getMessage());
+            Log.e(tagger(getClass()), "Unable to load typeface", e);
         }
         return typeface;
     }
@@ -133,7 +133,7 @@ public class ReminderDialog {
         if (button != null) {
             button.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) TEXT_SIZE);
             button.setAllCaps(false);
-            button.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            button.setTextColor(context.getResources().getColor(R.color.dialog_button_foreground));
         }
     }
 

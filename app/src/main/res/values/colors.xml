@@ -8,4 +8,10 @@
     <color name="lightPurple">#7D6787</color>
     <color name="green">#009688</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="darkGreen">#00332e</color>
+
+    <color name="dialog_background">#aa99b2</color>
+    <color name="dialog_foreground">#352c3a</color>
+    <color name="dialog_button_foreground">@color/dialog_foreground</color>
 </resources>

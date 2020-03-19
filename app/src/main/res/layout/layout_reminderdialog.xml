@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="25dp"
-    android:paddingRight="25dp">
+    android:paddingRight="25dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/dialog_message_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
-        android:textColor="@color/white" />
+        android:textColor="@color/dialog_foreground" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,13 +35,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_text_hours"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/dialog_foreground"
                 android:textSize="13sp" />
 
             <com.amoware.fplreminder.dialog.NumberPicker
                 android:id="@+id/dialog_hours_numberpicker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/dialog_foreground" />
         </LinearLayout>
 
         <Space
@@ -58,13 +61,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_text_minutes"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/dialog_foreground"
                 android:textSize="13sp" />
 
             <com.amoware.fplreminder.dialog.NumberPicker
                 android:id="@+id/dialog_minutes_numberpicker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/dialog_foreground" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
