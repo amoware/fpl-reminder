@@ -17,6 +17,11 @@ public class Gameweek {
         this.deadlineTime = deadlineTime;
     }
 
+    public Gameweek(Gameweek gameweek) {
+       this.name = gameweek != null ? gameweek.getName() : null;
+       this.deadlineTime = gameweek != null ? new Date(gameweek.getDeadlineTime().getTime()) : null;
+    }
+
     public String getName() {
         return name;
     }

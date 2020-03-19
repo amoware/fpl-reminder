@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private GameweekManager gameweekManager;
     private NotificationSettings notificationSettings;
 
+    private Gameweek currentGameweek;
     private Date currentDeadlineTime;
     private Time timeBeforeDeadlineTime;
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (Gameweek gameweek : gameweeks) {
                     if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
+                        currentGameweek = new Gameweek(gameweek);
                         currentDeadlineTime = new Date(gameweek.getDeadlineTime().getTime());
                         alarmsManager.setAlarmForGameweekDeadline(currentDeadlineTime);
                         break;
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             dialog = new ReminderDialog(this);
             dialog.show();
 
+            dialog.setGameweek(currentGameweek);
             dialog.setTime(timeBeforeDeadlineTime);
             dialog.setOnTimeSelected((time) -> {
                 setAlarmBasedOnSelectedTime(time);

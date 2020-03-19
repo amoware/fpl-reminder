@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.Time;
+import com.amoware.fplreminder.gameweek.Gameweek;
 
 import static com.amoware.fplreminder.common.Constants.NUNITO_REGULAR;
 import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
@@ -41,6 +42,8 @@ public class ReminderDialog {
     private NumberPicker minutesNumberPicker;
 
     private TextView messageTextView;
+
+    private Gameweek gameweek;
 
     public ReminderDialog(Context context) {
         this.context = context;
@@ -141,6 +144,10 @@ public class ReminderDialog {
         return dialog != null && isShowing;
     }
 
+    public void setGameweek(Gameweek gameweek) {
+        this.gameweek = gameweek;
+    }
+
     public void setTime(Time time) {
         if (time != null && hoursNumberPicker != null) {
             hoursNumberPicker.setValue(time.getHours());
@@ -155,9 +162,15 @@ public class ReminderDialog {
 
     private void updateDialogMessage() {
         if (hoursNumberPicker != null && minutesNumberPicker != null) {
+            String name = "a gameweek";
+            if (gameweek != null && gameweek.getName() != null) {
+                name = gameweek.getName().toLowerCase();
+            }
+
             messageTextView.setText(context.getString(R.string.dialog_message,
                     Integer.toString(hoursNumberPicker.getValue()),
-                    Integer.toString(minutesNumberPicker.getValue())));
+                    Integer.toString(minutesNumberPicker.getValue()),
+                    name));
         }
     }
 
