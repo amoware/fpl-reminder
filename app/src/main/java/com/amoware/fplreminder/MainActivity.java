@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
 
         Date todaysDate = new Date();
-        AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
+        AlarmsManager alarmsManager = new AlarmsManager(this);
 
         for (Gameweek gameweek : gameweeks) {
             if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
