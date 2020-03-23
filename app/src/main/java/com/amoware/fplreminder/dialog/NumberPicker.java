@@ -13,7 +13,8 @@ import androidx.annotation.RequiresApi;
 
 import com.amoware.fplreminder.R;
 
-import static com.amoware.fplreminder.common.Constants.TAG;
+import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
+import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Created by amoware on 2020-03-09.
@@ -70,9 +71,9 @@ public class NumberPicker extends android.widget.NumberPicker {
     private Typeface getTypeface() {
         Typeface typeface = null;
         try {
-            typeface = Typeface.createFromAsset(getContext().getAssets(), "nunito-semibold.ttf");
+            typeface = Typeface.createFromAsset(getContext().getAssets(), NUNITO_SEMIBOLD);
         } catch (Exception e) {
-            Log.e(TAG, "Unable to load typeface: " + e.getMessage());
+            Log.e(tagger(getClass()), "Unable to load typeface", e);
         }
         return typeface;
     }

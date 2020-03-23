@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     @Override
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
-        Log.d(tagger(MainActivity.class), "Gameweeks from FPL: " + gameweeks);
+        Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
 
         Date todaysDate = new Date();
         AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
