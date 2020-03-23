@@ -68,10 +68,12 @@ public class ReminderDialog {
         // Setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTheme);
 
-        builder.setTitle(semiboldSS.getType("Reminder", TEXT_SIZE + 1));
+        String dialogTitle = context.getString(R.string.dialog_title);
+        builder.setTitle(semiboldSS.getType(dialogTitle, TEXT_SIZE + 1));
         builder.setView(getContentView());
 
-        builder.setPositiveButton(semiboldSS.getType("Set reminder"), (dialogInterface, i) -> {
+        String setReminder = context.getString(R.string.dialog_button_setreminder);
+        builder.setPositiveButton(semiboldSS.getType(setReminder), (dialogInterface, i) -> {
             if (onTimeSelectedListener != null) {
                 onTimeSelectedListener.onTimeSelected(
                         new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue())
@@ -79,7 +81,8 @@ public class ReminderDialog {
             }
         });
 
-        builder.setNegativeButton(semiboldSS.getType("Cancel"), null);
+        String cancel = context.getString(R.string.dialog_button_cancel);
+        builder.setNegativeButton(semiboldSS.getType(cancel), null);
 
         return builder.create();
     }

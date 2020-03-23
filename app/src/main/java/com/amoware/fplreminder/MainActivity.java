@@ -115,12 +115,18 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         PreferenceManager preferenceManager = new PreferenceManager(this);
         preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
 
-        Log.d(tagger(getClass()), "Gameweek deadline: " + currentDeadlineTime
+        if (currentGameweek == null) {
+            return; // Don't set a reminder unless there's a current gameweek
+        }
+
+        Log.d(tagger(getClass()), "Gameweek deadline: " + currentGameweek.getDeadlineTime()
                 + ", time selected: " + time);
 
-        Date notificationDate = DateUtil.subtractTime(currentDeadlineTime, timeBeforeDeadlineTime);
+        Date notificationDate = DateUtil
+                .subtractTime(currentGameweek.getDeadlineTime(), timeBeforeDeadlineTime);
         AlarmsManager alarmsManager = new AlarmsManager(this);
         alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
+
     }
 
     private void updateGraphicalUserInterface() {
@@ -137,8 +143,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         for (Gameweek gameweek : gameweeks) {
             if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
                 currentGameweek = new Gameweek(gameweek);
-                currentDeadlineTime = new Date(gameweek.getDeadlineTime().getTime());
-                alarmsManager.setAlarmForGameweekDeadline(currentDeadlineTime);
+                alarmsManager.setAlarmForGameweekDeadline(currentGameweek.getDeadlineTime());
                 break;
             }
         }

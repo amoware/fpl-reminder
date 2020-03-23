@@ -4,4 +4,7 @@
     <string name="dialog_text_hours">Hours</string>
     <string name="dialog_text_minutes">Minutes</string>
     <string name="dialog_message_agameweek">a gameweek</string>
+    <string name="dialog_title">Reminder</string>
+    <string name="dialog_button_setreminder">Set reminder</string>
+    <string name="dialog_button_cancel">Cancel</string>
 </resources>

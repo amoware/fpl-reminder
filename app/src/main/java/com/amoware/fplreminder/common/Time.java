@@ -44,8 +44,8 @@ public class Time {
     }
 
     /*
-     * Konverterar ett Time-objekt till en json-formaterad sträng. Ex kan värdet för strängen bli
-     * {"hours":0,"minutes":0}.
+     * Converts a Time object to a json formatted string. For instance, the string's value may
+     * assume {"hours":0,"minutes":0}.
      */
     public String toJsonString() {
         try {
@@ -59,7 +59,7 @@ public class Time {
         return null;
     }
 
-    /* Returnerar ett Time-objekt utifrån en json-formaterad sträng. */
+    /* Parses and returns a Time object based on a json formatted string. */
     public static Time parseTime(String string) {
         try {
             JSONObject jsonObject = new JSONObject(string);
