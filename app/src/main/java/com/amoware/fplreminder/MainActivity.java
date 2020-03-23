@@ -31,7 +31,7 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 /**
  * Created by amoware on 2019-12-29.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
 
     private ReminderDialog dialog;
     private GameweekManager gameweekManager;
@@ -58,24 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
-            @Override
-            public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
-                Log.d(tagger(MainActivity.class), "Gameweeks from FPL: " + gameweeks);
-
-                Date todaysDate = new Date();
-                AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
-
-                for (Gameweek gameweek : gameweeks) {
-                    if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
-                        currentGameweek = new Gameweek(gameweek);
-                        currentDeadlineTime = new Date(gameweek.getDeadlineTime().getTime());
-                        alarmsManager.setAlarmForGameweekDeadline(currentDeadlineTime);
-                        break;
-                    }
-                }
-            }
-        });
+        GameweeksTask task = new GameweeksTask(this);
         task.execute();
     }
 
@@ -142,5 +125,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateGraphicalUserInterface() {
 
+    }
+
+    @Override
+    public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
+        Log.d(tagger(MainActivity.class), "Gameweeks from FPL: " + gameweeks);
+
+        Date todaysDate = new Date();
+        AlarmsManager alarmsManager = new AlarmsManager(MainActivity.this);
+
+        for (Gameweek gameweek : gameweeks) {
+            if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
+                currentGameweek = new Gameweek(gameweek);
+                currentDeadlineTime = new Date(gameweek.getDeadlineTime().getTime());
+                alarmsManager.setAlarmForGameweekDeadline(currentDeadlineTime);
+                break;
+            }
+        }
     }
 }
