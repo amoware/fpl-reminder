@@ -3,7 +3,6 @@ package com.amoware.fplreminder.unit;
 import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.Time;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -30,7 +29,7 @@ public class DateUtilUnitTest {
         Time time3 = new Time(47, 59);
         Date expectedDate3 = getDate(2020, 3, 12, 0, 0);
 
-        Assert.assertEquals(DateUtil.subtractTime(date, time1), expectedDate1);
+        assertEquals(DateUtil.subtractTime(date, time1), expectedDate1);
         assertEquals(DateUtil.subtractTime(date, time2), expectedDate2);
         assertEquals(DateUtil.subtractTime(date, time3), expectedDate3);
     }
@@ -38,25 +37,20 @@ public class DateUtilUnitTest {
     @Test
     public void subtractNullTimeFromDate() {
         Date date = getDate(2021, 1, 1, 0, 0);
-        Time time = null;
 
-        assertEquals(DateUtil.subtractTime(date, time), date);
+        assertEquals(DateUtil.subtractTime(date, null), date);
     }
 
     @Test
     public void subtractTimeFromNullDate() {
-        Date date = null;
         Time time = new Time(47, 0);
 
-        assertNull(DateUtil.subtractTime(date, time));
+        assertNull(DateUtil.subtractTime(null, time));
     }
 
     @Test
     public void subtractNullTimeFromNullDate() {
-        Date date = null;
-        Time time = null;
-
-        assertNull(DateUtil.subtractTime(date, time));
+        assertNull(DateUtil.subtractTime(null, null));
     }
 
     private Date getDate(int year, int month, int day, int hour, int minute) {
