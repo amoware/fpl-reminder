@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
 import com.amoware.fplreminder.common.DateUtil;
+import com.amoware.fplreminder.common.PreferenceManager;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.dialog.ReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
@@ -24,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.App.CHANNEL_1_ID;
+import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
@@ -109,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
             dialog = new ReminderDialog(this);
             dialog.show();
 
+            PreferenceManager preferenceManager = new PreferenceManager(this);
+            String jsonString = preferenceManager.getString(REMINDER_PREFERENCE, null);
+
+            timeBeforeDeadlineTime = Time.parseTime(jsonString);
+
             dialog.setGameweek(currentGameweek);
             dialog.setTime(timeBeforeDeadlineTime);
             dialog.setOnTimeSelected((time) -> {
@@ -120,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAlarmBasedOnSelectedTime(Time time) {
         this.timeBeforeDeadlineTime = time;
+
+        Log.d(tagger(getClass()), time.toJsonString());
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
+
         Log.d(tagger(getClass()), "Gameweek deadline: " + currentDeadlineTime
                 + ", time selected: " + time);
 
