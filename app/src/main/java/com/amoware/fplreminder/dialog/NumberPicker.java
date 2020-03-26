@@ -12,6 +12,7 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 
 import com.amoware.fplreminder.R;
+import com.amoware.fplreminder.common.TypefaceUtil;
 
 import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
 import static com.amoware.fplreminder.common.Constants.tagger;
@@ -58,7 +59,7 @@ public class NumberPicker extends android.widget.NumberPicker {
 
     private void updateView(View view) {
         if (view instanceof EditText) {
-            Typeface typeface = getTypeface();
+            Typeface typeface = TypefaceUtil.getSemiboldTypeface(getContext());
 
             if (typeface != null) {
                 ((EditText) view).setTypeface(typeface);
@@ -66,15 +67,5 @@ public class NumberPicker extends android.widget.NumberPicker {
                 ((EditText) view).setTextColor(getResources().getColor(R.color.dialog_foreground));
             }
         }
-    }
-
-    private Typeface getTypeface() {
-        Typeface typeface = null;
-        try {
-            typeface = Typeface.createFromAsset(getContext().getAssets(), NUNITO_SEMIBOLD);
-        } catch (Exception e) {
-            Log.e(tagger(getClass()), "Unable to load typeface", e);
-        }
-        return typeface;
     }
 }

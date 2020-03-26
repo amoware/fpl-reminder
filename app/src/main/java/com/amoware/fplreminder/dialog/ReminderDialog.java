@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 
 import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.Time;
+import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.gameweek.Gameweek;
-
-import static com.amoware.fplreminder.common.Constants.NUNITO_REGULAR;
-import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
-import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Created by amoware on 2020-03-09.
@@ -62,18 +58,18 @@ public class ReminderDialog {
     }
 
     private AlertDialog createAlertDialog() {
-        Typeface semiboldTypeface = getTypeface(NUNITO_SEMIBOLD);
-        SpannableString semiboldSS = new SpannableString(semiboldTypeface);
+        Typeface boldTypeface = TypefaceUtil.getBoldTypeface(context);
+        SpannableString boldSS = new SpannableString(boldTypeface);
 
         // Setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTheme);
 
         String dialogTitle = context.getString(R.string.dialog_title);
-        builder.setTitle(semiboldSS.getType(dialogTitle, TEXT_SIZE + 1));
+        builder.setTitle(boldSS.getType(dialogTitle, TEXT_SIZE + 1));
         builder.setView(getContentView());
 
         String setReminder = context.getString(R.string.dialog_button_setreminder);
-        builder.setPositiveButton(semiboldSS.getType(setReminder), (dialogInterface, i) -> {
+        builder.setPositiveButton(boldSS.getType(setReminder), (dialogInterface, i) -> {
             if (onTimeSelectedListener != null) {
                 onTimeSelectedListener.onTimeSelected(
                         new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue())
@@ -82,7 +78,7 @@ public class ReminderDialog {
         });
 
         String cancel = context.getString(R.string.dialog_button_cancel);
-        builder.setNegativeButton(semiboldSS.getType(cancel), null);
+        builder.setNegativeButton(boldSS.getType(cancel), null);
 
         return builder.create();
     }
@@ -96,7 +92,7 @@ public class ReminderDialog {
         if (inflater != null) {
             contentView = inflater.inflate(R.layout.layout_reminderdialog, null, false);
 
-            Typeface regularTypeface = getTypeface(NUNITO_REGULAR);
+            Typeface regularTypeface = TypefaceUtil.getSemiboldTypeface(context);
 
             messageTextView = contentView.findViewById(R.id.dialog_message_textview);
 
@@ -119,19 +115,9 @@ public class ReminderDialog {
     }
 
     private void setTextViewTypeface(TextView textView, Typeface typeface) {
-        if (textView != null && typeface != null) {
+        if (textView != null) {
             textView.setTypeface(typeface);
         }
-    }
-
-    private Typeface getTypeface(String path) {
-        Typeface typeface = null;
-        try {
-            typeface = Typeface.createFromAsset(context.getAssets(), path);
-        } catch (Exception e) {
-            Log.e(tagger(getClass()), "Unable to load typeface", e);
-        }
-        return typeface;
     }
 
     private void setDialogButton(int buttonType) {

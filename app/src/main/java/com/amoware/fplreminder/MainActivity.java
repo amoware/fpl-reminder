@@ -1,31 +1,25 @@
 package com.amoware.fplreminder;
 
-import android.app.Notification;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
-import com.amoware.fplreminder.common.DateUtil;
-import com.amoware.fplreminder.common.PreferenceManager;
 import com.amoware.fplreminder.common.Time;
+import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.dialog.ReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
-import com.amoware.fplreminder.gameweek.GameweekManager;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.amoware.fplreminder.App.CHANNEL_1_ID;
-import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
@@ -34,15 +28,12 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
 
     private ReminderDialog dialog;
-    private GameweekManager gameweekManager;
-    private NotificationSettings notificationSettings;
 
+    private FPLReminder fplReminder;
     private Gameweek currentGameweek;
-    private Date currentDeadlineTime;
-    private Time timeBeforeDeadlineTime;
 
-    public void displayNotificationTimer(){
-    }
+    private TextView hoursTextView;
+    private TextView minutesTextView;
 
     public void displayCountdownTimer(){
     }
@@ -50,43 +41,42 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void displayCurrentGameweek(){
     }
 
-    public void displayNotificationPreferences(){
+    public void displayNotificationPreferences() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        configureContentView();
 
         GameweeksTask task = new GameweeksTask(this);
         task.execute();
     }
 
+    private void configureContentView() {
+        fplReminder = new FPLReminder(this);
 
-    public void sendOnChannel1(View v){
-        String title = null;
-        EditText editTextTitle = findViewById(R.id.edit_text_title);
-        if (editTextTitle != null) {
-            title = editTextTitle.getText().toString();
-        }
+        Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
+        hoursTextView = findViewById(R.id.main_hours_value_textview);
+        minutesTextView = findViewById(R.id.main_minutes_value_textview);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_1)
-                .setContentTitle(title)
-                .setContentText(title)
-                .build();
+        hoursTextView.setTypeface(boldTypeface);
+        minutesTextView.setTypeface(boldTypeface);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, notification);
+        ((TextView) findViewById(R.id.main_title_textview)).setTypeface(boldTypeface);
 
-        VibratorService service = new VibratorService(this);
-        service.vibrate();
-    }
+        ((TextView) findViewById(R.id.main_timer_label_textview)).setTypeface(boldTypeface);
+        ((TextView) findViewById(R.id.main_hours_label_textview)).setTypeface(boldTypeface);
+        ((TextView) findViewById(R.id.main_minutes_label_textview)).setTypeface(boldTypeface);
+        ((TextView) findViewById(R.id.main_colon_label_textview)).setTypeface(boldTypeface);
+        ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
 
-    private Date generateDate(int seconds) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND,seconds);
-        return calendar.getTime();
+        ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
+        ((CheckBox) findViewById(R.id.main_sound_checkbox)).setTypeface(boldTypeface);
+        ((CheckBox) findViewById(R.id.main_vibration_checkbox)).setTypeface(boldTypeface);
+
+        displayNotificationTimer(fplReminder.getNotificationTimer());
     }
 
     public void showReminderDialog(View view) {
@@ -94,43 +84,27 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             dialog = new ReminderDialog(this);
             dialog.show();
 
-            PreferenceManager preferenceManager = new PreferenceManager(this);
-            String jsonString = preferenceManager.getString(REMINDER_PREFERENCE, null);
-
-            timeBeforeDeadlineTime = Time.parseTime(jsonString);
-
             dialog.setGameweek(currentGameweek);
-            dialog.setTime(timeBeforeDeadlineTime);
+            dialog.setTime(fplReminder.getNotificationTimer());
             dialog.setOnTimeSelected((time) -> {
                 setAlarmBasedOnSelectedTime(time);
-                updateGraphicalUserInterface();
+                displayNotificationTimer(time);
             });
         }
     }
 
     private void setAlarmBasedOnSelectedTime(Time time) {
-        this.timeBeforeDeadlineTime = time;
-
-        Log.d(tagger(getClass()), time.toJsonString());
-        PreferenceManager preferenceManager = new PreferenceManager(this);
-        preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
-
-        if (currentGameweek == null) {
-            return; // Don't set a reminder unless there's a current gameweek
+        if (currentGameweek != null) {
+            // Only set reminder when there's a current gameweek
+            fplReminder.setNotificationTimer(currentGameweek.getDeadlineTime(), time);
         }
-
-        Log.d(tagger(getClass()), "Gameweek deadline: " + currentGameweek.getDeadlineTime()
-                + ", time selected: " + time);
-
-        Date notificationDate = DateUtil
-                .subtractTime(currentGameweek.getDeadlineTime(), timeBeforeDeadlineTime);
-        AlarmsManager alarmsManager = new AlarmsManager(this);
-        alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
-
     }
 
-    private void updateGraphicalUserInterface() {
-
+    private void displayNotificationTimer(Time time) {
+        if (time != null && hoursTextView != null && minutesTextView != null) {
+            hoursTextView.setText(String.valueOf(time.getHours()));
+            minutesTextView.setText(String.valueOf(time.getMinutes()));
+        }
     }
 
     @Override

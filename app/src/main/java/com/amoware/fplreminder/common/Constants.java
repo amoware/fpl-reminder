@@ -6,6 +6,7 @@ package com.amoware.fplreminder.common;
 public class Constants {
     private static final String TAG = "Logcat";
 
+    public static final String NUNITO_BOLD = "nunito-bold.ttf";
     public static final String NUNITO_REGULAR = "nunito-regular.ttf";
     public static final String NUNITO_SEMIBOLD = "nunito-semibold.ttf";
 
