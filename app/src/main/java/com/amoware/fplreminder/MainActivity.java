@@ -26,9 +26,8 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
 
-    private FplReminderDialog dialog;
-
     private FplReminder fplReminder;
+    private FplReminderDialog dialog;
 
     private TextView hoursTextView;
     private TextView minutesTextView;
@@ -77,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     public void showReminderDialog(View view) {
         if (dialog == null || !dialog.isShowing()) {
-            dialog = new FplReminderDialog(fplReminder);
-            dialog.show();
+            (dialog = new FplReminderDialog(fplReminder)).show();
             dialog.setOnTimeSelected(this::displayNotificationTimer);
         }
     }
