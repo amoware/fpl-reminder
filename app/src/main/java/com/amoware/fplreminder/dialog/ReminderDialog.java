@@ -151,12 +151,12 @@ public class ReminderDialog {
 
     private void updateDialogMessage() {
         if (hoursNumberPicker != null && minutesNumberPicker != null) {
-            String name = context.getString(R.string.dialog_message_agameweek);
+            String name = context.getString(R.string.dialog_words_agameweek);
             if (gameweek != null && gameweek.getName() != null) {
                 name = gameweek.getName().toLowerCase();
             }
 
-            messageTextView.setText(context.getString(R.string.dialog_message,
+            messageTextView.setText(context.getString(R.string.dialog_text_intro,
                     Integer.toString(hoursNumberPicker.getValue()),
                     Integer.toString(minutesNumberPicker.getValue()),
                     name));

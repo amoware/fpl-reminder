@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private TextView hoursTextView;
     private TextView minutesTextView;
+    private TextView suffixTimerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         hoursTextView = findViewById(R.id.main_hours_value_textview);
         minutesTextView = findViewById(R.id.main_minutes_value_textview);
+        suffixTimerTextView = findViewById(R.id.main_suffixtimer_label_textview);
 
         hoursTextView.setTypeface(boldTypeface);
         minutesTextView.setTypeface(boldTypeface);
+        suffixTimerTextView.setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_title_textview)).setTypeface(boldTypeface);
 
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         ((TextView) findViewById(R.id.main_hours_label_textview)).setTypeface(boldTypeface);
         ((TextView) findViewById(R.id.main_minutes_label_textview)).setTypeface(boldTypeface);
         ((TextView) findViewById(R.id.main_colon_label_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
         ((CheckBox) findViewById(R.id.main_sound_checkbox)).setTypeface(boldTypeface);
@@ -73,6 +75,15 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             hoursTextView.setText(String.valueOf(time.getHours()));
             minutesTextView.setText(String.valueOf(time.getMinutes()));
         }
+        displayNotificationTimerText();
+    }
+
+    private void displayNotificationTimerText() {
+        String value = getString(R.string.common_word_gameweek);
+        if (fplReminder.getCurrentGameweek() != null) {
+            value = fplReminder.getCurrentGameweek().getName() + "'s";
+        }
+        suffixTimerTextView.setText(getString(R.string.main_text_beforedeadline, value));
     }
 
     public void showReminderDialog(View view) {
@@ -93,5 +104,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
+        displayNotificationTimerText();
     }
 }
