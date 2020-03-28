@@ -9,7 +9,5 @@
     <string name="dialog_button_setreminder">Set reminder</string>
     <string name="dialog_button_cancel">Cancel</string>
 
-    <string name="main_text_beforedeadline">Before %1$s deadline</string>
-
-    <string name="common_word_gameweek">gameweek</string>
+    <string name="main_text_beforedeadline">Before gameweek deadline</string>
 </resources>

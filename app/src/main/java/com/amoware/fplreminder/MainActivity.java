@@ -75,15 +75,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             hoursTextView.setText(String.valueOf(time.getHours()));
             minutesTextView.setText(String.valueOf(time.getMinutes()));
         }
-        displayNotificationTimerText();
-    }
-
-    private void displayNotificationTimerText() {
-        String value = getString(R.string.common_word_gameweek);
-        if (fplReminder.getCurrentGameweek() != null) {
-            value = fplReminder.getCurrentGameweek().getName() + "'s";
-        }
-        suffixTimerTextView.setText(getString(R.string.main_text_beforedeadline, value));
     }
 
     public void showReminderDialog(View view) {
@@ -104,6 +95,5 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
-        displayNotificationTimerText();
     }
 }
