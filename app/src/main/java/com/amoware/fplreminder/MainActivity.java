@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.amoware.fplreminder.common.FPLReminder;
+import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
-import com.amoware.fplreminder.dialog.ReminderDialog;
+import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
@@ -26,13 +26,12 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
 
-    private ReminderDialog dialog;
+    private FplReminderDialog dialog;
 
-    private FPLReminder fplReminder;
+    private FplReminder fplReminder;
 
     private TextView hoursTextView;
     private TextView minutesTextView;
-    private TextView suffixTimerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +44,14 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     private void configureContentView() {
-        fplReminder = new FPLReminder(this);
+        fplReminder = new FplReminder(this);
 
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         hoursTextView = findViewById(R.id.main_hours_value_textview);
         minutesTextView = findViewById(R.id.main_minutes_value_textview);
-        suffixTimerTextView = findViewById(R.id.main_suffixtimer_label_textview);
 
         hoursTextView.setTypeface(boldTypeface);
         minutesTextView.setTypeface(boldTypeface);
-        suffixTimerTextView.setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_title_textview)).setTypeface(boldTypeface);
 
@@ -62,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         ((TextView) findViewById(R.id.main_hours_label_textview)).setTypeface(boldTypeface);
         ((TextView) findViewById(R.id.main_minutes_label_textview)).setTypeface(boldTypeface);
         ((TextView) findViewById(R.id.main_colon_label_textview)).setTypeface(boldTypeface);
+        ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
         ((CheckBox) findViewById(R.id.main_sound_checkbox)).setTypeface(boldTypeface);
@@ -79,15 +77,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     public void showReminderDialog(View view) {
         if (dialog == null || !dialog.isShowing()) {
-            dialog = new ReminderDialog(this);
+            dialog = new FplReminderDialog(fplReminder);
             dialog.show();
-
-            dialog.setGameweek(fplReminder.getCurrentGameweek());
-            dialog.setTime(fplReminder.getNotificationTimer());
-            dialog.setOnTimeSelected((time) -> {
-                fplReminder.setNotificationTimer(time);
-                displayNotificationTimer(time);
-            });
+            dialog.setOnTimeSelected(this::displayNotificationTimer);
         }
     }
 

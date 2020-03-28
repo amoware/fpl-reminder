@@ -15,7 +15,7 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 /**
  * Created by amoware on 2019-12-12.
  */
-public class FPLReminder {
+public class FplReminder {
 
     private final Context context;
 
@@ -24,7 +24,7 @@ public class FPLReminder {
     private boolean notificationSound;
     private boolean notificationVibration;
 
-    public FPLReminder(Context context) {
+    public FplReminder(Context context) {
         this.context = context;
     }
 
@@ -118,5 +118,9 @@ public class FPLReminder {
 
     public Gameweek getCurrentGameweek() {
         return currentGameweek;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

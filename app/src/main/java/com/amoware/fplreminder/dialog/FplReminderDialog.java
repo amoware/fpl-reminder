@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amoware.fplreminder.R;
+import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.gameweek.Gameweek;
@@ -19,7 +20,7 @@ import com.amoware.fplreminder.gameweek.Gameweek;
 /**
  * Created by amoware on 2020-03-09.
  */
-public class ReminderDialog {
+public class FplReminderDialog {
 
     private OnTimeSelectedListener onTimeSelectedListener;
 
@@ -27,9 +28,11 @@ public class ReminderDialog {
         void onTimeSelected(Time time);
     }
 
+    private FplReminder fplReminder;
     private Context context;
-    private AlertDialog dialog;
+    private Gameweek gameweek;
 
+    private AlertDialog dialog;
     private boolean isShowing;
 
     private final int TEXT_SIZE = 18;
@@ -39,25 +42,39 @@ public class ReminderDialog {
 
     private TextView messageTextView;
 
-    private Gameweek gameweek;
-
-    public ReminderDialog(Context context) {
-        this.context = context;
+    public FplReminderDialog(FplReminder fplReminder) {
+        this.fplReminder = fplReminder;
+        if (this.fplReminder != null) {
+            this.context = this.fplReminder.getContext();
+            this.gameweek = this.fplReminder.getCurrentGameweek();
+        }
     }
 
     public void show() {
         isShowing = true;
         dialog = createAlertDialog();
-        dialog.show();
 
-        setDialogButton(DialogInterface.BUTTON_POSITIVE);
-        setDialogButton(DialogInterface.BUTTON_NEGATIVE);
+        if (dialog != null) {
+            dialog.show();
 
-        dialog.setOnDismissListener(dialogInterface -> isShowing = false);
-        dialog.setOnCancelListener(dialogInterface -> isShowing = false);
+            setDialogButton(DialogInterface.BUTTON_POSITIVE);
+            setDialogButton(DialogInterface.BUTTON_NEGATIVE);
+
+            dialog.setOnDismissListener(dialogInterface -> isShowing = false);
+            dialog.setOnCancelListener(dialogInterface -> isShowing = false);
+
+            updateNumberPickers();
+            updateDialogMessage();
+        } else {
+            isShowing = false;
+        }
     }
 
     private AlertDialog createAlertDialog() {
+        if (context == null) {
+            return null;
+        }
+
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(context);
         SpannableString boldSS = new SpannableString(boldTypeface);
 
@@ -71,9 +88,9 @@ public class ReminderDialog {
         String setReminder = context.getString(R.string.dialog_button_setreminder);
         builder.setPositiveButton(boldSS.getType(setReminder), (dialogInterface, i) -> {
             if (onTimeSelectedListener != null) {
-                onTimeSelectedListener.onTimeSelected(
-                        new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue())
-                );
+                Time newTime = new Time(hoursNumberPicker.getValue(), minutesNumberPicker.getValue());
+                fplReminder.setNotificationTimer(newTime);
+                onTimeSelectedListener.onTimeSelected(newTime);
             }
         });
 
@@ -129,15 +146,8 @@ public class ReminderDialog {
         }
     }
 
-    public boolean isShowing() {
-        return dialog != null && isShowing;
-    }
-
-    public void setGameweek(Gameweek gameweek) {
-        this.gameweek = gameweek;
-    }
-
-    public void setTime(Time time) {
+    private void updateNumberPickers() {
+        Time time = fplReminder != null ? fplReminder.getNotificationTimer() : null;
         if (time != null && hoursNumberPicker != null) {
             hoursNumberPicker.setValue(time.getHours());
         }
@@ -145,8 +155,6 @@ public class ReminderDialog {
         if (time != null && minutesNumberPicker != null) {
             minutesNumberPicker.setValue(time.getMinutes());
         }
-
-        updateDialogMessage();
     }
 
     private void updateDialogMessage() {
@@ -161,6 +169,10 @@ public class ReminderDialog {
                     Integer.toString(minutesNumberPicker.getValue()),
                     name));
         }
+    }
+
+    public boolean isShowing() {
+        return dialog != null && isShowing;
     }
 
     public void setOnTimeSelected(OnTimeSelectedListener onTimeSelectedListener) {
