@@ -92,13 +92,13 @@ public class ReminderDialog {
         if (inflater != null) {
             contentView = inflater.inflate(R.layout.layout_reminderdialog, null, false);
 
-            Typeface regularTypeface = TypefaceUtil.getSemiboldTypeface(context);
+            Typeface semiboldTypeface = TypefaceUtil.getSemiboldTypeface(context);
 
             messageTextView = contentView.findViewById(R.id.dialog_message_textview);
 
-            setTextViewTypeface(messageTextView, regularTypeface);
-            setTextViewTypeface(contentView.findViewById(R.id.dialog_hours_textview), regularTypeface);
-            setTextViewTypeface(contentView.findViewById(R.id.dialog_minutes_textview), regularTypeface);
+            setTextViewTypeface(messageTextView, semiboldTypeface);
+            setTextViewTypeface(contentView.findViewById(R.id.dialog_hours_textview), semiboldTypeface);
+            setTextViewTypeface(contentView.findViewById(R.id.dialog_minutes_textview), semiboldTypeface);
 
             hoursNumberPicker = contentView.findViewById(R.id.dialog_hours_numberpicker);
             hoursNumberPicker.setMinValue(0);

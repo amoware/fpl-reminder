@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.amoware.fplreminder.alarm.AlarmsManager;
+import com.amoware.fplreminder.common.FPLReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.dialog.ReminderDialog;
@@ -17,7 +17,6 @@ import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 
-import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.common.Constants.tagger;
@@ -30,19 +29,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private ReminderDialog dialog;
 
     private FPLReminder fplReminder;
-    private Gameweek currentGameweek;
 
     private TextView hoursTextView;
     private TextView minutesTextView;
-
-    public void displayCountdownTimer(){
-    }
-
-    public void displayCurrentGameweek(){
-    }
-
-    public void displayNotificationPreferences() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,27 +68,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
 
-    public void showReminderDialog(View view) {
-        if (dialog == null || !dialog.isShowing()) {
-            dialog = new ReminderDialog(this);
-            dialog.show();
-
-            dialog.setGameweek(currentGameweek);
-            dialog.setTime(fplReminder.getNotificationTimer());
-            dialog.setOnTimeSelected((time) -> {
-                setAlarmBasedOnSelectedTime(time);
-                displayNotificationTimer(time);
-            });
-        }
-    }
-
-    private void setAlarmBasedOnSelectedTime(Time time) {
-        if (currentGameweek != null) {
-            // Only set reminder when there's a current gameweek
-            fplReminder.setNotificationTimer(currentGameweek.getDeadlineTime(), time);
-        }
-    }
-
     private void displayNotificationTimer(Time time) {
         if (time != null && hoursTextView != null && minutesTextView != null) {
             hoursTextView.setText(String.valueOf(time.getHours()));
@@ -107,19 +75,23 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
+    public void showReminderDialog(View view) {
+        if (dialog == null || !dialog.isShowing()) {
+            dialog = new ReminderDialog(this);
+            dialog.show();
+
+            dialog.setGameweek(fplReminder.getCurrentGameweek());
+            dialog.setTime(fplReminder.getNotificationTimer());
+            dialog.setOnTimeSelected((time) -> {
+                fplReminder.setNotificationTimer(time);
+                displayNotificationTimer(time);
+            });
+        }
+    }
+
     @Override
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
-
-        Date todaysDate = new Date();
-        AlarmsManager alarmsManager = new AlarmsManager(this);
-
-        for (Gameweek gameweek : gameweeks) {
-            if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
-                currentGameweek = new Gameweek(gameweek);
-                alarmsManager.setAlarmForGameweekDeadline(currentGameweek.getDeadlineTime());
-                break;
-            }
-        }
+        fplReminder.onGameweeksDownloaded(gameweeks);
     }
 }

@@ -19,5 +19,8 @@ public class GameweekReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Todo update the list with gameweek deadlines
         Log.d(tagger(getClass()), "Hello from GameweekReceiver..");
+
+        // What happens if the user isn't connected to a network? Or if gameweeks cannot be
+        // downloaded?
     }
 }

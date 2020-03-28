@@ -1,4 +1,4 @@
-package com.amoware.fplreminder;
+package com.amoware.fplreminder.common;
 
 import android.content.Context;
 import android.os.Build;
