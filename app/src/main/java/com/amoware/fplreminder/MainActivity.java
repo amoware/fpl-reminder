@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         task.execute();
     }
 
-
+/*
     public void sendOnChannel1(View v){
         String title = null;
         EditText editTextTitle = findViewById(R.id.edit_text_title);
@@ -82,13 +82,15 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         VibratorService service = new VibratorService(this);
         service.vibrate();
     }
+*/
 
+/*
     private Date generateDate(int seconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND,seconds);
         return calendar.getTime();
     }
-
+*/
     public void showReminderDialog(View view) {
         if (dialog == null || !dialog.isShowing()) {
             dialog = new ReminderDialog(this);
