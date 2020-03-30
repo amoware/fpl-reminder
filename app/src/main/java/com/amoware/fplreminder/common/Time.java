@@ -62,7 +62,7 @@ public class Time {
     /* Parses and returns a Time object based on a json formatted string. */
     public static Time parseTime(String string) {
         try {
-            JSONObject jsonObject = new JSONObject(string);
+            JSONObject jsonObject = new JSONObject(string != null ? string : "");
             return new Time(jsonObject.getInt(HOURS_FIELD), jsonObject.getInt(MINUTES_FIELD));
         } catch (JSONException e) {
             // Do nothing
