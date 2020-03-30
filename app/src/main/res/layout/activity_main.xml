@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="55dp"
         android:text="Fantasy Premier League Reminder"
         android:textColor="#FFFFFF"
         android:textSize="32sp" />
@@ -37,6 +37,7 @@
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="5px"
         android:background="@drawable/rounded_corners">
 
         <LinearLayout
@@ -132,7 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="45dp"
         android:layout_marginLeft="20dp"
         android:text="Notification preferences"
         android:textAllCaps="true"
@@ -144,6 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="5px"
         android:background="@drawable/rounded_corners"
         android:orientation="horizontal"
         android:gravity="center">
@@ -153,7 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:paddingLeft="50dp">
+            android:paddingLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
 
             <CheckBox
                 android:id="@+id/main_sound_checkbox"
@@ -171,7 +175,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:paddingRight="50dp">
+            android:paddingRight="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
 
             <CheckBox
                 android:id="@+id/main_vibration_checkbox"
