@@ -32,6 +32,10 @@ public class FplReminder {
         return notificationSound;
     }
 
+    // Todo:
+    // Vi vill spara undan värdet `notificationSound` i en preference.
+    // Typ samma princip som i metoden get/setNotificationTimer.
+    // Skapa en metod i preferenceManager för att spara och hämta en boolean
     public void setNotificationSound(boolean notificationSound) {
         this.notificationSound = notificationSound;
     }
@@ -40,6 +44,10 @@ public class FplReminder {
         return notificationVibration;
     }
 
+    // Todo:
+    // Vi vill spara undan värdet `notificationVibration` i en preference.
+    // Typ samma princip som i metoden get/setNotificationTimer.
+    // Skapa en metod i preferenceManager för att spara och hämta en boolean
     public void setNotificationVibration(boolean notificationVibration) {
         this.notificationVibration = notificationVibration;
     }

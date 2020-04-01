@@ -67,9 +67,11 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
+        // Todo: sätt soundcheckbox mha fplReminders isNotificationSound-metod
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
+        // Todo: sätt
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
