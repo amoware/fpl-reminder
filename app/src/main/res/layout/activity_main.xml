@@ -160,10 +160,10 @@
             android:layout_marginBottom="15dp">
 
             <CheckBox
+                android:theme="@style/checkBoxStyle"
                 android:id="@+id/main_sound_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#FFFFFF"
                 android:layoutDirection="rtl"
                 android:text="Sound"
                 android:textSize="20sp"
@@ -180,14 +180,16 @@
             android:layout_marginBottom="15dp">
 
             <CheckBox
+                android:theme="@style/checkBoxStyle"
                 android:id="@+id/main_vibration_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#FFFFFF"
                 android:layoutDirection="rtl"
                 android:text="Vibration"
                 android:textSize="20sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                />
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

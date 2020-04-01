@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.CompoundButtonCompat;
 
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
@@ -86,4 +87,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
     }
+
+
 }
