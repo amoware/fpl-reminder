@@ -167,7 +167,8 @@
                 android:layoutDirection="rtl"
                 android:text="Sound"
                 android:textSize="20sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:onClick="changeSoundSettings" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,7 +188,8 @@
                 android:layoutDirection="rtl"
                 android:text="Vibration"
                 android:textSize="20sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:onClick="changeVibrationSettings" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

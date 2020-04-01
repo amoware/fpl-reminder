@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private TextView hoursTextView;
     private TextView minutesTextView;
 
+    private CheckBox soundCheckbox;
+    private CheckBox vibrationCheckbox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +64,12 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
-        ((CheckBox) findViewById(R.id.main_sound_checkbox)).setTypeface(boldTypeface);
-        ((CheckBox) findViewById(R.id.main_vibration_checkbox)).setTypeface(boldTypeface);
+
+        soundCheckbox = findViewById(R.id.main_sound_checkbox);
+        soundCheckbox.setTypeface(boldTypeface);
+
+        vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
+        vibrationCheckbox.setTypeface(boldTypeface);
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
@@ -74,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
+    /** Called from the view when the user clicks on the layout including the notification timer. */
     public void showReminderDialog(View view) {
         if (dialog == null || !dialog.isShowing()) {
             (dialog = new FplReminderDialog(fplReminder)).show();
@@ -85,5 +93,19 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
+    }
+
+    /** Called from the view when the user clicks on the checkbox concerning the sound. */
+    public void changeSoundSettings(View view) {
+        if (soundCheckbox != null) {
+            fplReminder.setNotificationSound(soundCheckbox.isChecked());
+        }
+    }
+
+    /** Called from the view when the user clicks on the checkbox concerning the vibration. */
+    public void changeVibrationSettings(View view) {
+        if (vibrationCheckbox != null) {
+            fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
+        }
     }
 }
