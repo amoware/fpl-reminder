@@ -84,6 +84,10 @@ public class FplReminder {
      * @return current gameweek
      */
     private Gameweek getCurrentGameweek(List<Gameweek> gameweeks) {
+        if (gameweeks == null) {
+            return null;
+        }
+
         Date todaysDate = new Date();
         for (Gameweek gameweek : gameweeks) {
             if (todaysDate.compareTo(gameweek.getDeadlineTime()) < 0) {
