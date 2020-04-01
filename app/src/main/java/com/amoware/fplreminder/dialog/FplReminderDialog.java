@@ -15,7 +15,6 @@ import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
-import com.amoware.fplreminder.gameweek.Gameweek;
 
 /**
  * Created by amoware on 2020-03-09.
@@ -30,7 +29,6 @@ public class FplReminderDialog {
 
     private FplReminder fplReminder;
     private Context context;
-    private Gameweek gameweek;
 
     private AlertDialog dialog;
     private boolean isShowing;
@@ -46,7 +44,6 @@ public class FplReminderDialog {
         this.fplReminder = fplReminder;
         if (this.fplReminder != null) {
             this.context = this.fplReminder.getContext();
-            this.gameweek = this.fplReminder.getCurrentGameweek();
         }
     }
 
@@ -159,15 +156,9 @@ public class FplReminderDialog {
 
     private void updateDialogMessage() {
         if (hoursNumberPicker != null && minutesNumberPicker != null) {
-            String name = context.getString(R.string.dialog_words_agameweek);
-            if (gameweek != null && gameweek.getName() != null) {
-                name = gameweek.getName().toLowerCase();
-            }
-
             messageTextView.setText(context.getString(R.string.dialog_text_intro,
                     Integer.toString(hoursNumberPicker.getValue()),
-                    Integer.toString(minutesNumberPicker.getValue()),
-                    name));
+                    Integer.toString(minutesNumberPicker.getValue())));
         }
     }
 
