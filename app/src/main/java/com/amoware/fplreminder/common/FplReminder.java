@@ -21,8 +21,8 @@ public class FplReminder {
 
     private Gameweek currentGameweek;
 
-    private boolean notificationSound;
-    private boolean notificationVibration;
+    private boolean notificationSound = true;
+    private boolean notificationVibration = true;
 
     public FplReminder(Context context) {
         this.context = context;
