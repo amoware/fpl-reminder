@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private void configureContentView() {
         fplReminder = new FplReminder(this);
 
+        Typeface regularTypeface = TypefaceUtil.getRegularTypeface(this);
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         hoursTextView = findViewById(R.id.main_hours_value_textview);
         minutesTextView = findViewById(R.id.main_minutes_value_textview);
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
+
+        ((TextView) findViewById(R.id.progress_textview)).setTypeface(regularTypeface);
 
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);

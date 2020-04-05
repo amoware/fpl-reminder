@@ -6,17 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#3F2A49">
+    android:background="#3F2A49"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/main_title_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="55dp"
         android:text="Fantasy Premier League Reminder"
         android:textColor="#FFFFFF"
-        android:textSize="32sp" />
+        android:textSize="26sp" />
 
     <TextView
         android:id="@+id/main_timer_label_textview"
@@ -24,108 +25,33 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
         android:text="Notification timer"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="12sp" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5px"
+        android:layout_marginTop="5dp"
+        android:padding="20dp"
         android:background="@drawable/rounded_corners">
 
-        <LinearLayout
+        <include
+            android:id="@+id/main_progress_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:onClick="showReminderDialog">
+            layout="@layout/layout_progress"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/main_hours_label_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hours"
-                    android:textSize="20sp"
-                    android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
-                    android:paddingRight="20dp"
-                    android:paddingTop="20dp" />
-
-                <TextView
-                    android:id="@+id/main_hours_value_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="#FFFFFF"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="20dp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/main_colon_label_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textSize="30sp"
-                android:orientation="vertical"
-                android:paddingTop="45dp"
-                android:textColor="#FFFFFF" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/main_minutes_label_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Minutes"
-                    android:textSize="20sp"
-                    android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="20dp" />
-
-                <TextView
-                    android:id="@+id/main_minutes_value_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="#FFFFFF"
-                    android:paddingLeft="20dp"
-                    android:paddingBottom="20dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <include
+            android:id="@+id/main_notification_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/main_suffixtimer_label_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/main_text_beforedeadline"
-                android:textAllCaps="true"
-                android:textColor="#FFFFFF"
-                android:paddingBottom="10dp" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            layout="@layout/layout_notificationtimer" />
     </LinearLayout>
 
     <TextView
@@ -134,7 +60,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="45dp"
-        android:layout_marginLeft="20dp"
         android:text="Notification preferences"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
@@ -143,9 +68,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5px"
+        android:layout_marginTop="5dp"
         android:background="@drawable/rounded_corners"
         android:orientation="horizontal"
         android:gravity="center">
