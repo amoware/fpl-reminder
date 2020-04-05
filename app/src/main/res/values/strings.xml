@@ -9,4 +9,6 @@
     <string name="dialog_button_cancel">Cancel</string>
 
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
+
+    <string name="progress_label_status">Fetching gameweeks&#8230;</string>
 </resources>

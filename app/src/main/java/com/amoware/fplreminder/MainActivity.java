@@ -19,6 +19,8 @@ import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 
 import java.util.List;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
@@ -39,10 +41,16 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showProgress(true);
         configureContentView();
 
         GameweeksTask task = new GameweeksTask(this);
         task.execute();
+    }
+
+    private void showProgress(boolean showProgress) {
+        findViewById(R.id.main_progress_layout).setVisibility(showProgress ? VISIBLE : GONE);
+        findViewById(R.id.main_notification_layout).setVisibility(showProgress ? GONE : VISIBLE);
     }
 
     private void configureContentView() {
@@ -66,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
 
-        ((TextView) findViewById(R.id.progress_textview)).setTypeface(regularTypeface);
+        ((TextView) findViewById(R.id.progress_textview)).setTypeface(boldTypeface);
 
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
+        showProgress(false);
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
