@@ -1,6 +1,7 @@
 package com.amoware.fplreminder.notification;
 
 import android.content.Context;
+import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -26,14 +27,19 @@ public class NotificationService {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_1);
+                .setSmallIcon(R.drawable.soccer);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            builder.setPriority(android.app.Notification.PRIORITY_HIGH);
+        }
 
         if (notification.getContentTitle() != null) {
             builder.setContentTitle(notification.getContentTitle());
         }
 
         if (notification.getContentText() != null) {
-            builder.setContentText(notification.getContentText());
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(
+                    notification.getContentText()));
         }
 
         if (notification.getSoundUri() != null) {

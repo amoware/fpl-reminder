@@ -26,8 +26,8 @@ public class ReminderReceiver extends BroadcastReceiver {
         Log.d(tagger(getClass()), "Hello from ReminderReceiver..");
 
         Notification notification = new Notification();
-        notification.setContentTitle("Reminder");
-        notification.setContentText("Hello world");
+        notification.setContentTitle("Approaching deadline");
+        notification.setContentText("The deadline of gameweek 23 is approaching. Do not forget to have your team set up no later than Friday at 18:00.");
 
         FplReminder fplReminder = new FplReminder(context);
 
