@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private void configureContentView() {
         fplReminder = new FplReminder(this);
 
-        Typeface regularTypeface = TypefaceUtil.getRegularTypeface(this);
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         hoursTextView = findViewById(R.id.main_hours_value_textview);
         minutesTextView = findViewById(R.id.main_minutes_value_textview);
