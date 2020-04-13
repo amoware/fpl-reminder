@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/linearLayout"
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:background="#3F2A49"
@@ -14,10 +15,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="20dp"
         android:text="Fantasy Premier League Reminder"
         android:textColor="#FFFFFF"
         android:textSize="26sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/main_upcomingDeadline_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Gameweek 33 deadline: Fri 10 Apr 20:00"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            />
+
+
+</LinearLayout>
 
     <TextView
         android:id="@+id/main_timer_label_textview"
