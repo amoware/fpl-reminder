@@ -15,4 +15,9 @@
     <color name="dialog_background">#aa99b2</color>
     <color name="dialog_foreground">#352c3a</color>
     <color name="dialog_button_foreground">@color/dialog_foreground</color>
+
+    <color name="refresh_button_default_background">@color/lightPurple</color>
+    <color name="refresh_button_default_border">#6b5973</color>
+    <color name="refresh_button_pressed_background">#786482</color>
+    <color name="refresh_button_pressed_border">#5e4e65</color>
 </resources>

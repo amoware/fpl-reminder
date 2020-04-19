@@ -140,4 +140,13 @@
         </LinearLayout>
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/main_refresh_button"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_refresh"
+        android:background="@drawable/refresh_button_selector"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        tools:ignore="ContentDescription" />
 </LinearLayout>
