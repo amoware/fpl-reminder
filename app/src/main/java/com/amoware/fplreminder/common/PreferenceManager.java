@@ -16,8 +16,18 @@ public class PreferenceManager {
         }
     }
 
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return preferences != null ? preferences.getBoolean(key, defaultValue) : defaultValue;
+    }
+
+    public void putBoolean(String key, boolean value) {
+        if (preferences != null) {
+            preferences.edit().putBoolean(key, value).apply();
+        }
+    }
+
     public String getString(String key, String defaultValue) {
-        return preferences != null ? preferences.getString(key, defaultValue) : null;
+        return preferences != null ? preferences.getString(key, defaultValue) : defaultValue;
     }
 
     public void putString(String key, String value) {

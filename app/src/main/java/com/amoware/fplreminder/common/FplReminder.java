@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
+import static com.amoware.fplreminder.common.Constants.SOUND_PREFERENCE;
+import static com.amoware.fplreminder.common.Constants.VIBRATION_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
@@ -18,38 +20,34 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 public class FplReminder {
 
     private final Context context;
-
     private Gameweek currentGameweek;
-
-    private boolean notificationSound = true;
-    private boolean notificationVibration = true;
 
     public FplReminder(Context context) {
         this.context = context;
     }
 
-    public boolean isNotificationSound() {
-        return notificationSound;
+    public Context getContext() {
+        return context;
     }
 
-    // Todo:
-    // Vi vill spara undan värdet `notificationSound` i en preference.
-    // Typ samma princip som i metoden get/setNotificationTimer.
-    // Skapa en metod i preferenceManager för att spara och hämta en boolean
+    public boolean isNotificationSound() {
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        return preferenceManager.getBoolean(SOUND_PREFERENCE, false);
+    }
+
     public void setNotificationSound(boolean notificationSound) {
-        this.notificationSound = notificationSound;
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        preferenceManager.putBoolean(SOUND_PREFERENCE, notificationSound);
     }
 
     public boolean isNotificationVibration() {
-        return notificationVibration;
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        return preferenceManager.getBoolean(VIBRATION_PREFERENCE, false);
     }
 
-    // Todo:
-    // Vi vill spara undan värdet `notificationVibration` i en preference.
-    // Typ samma princip som i metoden get/setNotificationTimer.
-    // Skapa en metod i preferenceManager för att spara och hämta en boolean
     public void setNotificationVibration(boolean notificationVibration) {
-        this.notificationVibration = notificationVibration;
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        preferenceManager.putBoolean(VIBRATION_PREFERENCE, notificationVibration);
     }
 
     public Time getNotificationTimer() {
@@ -126,13 +124,5 @@ public class FplReminder {
             AlarmsManager alarmsManager = new AlarmsManager(context);
             alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
         }
-    }
-
-    public Gameweek getCurrentGameweek() {
-        return currentGameweek;
-    }
-
-    public Context getContext() {
-        return context;
     }
 }
