@@ -43,8 +43,13 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        showProgress(true);
         configureContentView();
+
+        downloadGameweeks(null);
+    }
+
+    public void downloadGameweeks(View view) {
+        showProgress(true);
 
         GameweeksTask task = new GameweeksTask(this);
         task.execute();
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private void showProgress(boolean showProgress) {
         findViewById(R.id.main_progress_layout).setVisibility(showProgress ? VISIBLE : GONE);
+        findViewById(R.id.main_refresh_button).setVisibility(showProgress ? GONE : VISIBLE);
         findViewById(R.id.main_notification_layout).setVisibility(showProgress ? GONE : VISIBLE);
     }
 
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
         else
             soundCheckbox.setChecked(false);
-            showSnackbar("Sound is OFF");
+        showSnackbar("Sound is OFF");
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
@@ -96,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
         else
             vibrationCheckbox.setChecked(false);
-            showSnackbar("Vibration is OFF");
+        showSnackbar("Vibration is OFF");
 
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
