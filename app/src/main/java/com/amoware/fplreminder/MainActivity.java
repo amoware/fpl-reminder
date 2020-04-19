@@ -1,16 +1,13 @@
 package com.amoware.fplreminder;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
@@ -19,20 +16,20 @@ import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.amoware.fplreminder.common.Constants.tagger;
+import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
+import static com.google.android.material.snackbar.Snackbar.make;
 
 /**
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
 
-    private LinearLayout linearLayout;
     private FplReminder fplReminder;
     private FplReminderDialog dialog;
 
@@ -51,13 +48,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         GameweeksTask task = new GameweeksTask(this);
         task.execute();
-
-    }
-
-    public void showSnackbar(String info){
-        Snackbar.make(findViewById(R.id.linearLayout), "Settings saved: \n" + info,
-                Snackbar.LENGTH_LONG)
-                .show();
     }
 
     private void showProgress(boolean showProgress) {
@@ -90,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationSound() == true){
+        if (fplReminder.isNotificationSound() == true) {
             soundCheckbox.setChecked(true);
             showSnackbar("Sound is ON");
         }
@@ -100,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationVibration() == true){
+        if (fplReminder.isNotificationVibration() == true) {
             vibrationCheckbox.setChecked(true);
             showSnackbar("Vibration is ON");
         }
@@ -110,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
+    }
+
+    public void showSnackbar(String info) {
+        make(findViewById(R.id.main_linearlayout), "Settings saved: \n" + info, LENGTH_LONG)
+                .show();
     }
 
     private void displayNotificationTimer(Time time) {
