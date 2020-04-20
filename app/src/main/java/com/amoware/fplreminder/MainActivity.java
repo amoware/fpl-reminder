@@ -20,6 +20,7 @@ import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 import java.util.List;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.amoware.fplreminder.common.Constants.tagger;
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private CheckBox soundCheckbox;
     private CheckBox vibrationCheckbox;
 
+    private boolean gameweeksDownloading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +52,19 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     public void downloadGameweeks(View view) {
-        showProgress(true);
+        if (!gameweeksDownloading) {
+            gameweeksDownloading = true;
+            showProgress(true);
 
-        GameweeksTask task = new GameweeksTask(this);
-        task.execute();
+            GameweeksTask task = new GameweeksTask(this);
+            task.execute();
+        }
     }
 
     private void showProgress(boolean showProgress) {
         findViewById(R.id.main_progress_layout).setVisibility(showProgress ? VISIBLE : GONE);
         findViewById(R.id.main_refresh_button).setVisibility(showProgress ? GONE : VISIBLE);
+        findViewById(R.id.main_timer_label_textview).setVisibility(showProgress ?  INVISIBLE : VISIBLE);
         findViewById(R.id.main_notification_layout).setVisibility(showProgress ? GONE : VISIBLE);
     }
 
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
         showProgress(false);
+        gameweeksDownloading = false;
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
