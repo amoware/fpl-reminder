@@ -16,6 +16,7 @@ import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -95,29 +96,29 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         soundCheckbox.setTypeface(boldTypeface);
         if (fplReminder.isNotificationSound() == true) {
             soundCheckbox.setChecked(true);
-            showSnackbar("Sound is ON");
         }
         else
             soundCheckbox.setChecked(false);
-        showSnackbar("Sound is OFF");
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
         if (fplReminder.isNotificationVibration() == true) {
             vibrationCheckbox.setChecked(true);
-            showSnackbar("Vibration is ON");
         }
         else
             vibrationCheckbox.setChecked(false);
-        showSnackbar("Vibration is OFF");
-
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
 
+
     public void showSnackbar(String info) {
-        make(findViewById(R.id.main_linearlayout), "Settings saved: \n" + info, LENGTH_LONG)
+
+        make(findViewById(R.id.main_linearlayout),  info, LENGTH_LONG)
+               // .setActionTextColor(getResources().getColor(R.color.design_default_color_error))
+                .setTextColor(getResources().getColor(R.color.white))
                 .show();
+
     }
 
     private void displayNotificationTimer(Time time) {
@@ -145,15 +146,21 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
     public void changeSoundSettings(View view) {
-        if (soundCheckbox != null) {
+        if (soundCheckbox.isChecked() == true) {
             fplReminder.setNotificationSound(soundCheckbox.isChecked());
+            showSnackbar("Sound is ON");
         }
+        else
+            showSnackbar("Sound is OFF");
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the vibration. */
     public void changeVibrationSettings(View view) {
-        if (vibrationCheckbox != null) {
+        if (vibrationCheckbox.isChecked() == true) {
             fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
+            showSnackbar("Vibration is ON");
         }
+        else
+            showSnackbar("Vibration is OFF");
     }
 }
