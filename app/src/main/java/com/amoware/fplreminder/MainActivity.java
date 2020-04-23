@@ -19,7 +19,6 @@ import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,28 +101,21 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private void configureContentView() {
         fplReminder = new FplReminder(this);
 
+        applyBoldTypefaceToTextViews(
+                hoursTextView = findViewById(R.id.main_hours_value_textview),
+                minutesTextView = findViewById(R.id.main_minutes_value_textview),
+                findViewById(R.id.main_title_textview),
+                upcomingDeadlineTextView = findViewById(R.id.main_upcomingDeadline_textview),
+                findViewById(R.id.main_timer_label_textview),
+                findViewById(R.id.main_hours_label_textview),
+                findViewById(R.id.main_minutes_label_textview),
+                findViewById(R.id.main_colon_label_textview),
+                findViewById(R.id.main_suffixtimer_label_textview),
+                findViewById(R.id.main_preferences_label_textview),
+                findViewById(R.id.progress_textview)
+        );
+
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
-        hoursTextView = findViewById(R.id.main_hours_value_textview);
-        minutesTextView = findViewById(R.id.main_minutes_value_textview);
-
-        hoursTextView.setTypeface(boldTypeface);
-        minutesTextView.setTypeface(boldTypeface);
-
-        ((TextView) findViewById(R.id.main_title_textview)).setTypeface(boldTypeface);
-
-        upcomingDeadlineTextView = findViewById(R.id.main_upcomingDeadline_textview);
-        upcomingDeadlineTextView.setTypeface(boldTypeface);
-
-        ((TextView) findViewById(R.id.main_timer_label_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_hours_label_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_minutes_label_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_colon_label_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_suffixtimer_label_textview)).setTypeface(boldTypeface);
-
-        ((TextView) findViewById(R.id.main_preferences_label_textview)).setTypeface(boldTypeface);
-
-        ((TextView) findViewById(R.id.progress_textview)).setTypeface(boldTypeface);
-
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
         if (fplReminder.isNotificationSound()) {
@@ -143,6 +135,14 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
 
+    private void applyBoldTypefaceToTextViews(View... views) {
+        Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
+        for (View view : views) {
+            if (view != null) {
+                ((TextView) view).setTypeface(boldTypeface);
+            }
+        }
+    }
 
     public void showSnackbar(String info) {
         make(findViewById(R.id.main_linearlayout),  info, LENGTH_LONG)
