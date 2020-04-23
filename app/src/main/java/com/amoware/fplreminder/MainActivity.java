@@ -1,6 +1,9 @@
 package com.amoware.fplreminder;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private boolean gameweeksDownloading;
 
+    private boolean connectionTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,20 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         configureContentView();
 
         downloadGameweeks(null);
+
+        connectionTest = isNetworkAvailable();
+        Log.v("connected", "" + connectionTest);
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            return true;
+        }
+        else
+            return false;
     }
 
     public void downloadGameweeks(View view) {
