@@ -21,7 +21,11 @@ import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private TextView hoursTextView;
     private TextView minutesTextView;
+    private TextView upcomingDeadlineTextView;
 
     private CheckBox soundCheckbox;
     private CheckBox vibrationCheckbox;
@@ -83,10 +88,15 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     private void showProgress(boolean showProgress) {
-        findViewById(R.id.main_progress_layout).setVisibility(showProgress ? VISIBLE : GONE);
-        findViewById(R.id.main_refresh_button).setVisibility(showProgress ? GONE : VISIBLE);
-        findViewById(R.id.main_timer_label_textview).setVisibility(showProgress ?  INVISIBLE : VISIBLE);
-        findViewById(R.id.main_notification_layout).setVisibility(showProgress ? GONE : VISIBLE);
+        int visibleGone = showProgress ? VISIBLE : GONE;
+        int goneVisible = showProgress ? GONE : VISIBLE;
+        int invisibleVisible = showProgress ? INVISIBLE : VISIBLE;
+
+        findViewById(R.id.main_progress_layout).setVisibility(visibleGone);
+        findViewById(R.id.main_upcomingDeadline_textview).setVisibility(invisibleVisible);
+        findViewById(R.id.main_refresh_button).setVisibility(goneVisible);
+        findViewById(R.id.main_timer_label_textview).setVisibility(invisibleVisible);
+        findViewById(R.id.main_notification_layout).setVisibility(goneVisible);
     }
 
     private void configureContentView() {
@@ -100,7 +110,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         minutesTextView.setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_title_textview)).setTypeface(boldTypeface);
-        ((TextView) findViewById(R.id.main_upcomingDeadline_textview)).setTypeface(boldTypeface);
+
+        upcomingDeadlineTextView = findViewById(R.id.main_upcomingDeadline_textview);
+        upcomingDeadlineTextView.setTypeface(boldTypeface);
 
         ((TextView) findViewById(R.id.main_timer_label_textview)).setTypeface(boldTypeface);
         ((TextView) findViewById(R.id.main_hours_label_textview)).setTypeface(boldTypeface);
@@ -133,12 +145,10 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
 
     public void showSnackbar(String info) {
-
         make(findViewById(R.id.main_linearlayout),  info, LENGTH_LONG)
-               // .setActionTextColor(getResources().getColor(R.color.design_default_color_error))
+                // .setActionTextColor(getResources().getColor(R.color.design_default_color_error))
                 .setTextColor(getResources().getColor(R.color.white))
                 .show();
-
     }
 
     private void displayNotificationTimer(Time time) {
@@ -160,8 +170,23 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
         fplReminder.onGameweeksDownloaded(gameweeks);
+        showCurrentGameweek();
         showProgress(false);
         gameweeksDownloading = false;
+    }
+
+    private void showCurrentGameweek() {
+        Gameweek gameweek = fplReminder.getCurrentGameweek();
+        String text = "No upcoming gameweek";
+        if (gameweek != null) {
+            Date deadline = gameweek.getDeadlineTime();
+            text = gameweek.getName() != null ? (gameweek.getName() + ": No deadline"): text;
+            if (deadline != null) {
+                DateFormat dateFormat = new SimpleDateFormat("EEE d MMM hh:mm", new Locale("en"));
+                text = gameweek.getName() + " deadline: " + dateFormat.format(deadline);
+            }
+        }
+        upcomingDeadlineTextView.setText(text);
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
@@ -184,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             showSnackbar("Vibration is OFF");
     }
 
-    public void connectionSnackbar(){
-        if (connectionToInternet){
+    public void connectionSnackbar() {
+        if (connectionToInternet) {
             showSnackbar("Connection established");
         }
         else

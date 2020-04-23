@@ -9,6 +9,7 @@ import com.amoware.fplreminder.gameweek.Gameweek;
 import java.util.Date;
 import java.util.List;
 
+import static com.amoware.fplreminder.common.Constants.GAMEWEEK_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.SOUND_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.VIBRATION_PREFERENCE;
@@ -65,9 +66,10 @@ public class FplReminder {
     }
 
     private void saveReminderInPreference(Time time) {
-        Log.d(tagger(getClass()), time.toJsonString());
-        PreferenceManager preferenceManager = new PreferenceManager(context);
-        preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
+        if (time != null) {
+            PreferenceManager preferenceManager = new PreferenceManager(context);
+            preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
+        }
     }
 
     /**
@@ -78,6 +80,7 @@ public class FplReminder {
      */
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         currentGameweek = getCurrentGameweek(gameweeks);
+        saveCurrentGameweekInPreference(currentGameweek);
         setAlarmForGameweekDeadline();
         setAlarmForNotificationToBeShown();
     }
@@ -103,8 +106,15 @@ public class FplReminder {
         return null;
     }
 
+    private void saveCurrentGameweekInPreference(Gameweek currentGameweek) {
+        if (currentGameweek != null) {
+            PreferenceManager preferenceManager = new PreferenceManager(context);
+            preferenceManager.putString(GAMEWEEK_PREFERENCE, currentGameweek.toJsonString());
+        }
+    }
+
     /**
-     * Sets an alarm that at last triggers {@link com.amoware.fplreminder.alarm.GameweekReceiver}.
+     * Sets an alarm that eventually triggers {@link com.amoware.fplreminder.alarm.GameweekReceiver}.
      */
     private void setAlarmForGameweekDeadline() {
         if (currentGameweek != null) {
@@ -114,7 +124,7 @@ public class FplReminder {
     }
 
     /**
-     * Sets an alarm that at last triggers {@link com.amoware.fplreminder.alarm.ReminderReceiver}.
+     * Sets an alarm that eventually triggers {@link com.amoware.fplreminder.alarm.ReminderReceiver}.
      */
     private void setAlarmForNotificationToBeShown() {
         Time time = getNotificationTimer();
@@ -124,5 +134,9 @@ public class FplReminder {
             AlarmsManager alarmsManager = new AlarmsManager(context);
             alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
         }
+    }
+
+    public Gameweek getCurrentGameweek() {
+        return currentGameweek;
     }
 }
