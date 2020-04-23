@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private boolean gameweeksDownloading;
 
-    private boolean connectionTest;
+    private boolean connectionToInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         downloadGameweeks(null);
 
-        connectionTest = isNetworkAvailable();
-        Log.v("connected", "" + connectionTest);
+        connectionToInternet = isNetworkAvailable();
+        Log.v("connected", "" + connectionToInternet);
+        connectionSnackbar();
     }
 
     public boolean isNetworkAvailable() {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationSound() == true) {
+        if (fplReminder.isNotificationSound()) {
             soundCheckbox.setChecked(true);
         }
         else
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationVibration() == true) {
+        if (fplReminder.isNotificationVibration()) {
             vibrationCheckbox.setChecked(true);
         }
         else
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
     public void changeSoundSettings(View view) {
-        if (soundCheckbox.isChecked() == true) {
+        if (soundCheckbox.isChecked()) {
             fplReminder.setNotificationSound(soundCheckbox.isChecked());
             showSnackbar("Sound is ON");
         }
@@ -175,11 +176,19 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     /** Called from the view when the user clicks on the checkbox concerning the vibration. */
     public void changeVibrationSettings(View view) {
-        if (vibrationCheckbox.isChecked() == true) {
+        if (vibrationCheckbox.isChecked()) {
             fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
             showSnackbar("Vibration is ON");
         }
         else
             showSnackbar("Vibration is OFF");
+    }
+
+    public void connectionSnackbar(){
+        if (connectionToInternet){
+            showSnackbar("Connection established");
+        }
+        else
+            showSnackbar("No connection to internet");
     }
 }
