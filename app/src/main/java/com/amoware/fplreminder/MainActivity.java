@@ -60,11 +60,13 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         downloadGameweeks(null);
 
+
         connectionToInternet = isNetworkAvailable();
         Log.v("connected", "" + connectionToInternet);
         connectionSnackbar();
     }
 
+    // This method checsk to see if there is a connection to the internet
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -173,6 +175,11 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         showCurrentGameweek();
         showProgress(false);
         gameweeksDownloading = false;
+
+        // No gameweeks to download when app is started.
+        if (gameweeks == null || gameweeks.isEmpty()){
+            showSnackbar("Gameweeks can't be downloaded. Please try to refresh!");
+        }
     }
 
     private void showCurrentGameweek() {
@@ -193,27 +200,25 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void changeSoundSettings(View view) {
         if (soundCheckbox.isChecked()) {
             fplReminder.setNotificationSound(soundCheckbox.isChecked());
-            showSnackbar("Sound is ON");
+            showSnackbar("Sound notification is on");
         }
         else
-            showSnackbar("Sound is OFF");
+            showSnackbar("Sound notification is off");
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the vibration. */
     public void changeVibrationSettings(View view) {
         if (vibrationCheckbox.isChecked()) {
             fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
-            showSnackbar("Vibration is ON");
+            showSnackbar("Vibration notification is on");
         }
         else
-            showSnackbar("Vibration is OFF");
+            showSnackbar("Vibration notification is off");
     }
 
     public void connectionSnackbar() {
-        if (connectionToInternet) {
-            showSnackbar("Connection established");
+        if (connectionToInternet == false) {
+            showSnackbar("No connection to internet. Please check your internet connection or to refresh!");
         }
-        else
-            showSnackbar("No connection to internet");
     }
 }
