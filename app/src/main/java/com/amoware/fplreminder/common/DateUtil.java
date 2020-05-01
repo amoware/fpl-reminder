@@ -24,4 +24,22 @@ public class DateUtil {
 
         return calendar.getTime();
     }
+
+    public static Date addTime(Date date, Time timeAfterDate) {
+        if (timeAfterDate == null) {
+            return date;
+        }
+
+        if (date == null) {
+            return null;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.add(Calendar.HOUR_OF_DAY, timeAfterDate.getHours());
+        calendar.add(Calendar.MINUTE, timeAfterDate.getMinutes());
+
+        return calendar.getTime();
+    }
 }

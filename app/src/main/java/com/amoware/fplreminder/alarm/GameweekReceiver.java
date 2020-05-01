@@ -19,7 +19,6 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  */
 public class GameweekReceiver extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // Todo update the list with gameweek deadlines
@@ -29,7 +28,7 @@ public class GameweekReceiver extends BroadcastReceiver {
         // downloaded?
         ConnectionHandler connectionHandler = new ConnectionHandler(context);
 
-        if (connectionHandler.isNetworkAvailable() != true){
+        if (!connectionHandler.isNetworkAvailable()) {
             Notification notification = new Notification();
             NotificationService notificationService = new NotificationService(context);
             notification.setContentText("Connection could not be established. Gameweek deadlines not downloaded correctly");

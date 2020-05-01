@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.amoware.fplreminder.alarm.AlarmsManager;
 import com.amoware.fplreminder.common.ConnectionHandler;
+import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private boolean connectionToInternet;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -63,15 +64,18 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         downloadGameweeks(null);
 
+        ConnectionHandler connectionHandler = new ConnectionHandler(this);
+        connectionToInternet = connectionHandler.isNetworkAvailable();
+        Log.v(tagger(getClass()), "connected: " + connectionToInternet);
 
-        Log.v("connected", "" + connectionToInternet);
-        //connectionSnackbar();
+        connectionSnackbar();
 
-        //Test connectionHandler
-
+        // Test GameweekReceiver (tas bort sen)
+        AlarmsManager alarmsManager = new AlarmsManager(this);
+        alarmsManager.setAlarmForGameweekDeadline(
+                DateUtil.addTime(new Date(), new Time(0, 1))
+        );
     }
-
-
 
     public void downloadGameweeks(View view) {
         if (!gameweeksDownloading) {
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     public void showSnackbar(String info) {
-        make(findViewById(R.id.main_linearlayout),  info, LENGTH_LONG)
+        make(findViewById(R.id.main_linearlayout), info, LENGTH_LONG)
                 // .setActionTextColor(getResources().getColor(R.color.design_default_color_error))
                 .setTextColor(getResources().getColor(R.color.white))
                 .show();
@@ -212,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     public void connectionSnackbar() {
-        if (connectionToInternet == false) {
+        if (!connectionToInternet) {
             showSnackbar("No connection to internet. Please check your internet connection or to refresh!");
         }
     }
