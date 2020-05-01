@@ -23,6 +23,7 @@
         <receiver android:name=".alarm.ReminderReceiver" />
 
         <activity android:name=".MainActivity">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

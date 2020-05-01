@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.amoware.fplreminder.common.ConnectionHandler;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
@@ -52,8 +53,10 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private boolean connectionToInternet;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configureContentView();
@@ -61,22 +64,14 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         downloadGameweeks(null);
 
 
-        connectionToInternet = isNetworkAvailable();
         Log.v("connected", "" + connectionToInternet);
-        connectionSnackbar();
+        //connectionSnackbar();
+
+        //Test connectionHandler
+
     }
 
-    // This method checsk to see if there is a connection to the internet
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-            return true;
-        }
-        else
-            return false;
-    }
+
 
     public void downloadGameweeks(View view) {
         if (!gameweeksDownloading) {

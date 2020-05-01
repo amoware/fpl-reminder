@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.amoware.fplreminder.common.ConnectionHandler;
+import com.amoware.fplreminder.notification.Notification;
+import com.amoware.fplreminder.notification.NotificationService;
+
 import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
@@ -15,6 +19,7 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  */
 public class GameweekReceiver extends BroadcastReceiver {
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // Todo update the list with gameweek deadlines
@@ -22,5 +27,14 @@ public class GameweekReceiver extends BroadcastReceiver {
 
         // What happens if the user isn't connected to a network? Or if gameweeks cannot be
         // downloaded?
+        ConnectionHandler connectionHandler = new ConnectionHandler(context);
+
+        if (connectionHandler.isNetworkAvailable() != true){
+            Notification notification = new Notification();
+            NotificationService notificationService = new NotificationService(context);
+            notification.setContentText("Connection could not be established. Gameweek deadlines not downloaded correctly");
+            notificationService.notify(notification);
+        }
+
     }
 }
