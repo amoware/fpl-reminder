@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         gameweeksDownloading = false;
 
         // No gameweeks to download when app is started.
-        if (gameweeks == null || gameweeks.isEmpty()){
+        if (gameweeks == null || gameweeks.isEmpty()) {
             showSnackbar("Gameweeks can't be downloaded. Please try to refresh!");
         }
     }

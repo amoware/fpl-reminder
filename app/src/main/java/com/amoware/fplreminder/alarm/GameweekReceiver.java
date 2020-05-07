@@ -3,11 +3,23 @@ package com.amoware.fplreminder.alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 
 import com.amoware.fplreminder.common.ConnectionHandler;
+import com.amoware.fplreminder.common.DateUtil;
+import com.amoware.fplreminder.common.FplReminder;
+import com.amoware.fplreminder.gameweek.Gameweek;
+import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.notification.Notification;
 import com.amoware.fplreminder.notification.NotificationService;
+import com.amoware.fplreminder.notification.VibratorService;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
 
 import static com.amoware.fplreminder.common.Constants.tagger;
 
@@ -19,21 +31,70 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  */
 public class GameweekReceiver extends BroadcastReceiver {
 
+    private Context context;
+    private FplReminder fplReminder;
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Todo update the list with gameweek deadlines
         Log.d(tagger(getClass()), "Hello from GameweekReceiver..");
+        this.context = context;
+        this.fplReminder = new FplReminder(context);
 
-        // What happens if the user isn't connected to a network? Or if gameweeks cannot be
-        // downloaded?
         ConnectionHandler connectionHandler = new ConnectionHandler(context);
+        if (connectionHandler.isNetworkAvailable()) {
+            downloadGameweeks();
+        } else {
+            showNotification(createNotification("Offline", "Connection could not be established. Gameweek deadlines not downloaded correctly"));
+        }
+    }
 
-        if (!connectionHandler.isNetworkAvailable()) {
-            Notification notification = new Notification();
-            NotificationService notificationService = new NotificationService(context);
-            notification.setContentText("Connection could not be established. Gameweek deadlines not downloaded correctly");
-            notificationService.notify(notification);
+    private void downloadGameweeks() {
+        GameweeksTask task = new GameweeksTask(this::handleDownloadedGameweeks);
+        task.execute();
+    }
+
+    private void handleDownloadedGameweeks(List<Gameweek> gameweeks) {
+        fplReminder.onGameweeksDownloaded(gameweeks);
+        Gameweek currentGameweek = fplReminder.getCurrentGameweek();
+
+        String notificationTitle, notificationText;
+        if (gameweeks == null) {
+            notificationTitle = "Reminder not set";
+            notificationText = "Reminder not set for upcoming gameweek since no gameweeks were downloaded. Try again later by downloading gameweeks from within the app.";
+        } else if (currentGameweek == null || currentGameweek.getDeadlineTime() == null) {
+            notificationTitle = "Reminder not set";
+            notificationText = "Reminder not set for upcoming gameweek since an upcoming gameweek couldn\'t be found. Try again later by downloading gameweeks from within the app.";
+        } else {
+            DateFormat dateFormat = new SimpleDateFormat("EEE d MMM hh:mm", new Locale("en"));
+            notificationTitle = "Reminder set";
+            notificationText = "Reminder set at " + dateFormat.format(DateUtil.subtractTime(currentGameweek.getDeadlineTime(), fplReminder.getNotificationTimer())) + ". The deadline for " + currentGameweek.getName().toLowerCase() + " occurs at" + dateFormat.format(currentGameweek.getDeadlineTime()) + ".";
         }
 
+        showNotification(createNotification(notificationTitle, notificationText));
+    }
+
+    private Notification createNotification(String notificationTitle, String notificationText) {
+        Notification notification = new Notification();
+        notification.setContentTitle(notificationTitle);
+        notification.setContentText(notificationText);
+
+        // Make sound depending on the user setting
+        if (fplReminder.isNotificationSound()) {
+            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            notification.setSound(soundUri);
+        }
+
+        // Vibrate depending on the user setting
+        if (fplReminder.isNotificationVibration()) {
+            VibratorService service = new VibratorService();
+            notification.setVibrationPattern(service.getDefaultVibratePattern());
+        }
+
+        return notification;
+    }
+
+    private void showNotification(Notification notification) {
+        NotificationService notificationService = new NotificationService(context);
+        notificationService.notify(notification);
     }
 }

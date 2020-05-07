@@ -79,7 +79,7 @@ public class FplReminder {
      * @param gameweeks gameweeks that have been downloaded
      */
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
-        currentGameweek = getCurrentGameweek(gameweeks);
+        currentGameweek = parseCurrentGameweek(gameweeks);
         saveCurrentGameweekInPreference(currentGameweek);
         setAlarmForGameweekDeadline();
         setAlarmForNotificationToBeShown();
@@ -92,7 +92,7 @@ public class FplReminder {
      * @param gameweeks list of gameweeks
      * @return current gameweek
      */
-    private Gameweek getCurrentGameweek(List<Gameweek> gameweeks) {
+    private Gameweek parseCurrentGameweek(List<Gameweek> gameweeks) {
         if (gameweeks == null) {
             return null;
         }
