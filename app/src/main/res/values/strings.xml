@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FPL Reminder</string>
 
-    <string name="dialog_title">Reminder</string>
+    <string name="dialog_title">Set a reminder</string>
     <string name="dialog_text_intro">You will get a reminder %1$s hour(s) and %2$s minute(s) before a gameweek\'s deadline.</string>
     <string name="dialog_text_hours">Hours</string>
     <string name="dialog_text_minutes">Minutes</string>
