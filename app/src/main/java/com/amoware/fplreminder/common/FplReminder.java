@@ -107,9 +107,10 @@ public class FplReminder {
     }
 
     private void saveCurrentGameweekInPreference(Gameweek currentGameweek) {
-        if (currentGameweek != null) {
+        String gameweekToStore = currentGameweek != null ? currentGameweek.toJsonString() : null;
+        if (gameweekToStore != null) {
             PreferenceManager preferenceManager = new PreferenceManager(context);
-            preferenceManager.putString(GAMEWEEK_PREFERENCE, currentGameweek.toJsonString());
+            preferenceManager.putString(GAMEWEEK_PREFERENCE, gameweekToStore);
         }
     }
 
@@ -137,6 +138,26 @@ public class FplReminder {
     }
 
     public Gameweek getCurrentGameweek() {
+        if (currentGameweek == null) {
+            Gameweek savedGameweek = getSavedGameweekFromPreference();
+            currentGameweek = savedGameweek != null ? new Gameweek(savedGameweek) : null;
+        }
         return currentGameweek;
+    }
+
+    private Gameweek getSavedGameweekFromPreference() {
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        Gameweek storedGameweek = Gameweek.parseGameweek(
+                preferenceManager.getString(GAMEWEEK_PREFERENCE, null)
+        );
+
+        Date todaysDate = new Date();
+        if (storedGameweek != null && todaysDate.compareTo(storedGameweek.getDeadlineTime()) <= 0) {
+            return storedGameweek;
+        }
+
+        // No stored gameweek or the gameweek is too old
+        preferenceManager.putString(GAMEWEEK_PREFERENCE, null);
+        return null;
     }
 }

@@ -55,13 +55,24 @@
             android:layout_height="wrap_content"
             layout="@layout/layout_progress"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/main_status_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_status"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/main_notification_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             layout="@layout/layout_notificationtimer" />
+
     </LinearLayout>
 
     <TextView
@@ -102,6 +113,7 @@
                 android:textSize="20sp"
                 android:textColor="#FFFFFF"
                 android:onClick="changeSoundSettings" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +135,9 @@
                 android:textSize="20sp"
                 android:textColor="#FFFFFF"
                 android:onClick="changeVibrationSettings" />
+
         </LinearLayout>
+
     </LinearLayout>
 
     <ImageButton
@@ -136,4 +150,5 @@
         android:layout_marginTop="35dp"
         android:onClick="downloadGameweeks"
         tools:ignore="ContentDescription" />
+
 </LinearLayout>

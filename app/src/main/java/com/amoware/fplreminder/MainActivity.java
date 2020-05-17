@@ -1,9 +1,6 @@
 package com.amoware.fplreminder;
 
-import android.content.Context;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.amoware.fplreminder.alarm.AlarmsManager;
 import com.amoware.fplreminder.common.ConnectionHandler;
-import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
@@ -52,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private CheckBox vibrationCheckbox;
 
     private boolean gameweeksDownloading;
-
-    private boolean connectionToInternet;
+    private boolean connectedToInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,27 +57,22 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         configureContentView();
 
         downloadGameweeks(null);
-
-        ConnectionHandler connectionHandler = new ConnectionHandler(this);
-        connectionToInternet = connectionHandler.isNetworkAvailable();
-        Log.v(tagger(getClass()), "connected: " + connectionToInternet);
-
-        connectionSnackbar();
-
-        // Test GameweekReceiver (tas bort sen)
-        AlarmsManager alarmsManager = new AlarmsManager(this);
-        alarmsManager.setAlarmForGameweekDeadline(
-                DateUtil.addTime(new Date(), new Time(0, 1))
-        );
     }
 
     public void downloadGameweeks(View view) {
         if (!gameweeksDownloading) {
-            gameweeksDownloading = true;
-            showProgress(true);
+            ConnectionHandler connectionHandler = new ConnectionHandler(this);
+            if (!(connectedToInternet = connectionHandler.isNetworkAvailable())) {
+                connectionSnackbar();
+                showCurrentGameweek();
+                showProgress(false);
+            } else {
+                gameweeksDownloading = true;
+                showProgress(true);
 
-            GameweeksTask task = new GameweeksTask(this);
-            task.execute();
+                GameweeksTask task = new GameweeksTask(this);
+                task.execute();
+            }
         }
     }
 
@@ -92,11 +81,32 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         int goneVisible = showProgress ? GONE : VISIBLE;
         int invisibleVisible = showProgress ? INVISIBLE : VISIBLE;
 
-        findViewById(R.id.main_progress_layout).setVisibility(visibleGone);
-        findViewById(R.id.main_upcomingDeadline_textview).setVisibility(invisibleVisible);
-        findViewById(R.id.main_refresh_button).setVisibility(goneVisible);
-        findViewById(R.id.main_timer_label_textview).setVisibility(invisibleVisible);
-        findViewById(R.id.main_notification_layout).setVisibility(goneVisible);
+        setVisibility(findViewById(R.id.main_progress_layout), visibleGone);
+        setVisibility(findViewById(R.id.main_upcomingDeadline_textview), invisibleVisible);
+        setVisibility(findViewById(R.id.main_refresh_button), goneVisible);
+
+        // If there is no upcoming gameweek, the user shouldn't be able to set a reminder
+        int statusVisibility = GONE;
+        int notificationVisibility = goneVisible;
+        int timerLabelVisibility = invisibleVisible;
+
+        if (goneVisible == VISIBLE) {
+            if (fplReminder.getCurrentGameweek() == null) {
+                statusVisibility = VISIBLE;
+                notificationVisibility = GONE;
+                timerLabelVisibility = INVISIBLE;
+            }
+        }
+
+        setVisibility(findViewById(R.id.main_status_layout), statusVisibility);
+        setVisibility(findViewById(R.id.main_notification_layout), notificationVisibility);
+        setVisibility(findViewById(R.id.main_timer_label_textview), timerLabelVisibility);
+    }
+
+    private void setVisibility(View view, int visibility) {
+        if (view != null) {
+            view.setVisibility(visibility);
+        }
     }
 
     private void configureContentView() {
@@ -113,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
                 findViewById(R.id.main_colon_label_textview),
                 findViewById(R.id.main_suffixtimer_label_textview),
                 findViewById(R.id.main_preferences_label_textview),
-                findViewById(R.id.progress_textview)
+                findViewById(R.id.progress_textview),
+                findViewById(R.id.main_notification_status)
         );
 
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
@@ -188,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             Date deadline = gameweek.getDeadlineTime();
             text = gameweek.getName() != null ? (gameweek.getName() + ": No deadline"): text;
             if (deadline != null) {
-                DateFormat dateFormat = new SimpleDateFormat("EEE d MMM hh:mm", new Locale("en"));
+                DateFormat dateFormat = new SimpleDateFormat("EEE d MMM HH:mm", new Locale("en"));
                 text = gameweek.getName() + " deadline: " + dateFormat.format(deadline);
             }
         }
@@ -216,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     public void connectionSnackbar() {
-        if (!connectionToInternet) {
-            showSnackbar("No connection to internet. Please check your internet connection or to refresh!");
+        if (!connectedToInternet) {
+            showSnackbar("No connection to internet. Please check your internet connection or to refresh");
         }
     }
 }

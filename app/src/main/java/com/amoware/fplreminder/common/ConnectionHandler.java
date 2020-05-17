@@ -4,25 +4,23 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.amoware.fplreminder.MainActivity;
+public class ConnectionHandler {
 
-public class ConnectionHandler{
-    Context context;
+    private Context context;
 
-    public ConnectionHandler(Context context){
-        this.context=context;
+    public ConnectionHandler(Context context) {
+        this.context = context;
     }
 
     // This method check to see if there is a connection to the internet
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-            return true;
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
-        else
-            return false;
+        return true;
     }
 }
 
