@@ -12,6 +12,8 @@
     <color name="darkGreen">#00332e</color>
     <color name="checkbox_green">#009688</color>
 
+    <color name="ic_launcher_background">#3F2A49</color>
+
     <color name="dialog_background">@color/white</color>
     <color name="dialog_foreground">#352c3a</color>
     <color name="dialog_button_foreground">@color/dialog_foreground</color>

@@ -27,7 +27,7 @@ public class NotificationService {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.soccer);
+                .setSmallIcon(R.drawable.football);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             builder.setPriority(android.app.Notification.PRIORITY_HIGH);
