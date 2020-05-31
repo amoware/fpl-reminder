@@ -1,6 +1,7 @@
 package com.amoware.fplreminder;
 
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private boolean gameweeksDownloading;
     private boolean connectedToInternet;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
