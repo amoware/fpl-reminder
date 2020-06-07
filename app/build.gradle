@@ -19,6 +19,7 @@ android {
         mock {
             applicationIdSuffix ".mock"
             debuggable true
+            initWith buildTypes.debug
         }
     }
     compileOptions {
