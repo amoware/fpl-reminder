@@ -16,10 +16,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    flavorDimensions "mode"
+    productFlavors {
         mock {
-            applicationIdSuffix ".mock"
-            debuggable true
-            initWith buildTypes.debug
+            dimension "mode"
+        }
+        prod {
+            dimension "mode"
         }
     }
     compileOptions {
