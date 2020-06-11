@@ -24,11 +24,11 @@ public class HttpClient {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 4\",\n" +
-                "      \"deadline_time\": \"2020-06-07T12:57:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-016T12:57:00Z\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 5\",\n" +
-                "      \"deadline_time\": \"2020-06-07T12:59:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-018T12:59:00Z\"\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";

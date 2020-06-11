@@ -36,7 +36,8 @@ public class GameweekClient {
     public List<Gameweek> convertStringToGameweeks(String gameweeksString) throws Exception {
         Locale locale = new Locale("en");
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", locale);
-        simpleDateFormat.setTimeZone(TimeZone.getDefault());
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
 
         // 1. Läs in vår data i ett json-objekt (eftersom det e ett json-objekt)
         JSONObject jsonObject = new JSONObject(gameweeksString);
@@ -68,9 +69,6 @@ public class GameweekClient {
         return gameweekArrayList;
     }
 
-    /**
-     * yyyy-MM-dd'T'HH:mm:ss'Z'
-     */
     private Date convertStringToDate(String stringDate) throws ParseException {
         return simpleDateFormat.parse(stringDate);
     }
