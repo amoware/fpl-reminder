@@ -136,16 +136,18 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         if (fplReminder.isNotificationSound()) {
             soundCheckbox.setChecked(true);
         }
-        else
+        else {
             soundCheckbox.setChecked(false);
+        }
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
         if (fplReminder.isNotificationVibration()) {
             vibrationCheckbox.setChecked(true);
         }
-        else
+        else {
             vibrationCheckbox.setChecked(false);
+        }
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
@@ -211,22 +213,24 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     /** Called from the view when the user clicks on the checkbox concerning the sound. */
     public void changeSoundSettings(View view) {
+        fplReminder.setNotificationSound(soundCheckbox.isChecked());
         if (soundCheckbox.isChecked()) {
-            fplReminder.setNotificationSound(soundCheckbox.isChecked());
-            showSnackbar("Sound notification is on");
+            showSnackbar("Sound notification enabled");
         }
-        else
-            showSnackbar("Sound notification is off");
+        else {
+            showSnackbar("Sound notification disabled");
+        }
     }
 
     /** Called from the view when the user clicks on the checkbox concerning the vibration. */
     public void changeVibrationSettings(View view) {
+        fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
         if (vibrationCheckbox.isChecked()) {
-            fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
-            showSnackbar("Vibration notification is on");
+            showSnackbar("Vibration notification enabled");
         }
-        else
-            showSnackbar("Vibration notification is off");
+        else {
+            showSnackbar("Vibration notification disabled");
+        }
     }
 
     public void connectionSnackbar() {
