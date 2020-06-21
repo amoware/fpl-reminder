@@ -12,23 +12,23 @@ public class HttpClient {
                 "  \"events\": [\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 1\",\n" +
-                "      \"deadline_time\": \"2020-06-07T12:50:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-21T11:37:00Z\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 2\",\n" +
-                "      \"deadline_time\": \"2020-06-07T12:53:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-21T11:39:00Z\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 3\",\n" +
-                "      \"deadline_time\": \"2020-06-07T12:55:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-21T11:41:00Z\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 4\",\n" +
-                "      \"deadline_time\": \"2020-06-016T12:57:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-21T11:42:00Z\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 5\",\n" +
-                "      \"deadline_time\": \"2020-06-018T12:59:00Z\"\n" +
+                "      \"deadline_time\": \"2020-06-21T11:44:00Z\"\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";

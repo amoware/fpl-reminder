@@ -38,7 +38,6 @@ public class GameweekClient {
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", locale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-
         // 1. Läs in vår data i ett json-objekt (eftersom det e ett json-objekt)
         JSONObject jsonObject = new JSONObject(gameweeksString);
 
@@ -72,4 +71,5 @@ public class GameweekClient {
     private Date convertStringToDate(String stringDate) throws ParseException {
         return simpleDateFormat.parse(stringDate);
     }
+
 }

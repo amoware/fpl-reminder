@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private boolean gameweeksDownloading;
     private boolean connectedToInternet;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -238,4 +236,5 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             showSnackbar("No connection to internet. Please check your internet connection or to refresh");
         }
     }
+
 }
