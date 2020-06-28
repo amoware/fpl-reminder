@@ -191,16 +191,16 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         // No gameweeks to download when app is started.
         if (gameweeks == null || gameweeks.isEmpty()) {
-            showSnackbar("Gameweeks can't be downloaded. Please try to refresh!");
+            showSnackbar(getString(R.string.snackbar_text_nogameweeks));
         }
     }
 
     private void showCurrentGameweek() {
         Gameweek gameweek = fplReminder.getCurrentGameweek();
-        String text = "No upcoming gameweek";
+        String text = getString(R.string.overline_text_status_nogameweek);
         if (gameweek != null) {
             Date deadline = gameweek.getDeadlineTime();
-            text = gameweek.getName() != null ? (gameweek.getName() + ": No deadline"): text;
+            text = gameweek.getName() != null ? (gameweek.getName() + " " + getString(R.string.overline_text_status_nodeadline)): text;
             if (deadline != null) {
                 DateFormat dateFormat = new SimpleDateFormat("EEE d MMM HH:mm", new Locale("en"));
                 text = gameweek.getName() + " deadline: " + dateFormat.format(deadline);
@@ -213,10 +213,10 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void changeSoundSettings(View view) {
         fplReminder.setNotificationSound(soundCheckbox.isChecked());
         if (soundCheckbox.isChecked()) {
-            showSnackbar("Sound notification enabled");
+            showSnackbar(getString(R.string.snackbar_text_soundon));
         }
         else {
-            showSnackbar("Sound notification disabled");
+            showSnackbar(getString(R.string.snackbar_text_soundoff));
         }
     }
 
@@ -224,16 +224,16 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void changeVibrationSettings(View view) {
         fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
         if (vibrationCheckbox.isChecked()) {
-            showSnackbar("Vibration notification enabled");
+            showSnackbar(getString(R.string.snackbar_text_vibrationon));
         }
         else {
-            showSnackbar("Vibration notification disabled");
+            showSnackbar(getString(R.string.snackbar_text_vibrationoff));
         }
     }
 
     public void connectionSnackbar() {
         if (!connectedToInternet) {
-            showSnackbar("No connection to internet. Please check your internet connection or to refresh");
+            showSnackbar(getString(R.string.snackbar_text_nointernet));
         }
     }
 

@@ -8,6 +8,19 @@
     <string name="dialog_button_setreminder">Set reminder</string>
     <string name="dialog_button_cancel">Cancel</string>
 
+    <string name="snackbar_text_soundon">Sound turned on for notifications</string>
+    <string name="snackbar_text_soundoff">Sound turned off for notifications</string>
+    <string name="snackbar_text_vibrationon">Vibration turned on for notifications</string>
+    <string name="snackbar_text_vibrationoff">Vibration turned off for notifications</string>
+    <string name="snackbar_text_nointernet">No internet connection. Try again later</string>
+    <string name="snackbar_text_nogameweeks">No gameweeks were found. Try again later</string>
+
+    <string name="overline_text_status_nogameweek">No upcoming gameweek</string>
+    <string name="overline_text_status_nodeadline">%1$s has no deadline</string>
+
+    <string name="notification_title_nointernet">No internet connection</string>
+    <string name="dialog_button_cancel">Cancel</string>
+
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
 
     <string name="progress_label_status">Fetching gameweeks&#8230;</string>
