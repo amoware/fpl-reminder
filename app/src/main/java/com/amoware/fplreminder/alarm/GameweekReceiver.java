@@ -45,7 +45,7 @@ public class GameweekReceiver extends BroadcastReceiver {
         if (connectionHandler.isNetworkAvailable()) {
             downloadGameweeks();
         } else {
-            showNotification(createNotification("Offline", "Connection could not be established. Gameweek deadlines not downloaded correctly"));
+            showNotification(createNotification(context.getString(R.string.notification_title_nointernet), context.getString(R.string.notification_text_nointernet)));
         }
     }
 
