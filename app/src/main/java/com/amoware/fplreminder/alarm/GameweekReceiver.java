@@ -7,6 +7,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.ConnectionHandler;
 import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.FplReminder;
@@ -59,15 +60,17 @@ public class GameweekReceiver extends BroadcastReceiver {
 
         String notificationTitle, notificationText;
         if (gameweeks == null) {
-            notificationTitle = "Reminder not set";
-            notificationText = "Reminder not set for upcoming gameweek since no gameweeks were downloaded. Try again later by downloading gameweeks from within the app.";
+            notificationTitle = context.getString(R.string.notification_title_remindernotset);
+            notificationText = context.getString(R.string.notification_text_nogameweeks);
         } else if (currentGameweek == null || currentGameweek.getDeadlineTime() == null) {
-            notificationTitle = "Reminder not set";
-            notificationText = "Reminder not set for upcoming gameweek since an upcoming gameweek couldn\'t be found. Try again later by downloading gameweeks from within the app.";
+            notificationTitle = context.getString(R.string.notification_title_remindernotset);
+            notificationText = context.getString(R.string.notification_text_nodeadline);
         } else {
             DateFormat dateFormat = new SimpleDateFormat("EEE d MMM hh:mm", new Locale("en"));
-            notificationTitle = "Reminder set";
-            notificationText = "Reminder set at " + dateFormat.format(DateUtil.subtractTime(currentGameweek.getDeadlineTime(), fplReminder.getNotificationTimer())) + ". The deadline for " + currentGameweek.getName().toLowerCase() + " occurs at" + dateFormat.format(currentGameweek.getDeadlineTime()) + ".";
+            notificationTitle = context.getString(R.string.notification_title_reminderset);
+            String reminderSet = dateFormat.format(DateUtil.subtractTime(currentGameweek.getDeadlineTime(), fplReminder.getNotificationTimer()));
+            String deadline = dateFormat.format(currentGameweek.getDeadlineTime());
+            notificationText = context.getString(R.string.notification_text_reminderset, reminderSet, currentGameweek.getName().toLowerCase(), deadline);
         }
 
         showNotification(createNotification(notificationTitle, notificationText));
@@ -97,4 +100,5 @@ public class GameweekReceiver extends BroadcastReceiver {
         NotificationService notificationService = new NotificationService(context);
         notificationService.notify(notification);
     }
+
 }

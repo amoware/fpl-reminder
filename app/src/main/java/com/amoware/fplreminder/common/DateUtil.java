@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by amoware on 2020-03-12.
  */
 public class DateUtil {
+
     public static Date subtractTime(Date date, Time timeBeforeDate) {
         if (timeBeforeDate == null) {
             return date;
@@ -42,4 +43,28 @@ public class DateUtil {
 
         return calendar.getTime();
     }
+
+    public static boolean isToday(Date date) {
+        return date != null && getDate(date).compareTo(getTodaysDate()) == 0;
+    }
+
+    public static Date getTodaysDate() {
+        return getDate(new Date());
+    }
+
+    public static Date getDate(Date date) {
+        if (date == null) {
+            date = new Date();
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+    }
+
 }

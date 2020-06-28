@@ -24,4 +24,12 @@
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
 
     <string name="progress_label_status">Fetching gameweeks&#8230;</string>
+
+    <string name="notification_title_reminderset">Reminder set</string>
+    <string name="notification_text_reminderset">Your next reminder is set to %1$s. The deadline for %2$s occurs at %3$s.</string>
+    <string name="notification_title_remindernotset">Reminder not set</string>
+    <string name="notification_text_nogameweeks">Reminder not set because there were no gameweeks to be found. Try again later by pressing the reload button in the app.</string>
+    <string name="notification_text_nodeadline">Reminder not set because there were no upcoming gameweeks to be found. Try again later by pressing the reload button in the app.</string>
+    <string name="notification_title_reminder">Get your team ready</string>
+    <string name="notification_text_reminder">Need to make team changes? This is your friendly reminder to do so %1$s.</string>
 </resources>
