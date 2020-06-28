@@ -19,7 +19,7 @@
     <string name="overline_text_status_nodeadline">%1$s has no deadline</string>
 
     <string name="notification_title_nointernet">No internet connection</string>
-    <string name="notification_text_nointernet">A new deadline wasn’t set. Check your internet connection and try to reload by pressing the reload button in the app.</string>
+    <string name="notification_text_nointernet">A new deadline wasn\'t set. Check your internet connection and try to reload by pressing the reload button in the app.</string>
 
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
 
