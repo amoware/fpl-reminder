@@ -156,11 +156,30 @@ public class FplReminderDialog {
 
     private void updateDialogMessage() {
         if (hoursNumberPicker != null && minutesNumberPicker != null) {
-            messageTextView.setText(context.getString(R.string.dialog_text_intro,
-                    Integer.toString(hoursNumberPicker.getValue()),
-                    Integer.toString(minutesNumberPicker.getValue())));
+            int hours = hoursNumberPicker.getValue();
+            int minutes = minutesNumberPicker.getValue();
+
+            String numberOfHours = context.getResources().
+                    getQuantityString(R.plurals.numberOfHours, hours, hours);
+            String numberOfMinutes = context.getResources().
+                    getQuantityString(R.plurals.numberOfMinutes, minutes, minutes);
+
+            String result = "";
+
+            if (hours > 0 && minutes > 0) {
+                result = numberOfHours + " and " + numberOfMinutes + " before";
+            } else if (hours > 0 && minutes == 0) {
+                result = numberOfHours + " before";
+            } else if (hours == 0 && minutes > 0) {
+                result = numberOfMinutes + " before";
+            } else {
+                result = "at the same time as the";
+            }
+
+            messageTextView.setText(context.getString(R.string.dialog_text_intro, result));
         }
     }
+
 
     public boolean isShowing() {
         return dialog != null && isShowing;

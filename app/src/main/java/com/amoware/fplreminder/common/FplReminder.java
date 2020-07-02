@@ -156,6 +156,7 @@ public class FplReminder {
             return storedGameweek;
         }
 
+
         // No stored gameweek or the gameweek is too old
         preferenceManager.putString(GAMEWEEK_PREFERENCE, null);
         return null;

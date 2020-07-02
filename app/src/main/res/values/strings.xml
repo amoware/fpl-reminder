@@ -2,7 +2,7 @@
     <string name="app_name">FPL Reminder</string>
 
     <string name="dialog_title">Set a reminder</string>
-    <string name="dialog_text_intro">You will get a reminder %1$s hour(s) and %2$s minute(s) before a gameweek\'s deadline.</string>
+    <string name="dialog_text_intro">You will get a reminder %1$s gameweek deadline.</string>
     <string name="dialog_text_hours">Hours</string>
     <string name="dialog_text_minutes">Minutes</string>
     <string name="dialog_button_setreminder">Set reminder</string>
@@ -32,4 +32,15 @@
     <string name="notification_text_nodeadline">Reminder not set because there were no upcoming gameweeks to be found. Try again later by pressing the reload button in the app.</string>
     <string name="notification_title_reminder">Get your team ready</string>
     <string name="notification_text_reminder">Need to make team changes? This is your friendly reminder to do so %1$s.</string>
+
+    <plurals name="numberOfHours">
+        <item quantity="one">%d hour</item>
+        <item quantity= "other">%d hours</item>
+    </plurals>
+
+    <plurals name="numberOfMinutes">
+        <item quantity="one">%d minute</item>
+        <item quantity= "other">%d minutes</item>
+    </plurals>
+
 </resources>
