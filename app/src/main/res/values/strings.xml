@@ -35,12 +35,11 @@
 
     <plurals name="numberOfHours">
         <item quantity="one">%d hour</item>
-        <item quantity= "other">%d hours</item>
+        <item quantity="other">%d hours</item>
     </plurals>
 
     <plurals name="numberOfMinutes">
         <item quantity="one">%d minute</item>
-        <item quantity= "other">%d minutes</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
-
 </resources>
