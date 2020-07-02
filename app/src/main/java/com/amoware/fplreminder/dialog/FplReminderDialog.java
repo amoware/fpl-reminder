@@ -16,6 +16,10 @@ import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
 
+import static android.content.DialogInterface.BUTTON_NEGATIVE;
+import static android.content.DialogInterface.BUTTON_POSITIVE;
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
 /**
  * Created by amoware on 2020-03-09.
  */
@@ -54,8 +58,8 @@ public class FplReminderDialog {
         if (dialog != null) {
             dialog.show();
 
-            setDialogButton(DialogInterface.BUTTON_POSITIVE);
-            setDialogButton(DialogInterface.BUTTON_NEGATIVE);
+            setDialogButton(BUTTON_POSITIVE);
+            setDialogButton(BUTTON_NEGATIVE);
 
             dialog.setOnDismissListener(dialogInterface -> isShowing = false);
             dialog.setOnCancelListener(dialogInterface -> isShowing = false);
@@ -140,9 +144,10 @@ public class FplReminderDialog {
     private void setDialogButton(int buttonType) {
         Button button = dialog.getButton(buttonType);
         if (button != null) {
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) TEXT_SIZE);
+            button.setTextSize(COMPLEX_UNIT_SP, (float) TEXT_SIZE);
             button.setAllCaps(false);
-            button.setTextColor(context.getResources().getColor(R.color.dialog_button_foreground));
+            button.setTextColor(context.getResources().getColor(buttonType == BUTTON_POSITIVE ?
+                    R.color.colorAccent : R.color.dialog_button_foreground));
         }
     }
 
