@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,9 +12,6 @@ import androidx.annotation.RequiresApi;
 
 import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.TypefaceUtil;
-
-import static com.amoware.fplreminder.common.Constants.NUNITO_SEMIBOLD;
-import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Created by amoware on 2020-03-09.

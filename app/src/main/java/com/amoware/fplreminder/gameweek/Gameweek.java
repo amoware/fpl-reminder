@@ -2,8 +2,6 @@ package com.amoware.fplreminder.gameweek;
 
 import androidx.annotation.NonNull;
 
-import com.amoware.fplreminder.common.Time;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

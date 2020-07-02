@@ -45,7 +45,7 @@ public class GameweekClient {
         JSONArray jsonArray = jsonObject.getJSONArray("events");
 
         // for-loop som går igenom jsonArray och lägger in gameweek i en lista
-        List<Gameweek> gameweekArrayList = new ArrayList<Gameweek>();
+        List<Gameweek> gameweekArrayList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             // 3. Hämta ut json-arrayens första objekt
             JSONObject jsonObject2  = (JSONObject) jsonArray.get(i);

@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
 public class App extends Application {
+
     public static final String CHANNEL_1_ID = "channel1";
 
     @Override
@@ -13,7 +14,6 @@ public class App extends Application {
 
         createNotificationChannels();
     }
-
 
     private void createNotificationChannels(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
