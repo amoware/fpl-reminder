@@ -91,8 +91,11 @@ public class FplReminderDialog {
             }
         });
 
+        Typeface regularTypeface = TypefaceUtil.getRegularTypeface(context);
+        SpannableString regularSS = new SpannableString(regularTypeface);
+
         String cancel = context.getString(R.string.dialog_button_cancel);
-        builder.setNegativeButton(boldSS.getType(cancel), null);
+        builder.setNegativeButton(regularSS.getType(cancel), null);
 
         return builder.create();
     }
@@ -164,7 +167,7 @@ public class FplReminderDialog {
             String numberOfMinutes = context.getResources().
                     getQuantityString(R.plurals.numberOfMinutes, minutes, minutes);
 
-            String result = "";
+            String result;
 
             if (hours > 0 && minutes > 0) {
                 result = numberOfHours + " and " + numberOfMinutes + " before";
