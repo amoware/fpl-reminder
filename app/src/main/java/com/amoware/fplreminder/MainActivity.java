@@ -14,6 +14,7 @@ import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
 import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.dialog.FplReminderDialog;
+import com.amoware.fplreminder.dialog.SpannableString;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.gameweek.GameweeksTask;
 import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
@@ -160,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     public void showSnackbar(String info) {
-        make(findViewById(R.id.main_linearlayout), info, LENGTH_LONG)
-                // .setActionTextColor(getResources().getColor(R.color.design_default_color_error))
+        SpannableString ss = new SpannableString(TypefaceUtil.getRegularTypeface(this));
+        make(findViewById(R.id.main_linearlayout), ss.getType(info), LENGTH_LONG)
                 .setTextColor(getResources().getColor(R.color.white))
                 .show();
     }
