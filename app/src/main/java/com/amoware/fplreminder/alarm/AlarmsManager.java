@@ -2,9 +2,12 @@ package com.amoware.fplreminder.alarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.amoware.fplreminder.common.DateUtil;
 
 import java.util.Date;
 
@@ -42,10 +45,10 @@ public class AlarmsManager {
      */
     private void setAlarm(Date date, int id) {
         Log.d(tagger(getClass()), "Setting an alarm (id=" + id + ") at: " + date);
-        Class receiverClass = getReceiverClass(id);
+        Class<? extends BroadcastReceiver> receiverClass = getReceiverClass(id);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (date != null && receiverClass != null && alarmManager != null) {
+        if (!DateUtil.hasOccurred(date) && receiverClass != null && alarmManager != null) {
             Intent intent = new Intent(context, receiverClass);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
             alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
@@ -57,8 +60,8 @@ public class AlarmsManager {
      * @param id unique id for the alarm
      * @return class that extends BroadcastReceiver
      */
-    private Class getReceiverClass(int id) {
-        Class receiverClass = null;
+    private Class<? extends BroadcastReceiver> getReceiverClass(int id) {
+        Class<? extends BroadcastReceiver> receiverClass = null;
         if (id == ALARM_GAMEWEEK_ID) {
             receiverClass = GameweekReceiver.class;
         } else if (id == ALARM_REMINDER_ID) {
@@ -66,4 +69,5 @@ public class AlarmsManager {
         }
         return receiverClass;
     }
+
 }

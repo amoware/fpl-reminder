@@ -9,7 +9,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by amoware on 2020-03-13.
@@ -59,4 +61,26 @@ public class DateUtilUnitTest {
         calendar.set(year, month, day, hour, minute);
         return calendar.getTime();
     }
+
+    @Test
+    public void hasOccurred_dateBeforeTimestamp() {
+        assertTrue(DateUtil.hasOccurred(getDateRelativeToTimestamp(-1)));
+    }
+
+    @Test
+    public void hasOccurred_dateAfterTimestamp() {
+        assertFalse(DateUtil.hasOccurred(getDateRelativeToTimestamp(1)));
+    }
+
+    @Test
+    public void hasOccurred_nullDate() {
+        assertFalse(DateUtil.hasOccurred(null));
+    }
+
+    private Date getDateRelativeToTimestamp(int minutesOffset) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, minutesOffset);
+        return calendar.getTime();
+    }
+
 }

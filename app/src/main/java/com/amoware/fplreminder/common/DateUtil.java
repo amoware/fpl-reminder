@@ -26,24 +26,6 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public static Date addTime(Date date, Time timeAfterDate) {
-        if (timeAfterDate == null) {
-            return date;
-        }
-
-        if (date == null) {
-            return null;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        calendar.add(Calendar.HOUR_OF_DAY, timeAfterDate.getHours());
-        calendar.add(Calendar.MINUTE, timeAfterDate.getMinutes());
-
-        return calendar.getTime();
-    }
-
     public static boolean isToday(Date date) {
         return date != null && getDate(date).compareTo(getTodaysDate()) == 0;
     }
@@ -65,6 +47,10 @@ public class DateUtil {
         cal.set(Calendar.MILLISECOND, 0);
 
         return cal.getTime();
+    }
+
+    public static boolean hasOccurred(Date date) {
+        return date != null && date.compareTo(new Date()) < 0;
     }
 
 }
