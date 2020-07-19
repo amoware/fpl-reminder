@@ -66,7 +66,7 @@ public class GameweekReceiver extends BroadcastReceiver {
             notificationTitle = context.getString(R.string.notification_title_remindernotset);
             notificationText = context.getString(R.string.notification_text_nodeadline);
         } else {
-            DateFormat dateFormat = new SimpleDateFormat("EEE d MMM hh:mm", new Locale("en"));
+            DateFormat dateFormat = new SimpleDateFormat("EEE d MMM HH:mm", new Locale("en"));
             notificationTitle = context.getString(R.string.notification_title_reminderset);
             String reminderSet = dateFormat.format(DateUtil.subtractTime(currentGameweek.getDeadlineTime(), fplReminder.getNotificationTimer()));
             String deadline = dateFormat.format(currentGameweek.getDeadlineTime());
