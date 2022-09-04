@@ -28,7 +28,7 @@ public class HttpClient {
                 "    },\n" +
                 "    {\n" +
                 "      \"name\": \"Gameweek 5\",\n" +
-                "      \"deadline_time\": \"2020-06-21T11:44:00Z\"\n" +
+                "      \"deadline_time\": \"2023-06-21T11:44:00Z\"\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";

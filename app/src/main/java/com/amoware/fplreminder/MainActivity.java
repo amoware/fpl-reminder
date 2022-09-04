@@ -36,7 +36,6 @@ import static com.google.android.material.snackbar.Snackbar.make;
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
-
     private FplReminder fplReminder;
     private FplReminderDialog dialog;
 
@@ -131,21 +130,11 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationSound()) {
-            soundCheckbox.setChecked(true);
-        }
-        else {
-            soundCheckbox.setChecked(false);
-        }
+        soundCheckbox.setChecked(fplReminder.isNotificationSound());
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
-        if (fplReminder.isNotificationVibration()) {
-            vibrationCheckbox.setChecked(true);
-        }
-        else {
-            vibrationCheckbox.setChecked(false);
-        }
+        vibrationCheckbox.setChecked(fplReminder.isNotificationVibration());
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
     }
@@ -173,7 +162,9 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
-    /** Called from the view when the user clicks on the layout including the notification timer. */
+    /**
+     * Called from the view when the user clicks on the layout including the notification timer.
+     */
     public void showReminderDialog(View view) {
         if (dialog == null || !dialog.isShowing()) {
             (dialog = new FplReminderDialog(fplReminder)).show();
@@ -200,33 +191,36 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         String text = getString(R.string.overline_text_status_nogameweek);
         if (gameweek != null) {
             Date deadline = gameweek.getDeadlineTime();
-            text = gameweek.getName() != null ? (gameweek.getName() + " " + getString(R.string.overline_text_status_nodeadline)): text;
+            text = gameweek.getName() != null ?
+                    (gameweek.getName() + " " + getString(R.string.overline_text_status_nodeadline)) : text;
             if (deadline != null) {
-                DateFormat dateFormat = new SimpleDateFormat("EEE d MMM HH:mm", new Locale("en"));
-                text = gameweek.getName() + " deadline: " + dateFormat.format(deadline);
+                DateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm", new Locale("en"));
+                text = gameweek.getName() + " deadline:\n" + dateFormat.format(deadline);
             }
         }
         upcomingDeadlineTextView.setText(text);
     }
 
-    /** Called from the view when the user clicks on the checkbox concerning the sound. */
+    /**
+     * Called from the view when the user clicks on the checkbox concerning the sound.
+     */
     public void changeSoundSettings(View view) {
         fplReminder.setNotificationSound(soundCheckbox.isChecked());
         if (soundCheckbox.isChecked()) {
             showSnackbar(getString(R.string.snackbar_text_soundon));
-        }
-        else {
+        } else {
             showSnackbar(getString(R.string.snackbar_text_soundoff));
         }
     }
 
-    /** Called from the view when the user clicks on the checkbox concerning the vibration. */
+    /**
+     * Called from the view when the user clicks on the checkbox concerning the vibration.
+     */
     public void changeVibrationSettings(View view) {
         fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
         if (vibrationCheckbox.isChecked()) {
             showSnackbar(getString(R.string.snackbar_text_vibrationon));
-        }
-        else {
+        } else {
             showSnackbar(getString(R.string.snackbar_text_vibrationoff));
         }
     }
@@ -236,5 +230,4 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             showSnackbar(getString(R.string.snackbar_text_nointernet));
         }
     }
-
 }
