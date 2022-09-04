@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryDark">#3F2A49</color>
+    <color name="colorAccent">#009688</color>
+
+    <color name="darkPurple">#3F2A49</color>
+    <color name="lightPurple">#7D6787</color>
+    <color name="green">#009688</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="darkGreen">#00332e</color>
+    <color name="checkbox_green">#009688</color>
+
+    <color name="ic_launcher_background">#3F2A49</color>
+
+    <color name="dialog_background">@color/white</color>
+    <color name="dialog_foreground">#352c3a</color>
+    <color name="dialog_button_foreground">@color/dialog_foreground</color>
+
+    <color name="refresh_button_default_background">@color/lightPurple</color>
+    <color name="refresh_button_default_border">#6b5973</color>
+    <color name="refresh_button_pressed_background">#786482</color>
+    <color name="refresh_button_pressed_border">#5e4e65</color>
 </resources>
