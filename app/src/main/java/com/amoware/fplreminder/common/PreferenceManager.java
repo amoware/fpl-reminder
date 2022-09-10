@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
  * Created by amoware on 2020-03-23.
  */
 public class PreferenceManager {
-
     private SharedPreferences preferences;
 
     public PreferenceManager(Context context) {

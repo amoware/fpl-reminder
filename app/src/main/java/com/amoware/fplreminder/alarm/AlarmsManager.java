@@ -20,14 +20,13 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  * Created by amoware on 2019-12-29.
  */
 public class AlarmsManager {
+    private final Context mContext;
 
     private final int ALARM_GAMEWEEK_ID = 0;
     private final int ALARM_REMINDER_ID = 1;
 
-    private final Context context;
-
     public AlarmsManager(Context context) {
-        this.context = context;
+        mContext = context;
     }
 
     public void setAlarmForGameweekDeadline(Date date) {
@@ -47,25 +46,37 @@ public class AlarmsManager {
      */
     private void setAlarm(Date date, int id) {
         Log.d(tagger(getClass()), "Setting an alarm (id=" + id + ") at: " + date);
-        Class<? extends BroadcastReceiver> receiverClass = getReceiverClass(id);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (DateUtil.hasOccurred(date)) {
-            Log.d(tagger(getClass()), "Not setting alarm (id=" + id + "). " + date + " has already occurred");
+        Class<? extends BroadcastReceiver> receiverClass = getReceiverClass(id);
+        if (receiverClass == null) {
+            Log.e(tagger(getClass()), "receiverClass is null");
             return;
         }
 
-        if (receiverClass != null && alarmManager != null) {
-            Intent intent = new Intent(context, receiverClass);
-            PendingIntent pendingIntent = getPendingIntent(id, intent);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+        AlarmManager alarmManager = getAlarmManager();
+        if (alarmManager == null) {
+            Log.e(tagger(getClass()), "alarmManager is null");
+            return;
         }
+
+        if (DateUtil.hasOccurred(date)) {
+            Log.w(tagger(getClass()), "Not setting alarm (id=" + id + "). " + date + " has already occurred");
+            return;
+        }
+
+        Intent intent = new Intent(mContext, receiverClass);
+        PendingIntent pendingIntent = getPendingIntent(id, intent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+    }
+
+    private AlarmManager getAlarmManager() {
+        return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
     }
 
     private PendingIntent getPendingIntent(int id, Intent intent) {
         final int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
-        return PendingIntent.getBroadcast(context, id, intent, flags);
+        return PendingIntent.getBroadcast(mContext, id, intent, flags);
     }
 
     /**
@@ -83,5 +94,4 @@ public class AlarmsManager {
         }
         return receiverClass;
     }
-
 }

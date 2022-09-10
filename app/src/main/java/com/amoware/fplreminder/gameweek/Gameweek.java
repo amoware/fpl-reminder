@@ -11,7 +11,6 @@ import java.util.Date;
  * Created by amoware on 2019-12-29.
  */
 public class Gameweek {
-
     private static final String NAME_FIELD = "name";
     private static final String DEADLINE_FIELD = "deadlineTime";
 
@@ -51,7 +50,7 @@ public class Gameweek {
     @NonNull
     @Override
     public String toString() {
-        return "Gameweek{name='" + name + "\', deadlineTime=" + deadlineTime + '}';
+        return "Gameweek{name='" + name + "', deadlineTime=" + deadlineTime + '}';
     }
 
     /*

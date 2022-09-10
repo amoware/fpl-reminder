@@ -29,7 +29,7 @@ public class FplReminderDialog {
         void onTimeSelected(Time time);
     }
 
-    private FplReminder fplReminder;
+    private final FplReminder fplReminder;
     private Context context;
 
     private AlertDialog dialog;

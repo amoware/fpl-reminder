@@ -47,33 +47,39 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     private CheckBox vibrationCheckbox;
 
     private boolean gameweeksDownloading;
-    private boolean connectedToInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        configureContentView();
 
+        fplReminder = new FplReminder(this);
+
+        configureContentView();
         downloadGameweeks(null);
     }
 
     public void downloadGameweeks(View view) {
-        if (!gameweeksDownloading) {
-            ConnectionHandler connectionHandler = new ConnectionHandler(this);
-            if (!(connectedToInternet = connectionHandler.isNetworkAvailable())) {
-                connectionSnackbar();
-                showCurrentGameweek();
-                showProgress(false);
-            } else {
-                gameweeksDownloading = true;
-                showProgress(true);
-
-                GameweeksTask task = new GameweeksTask(this);
-                task.execute();
-            }
+        if (gameweeksDownloading) {
+            return;
         }
+
+        fplReminder.initializeCurrentGameweekFromStorage();
+
+        ConnectionHandler connectionHandler = new ConnectionHandler(this);
+        if (!connectionHandler.isNetworkAvailable()) {
+            showProgress(false);
+            showNetworkUnavailableSnackbar();
+            showCurrentGameweek();
+            return;
+        }
+
+        gameweeksDownloading = true;
+        showProgress(true);
+
+        GameweeksTask task = new GameweeksTask(this);
+        task.execute();
     }
 
     private void showProgress(boolean showProgress) {
@@ -110,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     private void configureContentView() {
-        fplReminder = new FplReminder(this);
-
         applyBoldTypefaceToTextViews(
                 hoursTextView = findViewById(R.id.main_hours_value_textview),
                 minutesTextView = findViewById(R.id.main_minutes_value_textview),
@@ -186,8 +190,13 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
+    @Override
+    public void writeBootstrapStaticContentToFile(String content) {
+        fplReminder.writeGameweekContentToFile(content);
+    }
+
     private void showCurrentGameweek() {
-        Gameweek gameweek = fplReminder.getCurrentGameweek();
+        Gameweek gameweek = fplReminder.getCurrentGameweekFromStorage();
         String text = getString(R.string.overline_text_status_nogameweek);
         if (gameweek != null) {
             Date deadline = gameweek.getDeadlineTime();
@@ -225,9 +234,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
-    public void connectionSnackbar() {
-        if (!connectedToInternet) {
-            showSnackbar(getString(R.string.snackbar_text_nointernet));
-        }
+    public void showNetworkUnavailableSnackbar() {
+        showSnackbar(getString(R.string.snackbar_text_nointernet));
     }
 }
