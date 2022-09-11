@@ -1,5 +1,6 @@
 package com.amoware.fplreminder.common;
 
+import static com.amoware.fplreminder.common.Constants.API_URL;
 import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.SOUND_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.VIBRATION_PREFERENCE;
@@ -8,10 +9,12 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
 import com.amoware.fplreminder.gameweek.Gameweek;
+import com.amoware.fplreminder.gameweek.HttpClient;
 
 import java.util.Date;
 import java.util.List;
@@ -75,25 +78,29 @@ public class FplReminder {
         preferenceManager.putBoolean(VIBRATION_PREFERENCE, notificationVibration);
     }
 
+    @Nullable
     public Time getNotificationTimer() {
         PreferenceManager preferenceManager = new PreferenceManager(mContext);
         String jsonString = preferenceManager.getString(REMINDER_PREFERENCE, null);
         return Time.parseTime(jsonString);
     }
 
-    public void setNotificationTimer(Time time) {
+    public void setNotificationTimer(@Nullable Time time) {
         Date deadlineTime = (mCurrentGameweek != null ? mCurrentGameweek.getDeadlineTime() : null);
         Log.d(tagger(getClass()), "Deadline: " + deadlineTime + ", time selected: " + time);
 
+        if (time == null) {
+            Log.e(tagger(getClass()), "time is null, failed to set notification timer");
+            return;
+        }
+
         saveReminderInPreference(time);
-        setAlarmForNotificationToBeShown();
+        setAlarmForNotificationToBeShown(mCurrentGameweek);
     }
 
-    private void saveReminderInPreference(Time time) {
-        if (time != null) {
-            PreferenceManager preferenceManager = new PreferenceManager(mContext);
-            preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
-        }
+    private void saveReminderInPreference(@NonNull Time time) {
+        PreferenceManager preferenceManager = new PreferenceManager(mContext);
+        preferenceManager.putString(REMINDER_PREFERENCE, time.toJsonString());
     }
 
     /**
@@ -105,11 +112,19 @@ public class FplReminder {
      */
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         setCurrentGameweek(parseCurrentGameweek(gameweeks));
-        setAlarmForGameWeekDeadline();
-        setAlarmForNotificationToBeShown();
+        setAlarms(mCurrentGameweek);
     }
 
-    private void setCurrentGameweek(Gameweek currentGameweek) {
+    public void setAlarms(@Nullable Gameweek gameweek) {
+        if (gameweek == null) {
+            Log.e(tagger(getClass()), "gameweek is null, failed to set alarms");
+            return;
+        }
+        setAlarmForGameWeekDeadline(gameweek);
+        setAlarmForNotificationToBeShown(gameweek);
+    }
+
+    private void setCurrentGameweek(@Nullable Gameweek currentGameweek) {
         mCurrentGameweek = currentGameweek;
     }
 
@@ -139,35 +154,48 @@ public class FplReminder {
     /**
      * Sets an alarm that eventually triggers {@link com.amoware.fplreminder.alarm.GameweekReceiver}.
      */
-    private void setAlarmForGameWeekDeadline() {
-        if (mCurrentGameweek == null) {
-            return;
-        }
-
+    private void setAlarmForGameWeekDeadline(@NonNull Gameweek gameweek) {
         AlarmsManager alarmsManager = new AlarmsManager(mContext);
-        alarmsManager.setAlarmForGameweekDeadline(mCurrentGameweek.getDeadlineTime());
+        alarmsManager.setAlarmForGameweekDeadline(gameweek.getDeadlineTime());
     }
 
     /**
      * Sets an alarm that eventually triggers {@link com.amoware.fplreminder.alarm.ReminderReceiver}.
      */
-    private void setAlarmForNotificationToBeShown() {
-        // Only set reminder when there's a current gameweek
-        if (mCurrentGameweek == null) {
-            return;
-        }
-
+    private void setAlarmForNotificationToBeShown(@NonNull Gameweek gameweek) {
         Time time = getNotificationTimer();
         if (time == null) {
+            Log.e(tagger(getClass()), "time is null");
             return;
         }
 
-        Date notificationDate = DateUtil.subtractTime(mCurrentGameweek.getDeadlineTime(), time);
+        Date notificationDate = DateUtil.subtractTime(gameweek.getDeadlineTime(), time);
         AlarmsManager alarmsManager = new AlarmsManager(mContext);
         alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
     }
 
     public void writeGameweekContentToFile(String content) {
         mGameweekStorage.writeContentToFile(content);
+    }
+
+    @Nullable
+    public Gameweek getCurrentGameweekFromAPI() {
+        HttpClient httpClient = new HttpClient();
+
+        String bootstrapStatic = null;
+        try {
+            bootstrapStatic = httpClient.sendGetRequest(API_URL);
+        } catch (Exception e) {
+            Log.e(tagger(getClass()), "Exception", e);
+        }
+
+        String strippedBootstrapStatic = GameweekParser.stripAllButEvents(bootstrapStatic);
+        if (strippedBootstrapStatic == null) {
+            return null;
+        }
+
+        writeGameweekContentToFile(strippedBootstrapStatic);
+
+        return parseCurrentGameweek(GameweekParser.toGameweeks(strippedBootstrapStatic));
     }
 }

@@ -1,5 +1,7 @@
 package com.amoware.fplreminder;
 
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.amoware.fplreminder.alarm.RestoreAlarmsReceiver;
 import com.amoware.fplreminder.common.ConnectionHandler;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.common.Time;
@@ -58,6 +61,21 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
         configureContentView();
         downloadGameweeks(null);
+
+        // Activate trigger-after-boot receiver
+        ComponentName receiver = new ComponentName(this, RestoreAlarmsReceiver.class);
+        PackageManager pm = getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+        // Disable trigger-after-boot receiver
+        /*ComponentName receiver = new ComponentName(context, SampleBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);*/
     }
 
     public void downloadGameweeks(View view) {
