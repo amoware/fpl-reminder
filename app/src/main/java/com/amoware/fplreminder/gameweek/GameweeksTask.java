@@ -1,6 +1,5 @@
 package com.amoware.fplreminder.gameweek;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
@@ -8,23 +7,26 @@ import java.util.List;
 import static com.amoware.fplreminder.common.Constants.API_URL;
 import static com.amoware.fplreminder.common.Constants.tagger;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.amoware.fplreminder.common.GameweekParser;
+import com.amoware.fplreminder.model.async.AsyncTask;
 
 /**
  * Created by amoware on 2020-02-11.
  */
-public class GameweeksTask extends AsyncTask<Void,Void,List<Gameweek>> {
-    private final GameweeksTaskInterface gInterface;
+public class GameweeksTask extends AsyncTask<Void, List<Gameweek>> {
+    @NonNull
+    private final GameweeksTaskInterface mGameweeksTaskInterface;
 
-    public GameweeksTask(GameweeksTaskInterface gInterface) {
-        this.gInterface = gInterface;
+    public GameweeksTask(@NonNull GameweeksTaskInterface gameweeksTaskInterface) {
+        mGameweeksTaskInterface = gameweeksTaskInterface;
     }
 
     @Nullable
     @Override
-    protected List<Gameweek> doInBackground(Void... voids) {
+    protected List<Gameweek> doInBackground(Void aVoid) {
         HttpClient httpClient = new HttpClient();
 
         String bootstrapStatic = null;
@@ -39,13 +41,12 @@ public class GameweeksTask extends AsyncTask<Void,Void,List<Gameweek>> {
             return null;
         }
 
-        gInterface.writeBootstrapStaticContentToFile(strippedBootstrapStatic);
+        mGameweeksTaskInterface.writeBootstrapStaticContentToFile(strippedBootstrapStatic);
         return GameweekParser.toGameweeks(strippedBootstrapStatic);
     }
 
     @Override
     protected void onPostExecute(List<Gameweek> gameweeks) {
-        super.onPostExecute(gameweeks);
-        gInterface.onGameweeksDownloaded(gameweeks);
+        mGameweeksTaskInterface.onGameweeksDownloaded(gameweeks);
     }
 }
