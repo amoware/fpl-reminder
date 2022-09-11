@@ -19,8 +19,8 @@ import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.dialog.SpannableString;
 import com.amoware.fplreminder.gameweek.Gameweek;
-import com.amoware.fplreminder.gameweek.GameweeksTask;
-import com.amoware.fplreminder.gameweek.GameweeksTaskInterface;
+import com.amoware.fplreminder.model.gameweek.GameweeksTask;
+import com.amoware.fplreminder.model.gameweek.GameweeksTaskInterface;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

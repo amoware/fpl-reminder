@@ -1,4 +1,4 @@
-package com.amoware.fplreminder.gameweek;
+package com.amoware.fplreminder.model.gameweek;
 
 import android.util.Log;
 
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.amoware.fplreminder.common.GameweekParser;
+import com.amoware.fplreminder.gameweek.Gameweek;
+import com.amoware.fplreminder.gameweek.HttpClient;
 import com.amoware.fplreminder.model.async.AsyncTask;
 
 /**
