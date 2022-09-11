@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         PackageManager pm = getPackageManager();
 
         pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+                PackageManager.DONT_KILL_APP
+        );
 
         // Disable trigger-after-boot receiver
         /*ComponentName receiver = new ComponentName(context, SampleBootReceiver.class);
@@ -149,16 +150,24 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
                 findViewById(R.id.main_notification_status)
         );
 
+        findViewById(R.id.main_notification_layout)
+                .setOnClickListener(this::showReminderDialog);
+
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
         soundCheckbox.setChecked(fplReminder.isNotificationSound());
+        soundCheckbox.setOnClickListener(this::changeSoundSettings);
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
         vibrationCheckbox.setChecked(fplReminder.isNotificationVibration());
+        vibrationCheckbox.setOnClickListener(this::changeVibrationSettings);
 
         displayNotificationTimer(fplReminder.getNotificationTimer());
+
+        findViewById(R.id.main_refresh_button)
+                .setOnClickListener(this::downloadGameweeks);
     }
 
     private void applyBoldTypefaceToTextViews(View... views) {

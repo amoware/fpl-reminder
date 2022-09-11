@@ -9,12 +9,17 @@
     <string name="dialog_text_minutes">Minutes</string>
     <string name="dialog_title">Set a reminder</string>
 
+    <string name="main_label_colon">:</string>
+    <string name="main_label_hours">Hours</string>
+    <string name="main_label_minutes">Minutes</string>
     <string name="main_label_preferences">Notification preferences</string>
     <string name="main_label_timer">Notification timer</string>
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
     <string name="main_text_sound">Sound</string>
     <string name="main_text_vibration">Vibration</string>
     <string name="main_title">Fantasy Premier League Reminder</string>
+    <string name="main_value_hours">0</string>
+    <string name="main_value_minutes">0</string>
 
     <string name="notification_text_nodeadline">Reminder not set because there were no upcoming gameweeks to be found. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_nogameweeks">Reminder not set because there were no gameweeks to be found. Try again later by pressing the reload button in the app.</string>
