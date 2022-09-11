@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Fantasy Premier League Reminder"
+        android:text="@string/main_title"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:gravity="center"
-        android:text="Notification timer"
+        android:text="@string/main_label_timer"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="12sp" />
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:gravity="center"
-        android:text="Notification preferences"
+        android:text="@string/main_label_preferences"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="12sp" />
@@ -90,9 +90,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/rounded_corners"
+        android:baselineAligned="false"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
                 android:onClick="changeSoundSettings"
-                android:text="Sound"
+                android:text="@string/main_text_sound"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:theme="@style/checkBoxStyle"
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
                 android:onClick="changeVibrationSettings"
-                android:text="Vibration"
+                android:text="@string/main_text_vibration"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:theme="@style/checkBoxStyle"
