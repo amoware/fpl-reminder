@@ -1,6 +1,6 @@
 package com.amoware.fplreminder.common;
 
-import static com.amoware.fplreminder.common.Constants.API_URL;
+import static com.amoware.fplreminder.common.Constants.FETCHED_GAMEWEEKS_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.REMINDER_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.SOUND_PREFERENCE;
 import static com.amoware.fplreminder.common.Constants.VIBRATION_PREFERENCE;
@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.amoware.fplreminder.alarm.AlarmsManager;
 import com.amoware.fplreminder.gameweek.Gameweek;
-import com.amoware.fplreminder.gameweek.HttpClient;
+import com.amoware.fplreminder.model.gameweek.GameweeksClient;
 
 import java.util.Date;
 import java.util.List;
@@ -34,24 +34,14 @@ public class FplReminder {
         mGameweekStorage = new GameweekStorage(context);
     }
 
-    public void initializeCurrentGameweekFromStorage() {
-        mCurrentGameweek = parseCurrentGameweek(mGameweekStorage.readAll());
-    }
-
     @Nullable
     public Gameweek getCurrentGameweek() {
         return mCurrentGameweek;
     }
 
     @Nullable
-    public Gameweek getCurrentGameweekFromStorage() {
-        List<Gameweek> storedGameweeks = mGameweekStorage.readAll();
-        return parseCurrentGameweek(storedGameweeks);
-    }
-
-    @Nullable
     public List<Gameweek> getGameweeksFromStorage() {
-        return mGameweekStorage.readAll();
+        return mGameweekStorage.readGameweeksFromFile();
     }
 
     public Context getContext() {
@@ -130,7 +120,7 @@ public class FplReminder {
 
     /**
      * Returns the current gameweek based on a list of gameweeks. Current gameweek is the
-     * first gameweek in the list which's deadline time occurs before the timestamp of calling this
+     * first gameweek's deadline time that occurs before the timestamp of calling this
      * function.
      *
      * @param gameweeks list of gameweeks
@@ -174,28 +164,38 @@ public class FplReminder {
         alarmsManager.setAlarmForNotificationToBeShown(notificationDate);
     }
 
-    public void writeGameweekContentToFile(String content) {
-        mGameweekStorage.writeContentToFile(content);
+    public void writeGameweeksToStorage(@Nullable List<Gameweek> gameweeks) {
+        mGameweekStorage.writeGameweeksToFile(gameweeks);
+    }
+
+    @Nullable
+    public Gameweek getCurrentGameweekFromStorage() {
+        List<Gameweek> storedGameweeks = mGameweekStorage.readGameweeksFromFile();
+        return parseCurrentGameweek(storedGameweeks);
     }
 
     @Nullable
     public Gameweek getCurrentGameweekFromAPI() {
-        HttpClient httpClient = new HttpClient();
+        GameweeksClient client = new GameweeksClient();
 
-        String bootstrapStatic = null;
-        try {
-            bootstrapStatic = httpClient.sendGetRequest(API_URL);
-        } catch (Exception e) {
-            Log.e(tagger(getClass()), "Exception", e);
-        }
-
-        String strippedBootstrapStatic = GameweekParser.stripAllButEvents(bootstrapStatic);
-        if (strippedBootstrapStatic == null) {
+        List<Gameweek> gameweeks = client.fetchGameweeks();
+        if (gameweeks == null || gameweeks.size() == 0) {
             return null;
         }
 
-        writeGameweekContentToFile(strippedBootstrapStatic);
+        writeGameweeksToStorage(gameweeks);
 
-        return parseCurrentGameweek(GameweekParser.toGameweeks(strippedBootstrapStatic));
+        return parseCurrentGameweek(gameweeks);
+    }
+
+    @Nullable
+    public Date getFetchedGameweeksDate() {
+        PreferenceManager preferenceManager = new PreferenceManager(mContext);
+        return preferenceManager.getDate(FETCHED_GAMEWEEKS_PREFERENCE);
+    }
+
+    public void updateFetchedGameweeksDate() {
+        PreferenceManager preferenceManager = new PreferenceManager(mContext);
+        preferenceManager.putDate(FETCHED_GAMEWEEKS_PREFERENCE, DateUtil.getNow());
     }
 }

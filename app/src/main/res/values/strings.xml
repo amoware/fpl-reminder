@@ -24,6 +24,7 @@
     <string name="notification_text_nodeadline">Reminder not set because there were no upcoming gameweeks to be found. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_nogameweeks">Reminder not set because there were no gameweeks to be found. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_nointernet">A new deadline wasn\'t set. Check your internet connection and try to reload by pressing the reload button in the app.</string>
+    <string name="notification_text_nullableDate">Reminder not set because of an unknown date error. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_reminder">Need to make team changes? This is your friendly reminder to do so %1$s.</string>
     <string name="notification_text_reminderset">Your next reminder is set to %1$s. The deadline for %2$s occurs at %3$s.</string>
     <string name="notification_title_nointernet">No internet connection</string>

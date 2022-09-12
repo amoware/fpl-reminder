@@ -22,7 +22,7 @@ public class AlarmsLogic {
         mFplReminder = new FplReminder(context);
     }
 
-    public void initializeAlarmsFromFile() {
+    public void initializeAlarmsFromStorage() {
         Gameweek gameweek = mFplReminder.getCurrentGameweekFromStorage();
         if (gameweek != null) {
             initializeAlarms(gameweek);
@@ -37,7 +37,7 @@ public class AlarmsLogic {
             return;
         }
 
-        Log.w(tagger(getClass()), "current gameweek from api is null");
+        Log.w(tagger(getClass()), "current gameweek from api is null, failed to set alarms");
     }
 
     private void initializeAlarms(@NonNull Gameweek gameweek) {

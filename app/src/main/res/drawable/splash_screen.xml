@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:drawable="@color/darkPurple" />
-
     <item>
-        <bitmap android:src="@drawable/fpl_startscreen_low"
-            android:gravity="center" />
-
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/fpl_startscreen_low" />
     </item>
-
 </layer-list>

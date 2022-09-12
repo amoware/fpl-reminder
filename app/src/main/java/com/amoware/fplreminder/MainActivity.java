@@ -19,7 +19,7 @@ import com.amoware.fplreminder.common.TypefaceUtil;
 import com.amoware.fplreminder.dialog.FplReminderDialog;
 import com.amoware.fplreminder.dialog.SpannableString;
 import com.amoware.fplreminder.gameweek.Gameweek;
-import com.amoware.fplreminder.model.gameweek.GameweeksTask;
+import com.amoware.fplreminder.model.gameweek.FetchGameweeksTask;
 import com.amoware.fplreminder.model.gameweek.GameweeksTaskInterface;
 
 import java.text.DateFormat;
@@ -39,8 +39,8 @@ import static com.google.android.material.snackbar.Snackbar.make;
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
-    private FplReminder fplReminder;
-    private FplReminderDialog dialog;
+    private FplReminder mFplReminder;
+    private FplReminderDialog mDialog;
 
     private TextView hoursTextView;
     private TextView minutesTextView;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fplReminder = new FplReminder(this);
+        mFplReminder = new FplReminder(this);
 
         configureContentView();
         downloadGameweeks(null);
@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
             return;
         }
 
-        fplReminder.initializeCurrentGameweekFromStorage();
-
         ConnectionHandler connectionHandler = new ConnectionHandler(this);
         if (!connectionHandler.isNetworkAvailable()) {
             showProgress(false);
@@ -97,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         gameweeksDownloading = true;
         showProgress(true);
 
-        GameweeksTask task = new GameweeksTask(this);
-        task.execute();
+        new FetchGameweeksTask(mFplReminder, this)
+                .execute();
     }
 
     private void showProgress(boolean showProgress) {
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         int timerLabelVisibility = invisibleVisible;
 
         if (goneVisible == VISIBLE) {
-            if (fplReminder.getCurrentGameweek() == null) {
+            if (mFplReminder.getCurrentGameweek() == null) {
                 statusVisibility = VISIBLE;
                 notificationVisibility = GONE;
                 timerLabelVisibility = INVISIBLE;
@@ -156,15 +154,15 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         Typeface boldTypeface = TypefaceUtil.getBoldTypeface(this);
         soundCheckbox = findViewById(R.id.main_sound_checkbox);
         soundCheckbox.setTypeface(boldTypeface);
-        soundCheckbox.setChecked(fplReminder.isNotificationSound());
+        soundCheckbox.setChecked(mFplReminder.isNotificationSound());
         soundCheckbox.setOnClickListener(this::changeSoundSettings);
 
         vibrationCheckbox = findViewById(R.id.main_vibration_checkbox);
         vibrationCheckbox.setTypeface(boldTypeface);
-        vibrationCheckbox.setChecked(fplReminder.isNotificationVibration());
+        vibrationCheckbox.setChecked(mFplReminder.isNotificationVibration());
         vibrationCheckbox.setOnClickListener(this::changeVibrationSettings);
 
-        displayNotificationTimer(fplReminder.getNotificationTimer());
+        displayNotificationTimer(mFplReminder.getNotificationTimer());
 
         findViewById(R.id.main_refresh_button)
                 .setOnClickListener(this::downloadGameweeks);
@@ -197,16 +195,16 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
      * Called from the view when the user clicks on the layout including the notification timer.
      */
     public void showReminderDialog(View view) {
-        if (dialog == null || !dialog.isShowing()) {
-            (dialog = new FplReminderDialog(fplReminder)).show();
-            dialog.setOnTimeSelected(this::displayNotificationTimer);
+        if (mDialog == null || !mDialog.isShowing()) {
+            (mDialog = new FplReminderDialog(mFplReminder)).show();
+            mDialog.setOnTimeSelected(this::displayNotificationTimer);
         }
     }
 
     @Override
     public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
         Log.d(tagger(getClass()), "Gameweeks from FPL: " + gameweeks);
-        fplReminder.onGameweeksDownloaded(gameweeks);
+        mFplReminder.onGameweeksDownloaded(gameweeks);
         showCurrentGameweek();
         showProgress(false);
         gameweeksDownloading = false;
@@ -217,13 +215,8 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         }
     }
 
-    @Override
-    public void writeBootstrapStaticContentToFile(String content) {
-        fplReminder.writeGameweekContentToFile(content);
-    }
-
     private void showCurrentGameweek() {
-        Gameweek gameweek = fplReminder.getCurrentGameweekFromStorage();
+        Gameweek gameweek = mFplReminder.getCurrentGameweekFromStorage();
         String text = getString(R.string.overline_text_status_nogameweek);
         if (gameweek != null) {
             Date deadline = gameweek.getDeadlineTime();
@@ -241,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
      * Called from the view when the user clicks on the checkbox concerning the sound.
      */
     public void changeSoundSettings(View view) {
-        fplReminder.setNotificationSound(soundCheckbox.isChecked());
+        mFplReminder.setNotificationSound(soundCheckbox.isChecked());
         if (soundCheckbox.isChecked()) {
             showSnackbar(getString(R.string.snackbar_text_soundon));
         } else {
@@ -253,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
      * Called from the view when the user clicks on the checkbox concerning the vibration.
      */
     public void changeVibrationSettings(View view) {
-        fplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
+        mFplReminder.setNotificationVibration(vibrationCheckbox.isChecked());
         if (vibrationCheckbox.isChecked()) {
             showSnackbar(getString(R.string.snackbar_text_vibrationon));
         } else {

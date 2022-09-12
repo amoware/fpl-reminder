@@ -26,6 +26,10 @@ import java.util.TimeZone;
 public class GameweekParser {
     private static final SimpleDateFormat simpleDateFormat;
 
+    private static final String NAME_KEY = "name";
+    private static final String DEADLINE_TIME_KEY = "deadline_time";
+    private static final String EVENTS_KEY = "events";
+
     static {
         Locale locale = new Locale("en");
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", locale);
@@ -33,7 +37,54 @@ public class GameweekParser {
     }
 
     @Nullable
-    public static List<Gameweek> toGameweeks(String content) {
+    public static String toString(@Nullable List<Gameweek> gameweeks) {
+        if (gameweeks == null || gameweeks.size() == 0) {
+            return null;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+
+        JSONArray jsonArray = new JSONArray();
+        for (Gameweek gameweek : gameweeks) {
+            JSONObject gameweekObject = null;
+            try {
+                gameweekObject = toJSONObject(gameweek);
+            } catch (JSONException e) {
+                Log.e(tagger(GameweekParser.class), "JSONException", e);
+            }
+
+            if (gameweekObject == null) {
+                continue;
+            }
+            jsonArray.put(gameweekObject);
+        }
+
+        try {
+            jsonObject.put(EVENTS_KEY, jsonArray);
+        } catch (JSONException e) {
+            Log.e(tagger(GameweekParser.class), "JSONException", e);
+        }
+
+        return jsonObject.toString();
+    }
+
+    @Nullable
+    private static JSONObject toJSONObject(@Nullable Gameweek gameweek) throws JSONException {
+        if (Gameweek.isEmpty(gameweek)) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(NAME_KEY, gameweek.getName());
+        jsonObject.put(DEADLINE_TIME_KEY, simpleDateFormat.format(gameweek.getDeadlineTime()));
+        return jsonObject;
+    }
+
+    @Nullable
+    public static List<Gameweek> toGameweeks(@Nullable String content) {
+        if (StringUtil.isStringEmpty(content)) {
+            return null;
+        }
+
         // 1. Läs in vår data i ett json-objekt (eftersom det e ett json-objekt)
         JSONObject jsonObject = getNullableJSONObject(content);
         if (jsonObject == null) {
@@ -56,10 +107,10 @@ public class GameweekParser {
             }
 
             // 4. Utifrån första objektet, hämta ut värdet för dess property "name"
-            String name = getNullableString(eventJsonObject, "name");
+            String name = getNullableString(eventJsonObject, NAME_KEY);
 
             // 5. Hämta värdet från propertyn "deadline-time"
-            String deadlineDate = getNullableString(eventJsonObject, "deadline_time");
+            String deadlineDate = getNullableString(eventJsonObject, DEADLINE_TIME_KEY);
             if (deadlineDate == null) {
                 continue;
             }
@@ -101,7 +152,7 @@ public class GameweekParser {
     @Nullable
     private static JSONArray getNullableEventsArray(JSONObject jsonObject) {
         try {
-            return jsonObject.getJSONArray("events");
+            return jsonObject.getJSONArray(EVENTS_KEY);
         } catch (JSONException e) {
             Log.e(tagger(GameweekParser.class), "JSONException", e);
         }
@@ -125,30 +176,5 @@ public class GameweekParser {
             Log.e(tagger(GameweekParser.class), "ParseException", e);
         }
         return null;
-    }
-
-    public static String stripAllButEvents(@Nullable String bootstrapStatic) {
-        if (StringUtil.isStringEmpty(bootstrapStatic)) {
-            return null;
-        }
-
-        JSONObject jsonObject = getNullableJSONObject(bootstrapStatic);
-        if (jsonObject == null) {
-            return null;
-        }
-
-        JSONArray jsonArray = getNullableEventsArray(jsonObject);
-        if (jsonArray == null) {
-            return null;
-        }
-
-        JSONObject newJsonObject = new JSONObject();
-        try {
-            newJsonObject.put("events", jsonArray);
-        } catch (JSONException e) {
-            Log.e(tagger(GameweekParser.class), "JSONException", e);
-        }
-
-        return newJsonObject.toString();
     }
 }

@@ -9,19 +9,21 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.amoware.fplreminder.R;
 import com.amoware.fplreminder.common.ConnectionHandler;
 import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.gameweek.Gameweek;
-import com.amoware.fplreminder.model.gameweek.GameweeksTask;
-import com.amoware.fplreminder.model.gameweek.GameweeksTaskInterface;
+import com.amoware.fplreminder.model.gameweek.FetchGameweeksTask;
 import com.amoware.fplreminder.notification.Notification;
 import com.amoware.fplreminder.notification.NotificationService;
 import com.amoware.fplreminder.notification.VibratorService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,24 +52,15 @@ public class GameweekReceiver extends BroadcastReceiver {
     }
 
     private void downloadGameweeks() {
-        GameweeksTask task = new GameweeksTask(new GameweeksTaskInterface() {
-            @Override
-            public void onGameweeksDownloaded(List<Gameweek> gameweeks) {
-                if (gameweeks == null || gameweeks.size() == 0) {
-                    gameweeks = mFplReminder.getGameweeksFromStorage();
-                }
-                handleDownloadedGameweeks(gameweeks);
+        new FetchGameweeksTask(mFplReminder, (gameweeks) -> {
+            if (gameweeks == null || gameweeks.size() == 0) {
+                gameweeks = mFplReminder.getGameweeksFromStorage();
             }
-
-            @Override
-            public void writeBootstrapStaticContentToFile(String content) {
-                mFplReminder.writeGameweekContentToFile(content);
-            }
-        });
-        task.execute();
+            handleDownloadedGameweeks(gameweeks);
+        }).execute();
     }
 
-    private void handleDownloadedGameweeks(List<Gameweek> gameweeks) {
+    private void handleDownloadedGameweeks(@Nullable List<Gameweek> gameweeks) {
         mFplReminder.onGameweeksDownloaded(gameweeks);
         Gameweek currentGameweek = mFplReminder.getCurrentGameweek();
 
@@ -80,12 +73,22 @@ public class GameweekReceiver extends BroadcastReceiver {
             notificationText = mContext.getString(R.string.notification_text_nodeadline);
         } else {
             DateFormat dateFormat = new SimpleDateFormat("EEE d MMM HH:mm", new Locale("en"));
-            notificationTitle = mContext.getString(R.string.notification_title_reminderset);
-            String reminderSet = dateFormat.format(DateUtil.subtractTime(currentGameweek.getDeadlineTime(),
-                    mFplReminder.getNotificationTimer()));
-            String deadline = dateFormat.format(currentGameweek.getDeadlineTime());
-            notificationText = mContext.getString(R.string.notification_text_reminderset, reminderSet,
-                    currentGameweek.getName().toLowerCase(), deadline);
+            Date date = DateUtil.subtractTime(
+                    currentGameweek.getDeadlineTime(),
+                    mFplReminder.getNotificationTimer()
+            );
+
+            if (date == null) {
+                notificationTitle = mContext.getString(R.string.notification_title_remindernotset);
+                notificationText = mContext.getString(R.string.notification_text_nullableDate);
+            } else {
+                notificationTitle = mContext.getString(R.string.notification_title_reminderset);
+                String reminderSet = dateFormat.format(date);
+                String deadline = dateFormat.format(currentGameweek.getDeadlineTime());
+                notificationText = mContext.getString(R.string.notification_text_reminderset, reminderSet,
+                        currentGameweek.getName().toLowerCase(), deadline
+                );
+            }
         }
 
         showNotification(createNotification(notificationTitle, notificationText));

@@ -8,6 +8,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/football.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/refresh_button_selector.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/round_settings_24.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.101" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11277173913043478" />
         <entry key="app/src/main/res/layout/layout_notificationtimer.xml" value="0.17028985507246377" />
         <entry key="app/src/main/res/layout/layout_progress.xml" value="0.17028985507246377" />

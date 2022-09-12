@@ -9,5 +9,4 @@ import java.util.List;
  */
 public interface GameweeksTaskInterface {
     void onGameweeksDownloaded(List<Gameweek> gameweeks);
-    void writeBootstrapStaticContentToFile(String content);
 }

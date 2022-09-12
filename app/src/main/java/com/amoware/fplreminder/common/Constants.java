@@ -13,6 +13,7 @@ public class Constants {
     public static final String SOUND_PREFERENCE = "soundPreference";
     public static final String VIBRATION_PREFERENCE = "vibrationPreference";
     public static final String REMINDER_PREFERENCE = "reminderPreference";
+    public static final String FETCHED_GAMEWEEKS_PREFERENCE = "fetchedGameweeksPreference";
 
     public static final String API_URL = "https://fantasy.premierleague.com/api/bootstrap-static/";
 

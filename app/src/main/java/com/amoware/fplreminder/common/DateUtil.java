@@ -1,6 +1,7 @@
 package com.amoware.fplreminder.common;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,10 +10,12 @@ import java.util.Date;
  * Created by amoware on 2020-03-12.
  */
 public class DateUtil {
+    @NonNull
     public static Date getNow() {
         return new Date();
     }
 
+    @Nullable
     public static Date subtractTime(Date date, Time timeBeforeDate) {
         if (timeBeforeDate == null) {
             return date;
@@ -60,5 +63,13 @@ public class DateUtil {
 
     public static boolean isFirstBeforeSecond(@NonNull Date first, @NonNull Date second) {
         return first.compareTo(second) < 0;
+    }
+
+    public static long getMillisecondsAgo(@Nullable Date date) {
+        Date now = getNow();
+        if (date == null) {
+            return now.getTime();
+        }
+        return now.getTime() - date.getTime();
     }
 }

@@ -32,7 +32,7 @@ public class GameweekStorage {
     }
 
     @Nullable
-    public List<Gameweek> readAll() {
+    public List<Gameweek> readGameweeksFromFile() {
         return GameweekParser.toGameweeks(readFileContent());
     }
 
@@ -74,9 +74,20 @@ public class GameweekStorage {
         return stringBuilder.toString().trim();
     }
 
-    public void writeContentToFile(String data) {
+    public void writeGameweeksToFile(@Nullable List<Gameweek> gameweeks) {
         if (mContext == null) {
-            Log.e(tagger(getClass()), "writeContentToFile: context is null");
+            Log.e(tagger(getClass()), "writeGameweeksToFile: context is null");
+            return;
+        }
+
+        if (gameweeks == null || gameweeks.size() == 0) {
+            Log.w(tagger(getClass()), "writeGameweeksToFile: gameweeks is empty");
+            return;
+        }
+
+        String data = GameweekParser.toString(gameweeks);
+        if (StringUtil.isStringEmpty(data)) {
+            Log.w(tagger(getClass()), "writeGameweeksToFile: content to write is empty");
             return;
         }
 
@@ -85,8 +96,9 @@ public class GameweekStorage {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
             outputStreamWriter.write(data);
             outputStreamWriter.close();
+            Log.d(tagger(getClass()), "writeGameweeksToFile: gameweeks written to file");
         } catch (IOException e) {
-            Log.e(tagger(getClass()), "writeStringToFile: file write failed", e);
+            Log.e(tagger(getClass()), "writeGameweeksToFile: file write failed", e);
         }
     }
 }
