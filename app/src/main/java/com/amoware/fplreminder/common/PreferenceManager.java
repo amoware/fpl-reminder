@@ -11,29 +11,40 @@ import java.util.Date;
  * Created by amoware on 2020-03-23.
  */
 public class PreferenceManager {
-    private SharedPreferences preferences;
+    @Nullable
+    private final Context mContext;
 
-    public PreferenceManager(Context context) {
-        if (context != null) {
-            preferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+    public PreferenceManager(@Nullable Context context) {
+        mContext = context;
+    }
+
+    @Nullable
+    private SharedPreferences getSharedPreferences() {
+        if (mContext != null) {
+            return android.preference.PreferenceManager.getDefaultSharedPreferences(mContext);
         }
+        return null;
     }
 
     public boolean getBoolean(String key, boolean defaultValue) {
+        SharedPreferences preferences = getSharedPreferences();
         return preferences != null ? preferences.getBoolean(key, defaultValue) : defaultValue;
     }
 
     public void putBoolean(String key, boolean value) {
+        SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             preferences.edit().putBoolean(key, value).apply();
         }
     }
 
     public String getString(String key, String defaultValue) {
+        SharedPreferences preferences = getSharedPreferences();
         return preferences != null ? preferences.getString(key, defaultValue) : defaultValue;
     }
 
     public void putString(String key, String value) {
+        SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             preferences.edit().putString(key, value).apply();
         }
@@ -41,6 +52,7 @@ public class PreferenceManager {
 
     @Nullable
     public Date getDate(String key) {
+        SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             long time = preferences.getLong(key, -1);
             if (time == -1) {
@@ -52,7 +64,8 @@ public class PreferenceManager {
     }
 
     public void putDate(String key, @Nullable Date value) {
-        if (preferences != null || value != null) {
+        SharedPreferences preferences = getSharedPreferences();
+        if (preferences != null && value != null) {
             preferences.edit().putLong(key, value.getTime()).apply();
         }
     }

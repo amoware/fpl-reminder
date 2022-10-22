@@ -43,8 +43,8 @@ public class GameweekStorage {
             return null;
         }
 
-        try {
-            return readStringFromInputStream(mContext.openFileInput(FILE_NAME));
+        try (InputStream inputStream = mContext.openFileInput(FILE_NAME)) {
+            return readStringFromInputStream(inputStream);
         } catch (FileNotFoundException e) {
             Log.w(tagger(getClass()), "readFileContent: file not found", e);
         } catch (IOException e) {
@@ -63,14 +63,17 @@ public class GameweekStorage {
 
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String receiveString;
         StringBuilder stringBuilder = new StringBuilder();
 
-        while ((receiveString = bufferedReader.readLine()) != null) {
-            stringBuilder.append(receiveString).append("\n");
-        }
+        String receiveString;
+        do {
+            receiveString = bufferedReader.readLine();
+            if (receiveString != null) {
+                stringBuilder.append(receiveString).append("\n");
+            }
+        } while (receiveString != null);
 
-        inputStream.close();
+        bufferedReader.close();
         return stringBuilder.toString().trim();
     }
 

@@ -1,5 +1,12 @@
 package com.amoware.fplreminder;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+import static com.amoware.fplreminder.common.Constants.tagger;
+import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
+import static com.google.android.material.snackbar.Snackbar.make;
+
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -27,13 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static android.view.View.GONE;
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-import static com.amoware.fplreminder.common.Constants.tagger;
-import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
-import static com.google.android.material.snackbar.Snackbar.make;
 
 /**
  * Created by amoware on 2019-12-29.
@@ -69,14 +69,6 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP
         );
-
-        // Disable trigger-after-boot receiver
-        /*ComponentName receiver = new ComponentName(context, SampleBootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);*/
     }
 
     public void downloadGameweeks(View view) {
