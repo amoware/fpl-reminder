@@ -155,8 +155,8 @@ public class FplReminder {
     private void setAlarmForNotificationToBeShown(@NonNull Gameweek gameweek) {
         Time time = getNotificationTimer();
         if (time == null) {
-            Log.e(tagger(getClass()), "time is null");
-            return;
+            Log.w(tagger(getClass()), "time is null");
+            time = new Time(0, 0);
         }
 
         Date notificationDate = DateUtil.subtractTime(gameweek.getDeadlineTime(), time);

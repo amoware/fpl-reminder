@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amoware.fplreminder.alarm.RestoreAlarmsReceiver;
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
                 .show();
     }
 
-    private void displayNotificationTimer(Time time) {
+    private void displayNotificationTimer(@Nullable Time time) {
         if (time != null && hoursTextView != null && minutesTextView != null) {
             hoursTextView.setText(String.valueOf(time.getHours()));
             minutesTextView.setText(String.valueOf(time.getMinutes()));
