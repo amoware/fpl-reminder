@@ -5,8 +5,6 @@ import static com.amoware.fplreminder.common.Constants.tagger;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -17,9 +15,8 @@ import com.amoware.fplreminder.common.DateUtil;
 import com.amoware.fplreminder.common.FplReminder;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.model.gameweek.FetchGameweeksTask;
+import com.amoware.fplreminder.notification.FplNotifier;
 import com.amoware.fplreminder.notification.Notification;
-import com.amoware.fplreminder.notification.NotificationService;
-import com.amoware.fplreminder.notification.VibratorService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -98,24 +95,11 @@ public class GameweekReceiver extends BroadcastReceiver {
         Notification notification = new Notification();
         notification.setContentTitle(notificationTitle);
         notification.setContentText(notificationText);
-
-        // Make sound depending on the user setting
-        if (mFplReminder.isNotificationSound()) {
-            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            notification.setSound(soundUri);
-        }
-
-        // Vibrate depending on the user setting
-        if (mFplReminder.isNotificationVibration()) {
-            VibratorService service = new VibratorService();
-            notification.setVibrationPattern(service.getDefaultVibratePattern());
-        }
-
         return notification;
     }
 
     private void showNotification(Notification notification) {
-        NotificationService notificationService = new NotificationService(mContext);
-        notificationService.notify(notification);
+        FplNotifier notifier = new FplNotifier(mContext);
+        notifier.pushIsNewReminderSetNotification(notification);
     }
 }
