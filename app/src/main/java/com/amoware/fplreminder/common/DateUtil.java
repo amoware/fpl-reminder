@@ -38,11 +38,13 @@ public class DateUtil {
         return date != null && getDate(date).compareTo(getTodayDate()) == 0;
     }
 
+    @NonNull
     public static Date getTodayDate() {
         return getDate(new Date());
     }
 
-    public static Date getDate(Date date) {
+    @NonNull
+    public static Date getDate(@Nullable Date date) {
         if (date == null) {
             date = new Date();
         }
@@ -57,7 +59,7 @@ public class DateUtil {
         return cal.getTime();
     }
 
-    public static boolean hasOccurred(Date date) {
+    public static boolean hasOccurred(@Nullable Date date) {
         return date != null && date.compareTo(getNow()) < 0;
     }
 

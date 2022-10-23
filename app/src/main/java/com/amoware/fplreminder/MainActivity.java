@@ -29,6 +29,7 @@ import com.amoware.fplreminder.dialog.SpannableString;
 import com.amoware.fplreminder.gameweek.Gameweek;
 import com.amoware.fplreminder.model.gameweek.FetchGameweeksTask;
 import com.amoware.fplreminder.model.gameweek.GameweeksTaskInterface;
+import com.amoware.fplreminder.notification.FplNotifier;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,7 +41,6 @@ import java.util.Locale;
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
-
     private FplReminder mFplReminder;
     private FplReminderDialog mDialog;
 
@@ -64,6 +64,20 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         configureContentView();
         downloadGameweeks(null);
 
+        FplNotifier fplNotifier = new FplNotifier(this);
+        if (fplNotifier.shouldRequestPermission()) {
+            Log.d(tagger(getClass()), "Requesting permission!");
+
+            fplNotifier.requestPermission(this, (isGranted) -> {
+                Log.d(tagger(getClass()), "Permission granted? " + isGranted);
+                if (!isGranted) {
+                    showNotificationsDisabledViews();
+                }
+            });
+        } else if (fplNotifier.areNotificationsDisabled()) {
+            showNotificationsDisabledViews();
+        }
+
         // Activate trigger-after-boot receiver
         ComponentName receiver = new ComponentName(this, RestoreAlarmsReceiver.class);
         PackageManager pm = getPackageManager();
@@ -71,6 +85,25 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
         pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FplNotifier fplNotifier = new FplNotifier(this);
+        setNotificationsDisabledViewsVisibility(
+                fplNotifier.areNotificationsDisabled() ? VISIBLE : GONE
+        );
+    }
+
+    private void showNotificationsDisabledViews() {
+        setNotificationsDisabledViewsVisibility(VISIBLE);
+    }
+
+    private void setNotificationsDisabledViewsVisibility(int visibility) {
+        findViewById(R.id.main_notification_disabled_label_textview).setVisibility(visibility);
+        findViewById(R.id.main_notifications_disabled_layout).setVisibility(visibility);
     }
 
     public void downloadGameweeks(View view) {
@@ -139,8 +172,12 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
                 findViewById(R.id.main_suffixtimer_label_textview),
                 findViewById(R.id.main_preferences_label_textview),
                 findViewById(R.id.progress_textview),
-                findViewById(R.id.main_notification_status)
+                findViewById(R.id.main_notification_status),
+                findViewById(R.id.main_notification_disabled_label_textview),
+                findViewById(R.id.main_notifications_disabled_textview)
         );
+
+        setNotificationsDisabledViewsVisibility(GONE);
 
         findViewById(R.id.main_notification_layout)
                 .setOnClickListener(this::showReminderDialog);
@@ -179,9 +216,12 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     }
 
     private void displayNotificationTimer(@Nullable Time time) {
-        if (time != null && hoursTextView != null && minutesTextView != null) {
-            hoursTextView.setText(getZeroPaddedString(time.getHours()));
-            minutesTextView.setText(getZeroPaddedString(time.getMinutes()));
+        int hours = time != null ? time.getHours() : 0;
+        int minutes = time != null ? time.getMinutes() : 0;
+
+        if (hoursTextView != null && minutesTextView != null) {
+            hoursTextView.setText(getZeroPaddedString(hours));
+            minutesTextView.setText(getZeroPaddedString(minutes));
         }
     }
 
@@ -255,5 +295,4 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void showNetworkUnavailableSnackbar() {
         showSnackbar(getString(R.string.snackbar_text_nointernet));
     }
-
 }

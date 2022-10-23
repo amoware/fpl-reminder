@@ -42,7 +42,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         );
 
         FplNotifier notifier = new FplNotifier(context);
-        notifier.pushGetYourTeamReadyNotification(notification);
+        notifier.postGetYourTeamReadyNotification(notification);
     }
 
     @Nullable

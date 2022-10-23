@@ -8,8 +8,9 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 public class App extends Application {
-    public static final String PREP_TEAM_CHANNEL = "teamChangesChannel";
-    public static final String NEW_REMINDER_CHANNEL = "newReminderChannel";
+
+    public static final String PREP_TEAM_CHANNEL = "prepTeamChannel";
+    public static final String REMINDER_SET_CHANNEL = "newReminderChannel";
 
     @Override
     public void onCreate() {
@@ -19,8 +20,8 @@ public class App extends Application {
 
     private void createNotificationChannels() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            createNotificationChannel(PREP_TEAM_CHANNEL, "Team changes", "Make team changes");
-            createNotificationChannel(NEW_REMINDER_CHANNEL, "New reminder", "Status about new reminder");
+            createNotificationChannel(PREP_TEAM_CHANNEL, "Get your team ready", "Friendly reminder to get your team ready before deadline");
+            createNotificationChannel(REMINDER_SET_CHANNEL, "Reminder set", "Status about when next reminder occurs");
         }
     }
 
@@ -36,4 +37,5 @@ public class App extends Application {
 
         manager.createNotificationChannel(channel);
     }
+
 }

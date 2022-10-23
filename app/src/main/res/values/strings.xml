@@ -9,6 +9,8 @@
     <string name="dialog_text_minutes">Minutes</string>
     <string name="dialog_title">Set a reminder</string>
 
+    <string name="main_disabled_label">Notifications disabled</string>
+    <string name="main_disabled_value">Notifications are disabled. We cannot let you know when a deadline occurs. Try activating them in your device\'s settings</string>
     <string name="main_label_colon">:</string>
     <string name="main_label_hours">Hours</string>
     <string name="main_label_minutes">Minutes</string>

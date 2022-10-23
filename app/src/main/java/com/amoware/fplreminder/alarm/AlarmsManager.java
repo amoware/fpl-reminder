@@ -1,20 +1,18 @@
 package com.amoware.fplreminder.alarm;
 
+import static com.amoware.fplreminder.common.Constants.tagger;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
 import com.amoware.fplreminder.common.DateUtil;
 
 import java.util.Date;
-
-import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Manages alarms. There are two type of alarms: one for notification to be shown to the user and

@@ -1,159 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3F2A49"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/main_title_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/main_title"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/main_upcomingDeadline_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/main_timer_label_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="@string/main_label_timer"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
+        android:background="#3F2A49"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp"
+        tools:context=".MainActivity">
 
-        <include
-            android:id="@+id/main_progress_layout"
-            layout="@layout/layout_progress"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/main_title"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/main_upcomingDeadline_textview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:visibility="gone" />
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
-        <include
-            android:id="@+id/main_status_layout"
-            layout="@layout/layout_status"
+        <TextView
+            android:id="@+id/main_timer_label_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/main_notification_layout"
-            layout="@layout/layout_notificationtimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/main_preferences_label_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:gravity="center"
-        android:text="@string/main_label_preferences"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_corners"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal">
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="@string/main_label_timer"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="0.5"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners"
             android:gravity="center"
-            android:paddingStart="40dp"
-            android:paddingLeft="40dp"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <CheckBox
-                android:id="@+id/main_sound_checkbox"
+            <include
+                android:id="@+id/main_progress_layout"
+                layout="@layout/layout_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:text="@string/main_text_sound"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:theme="@style/checkBoxStyle"
-                tools:ignore="UnusedAttribute" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/main_status_layout"
+                layout="@layout/layout_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/main_notification_layout"
+                layout="@layout/layout_notificationtimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/main_preferences_label_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="0.5"
+            android:layout_marginTop="45dp"
             android:gravity="center"
-            android:paddingStart="0dp"
-            android:paddingLeft="0dp"
-            android:paddingEnd="40dp"
-            android:paddingRight="40dp">
+            android:text="@string/main_label_preferences"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
-            <CheckBox
-                android:id="@+id/main_vibration_checkbox"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:text="@string/main_text_vibration"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:theme="@style/checkBoxStyle"
-                tools:ignore="UnusedAttribute" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:paddingStart="40dp"
+                android:paddingLeft="40dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp">
+
+                <CheckBox
+                    android:id="@+id/main_sound_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:text="@string/main_text_sound"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:theme="@style/checkBoxStyle"
+                    tools:ignore="UnusedAttribute" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingEnd="40dp"
+                android:paddingRight="40dp">
+
+                <CheckBox
+                    android:id="@+id/main_vibration_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:text="@string/main_text_vibration"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:theme="@style/checkBoxStyle"
+                    tools:ignore="UnusedAttribute" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/main_notification_disabled_label_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="@string/main_disabled_label"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/main_notifications_disabled_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/main_notifications_disabled_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/main_disabled_value"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/main_refresh_button"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/refresh_button_selector"
+            android:src="@drawable/ic_refresh"
+            tools:ignore="ContentDescription" />
+
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/main_refresh_button"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/refresh_button_selector"
-        android:src="@drawable/ic_refresh"
-        tools:ignore="ContentDescription" />
-
-</LinearLayout>
+</ScrollView>

@@ -100,6 +100,6 @@ public class GameweekReceiver extends BroadcastReceiver {
 
     private void showNotification(Notification notification) {
         FplNotifier notifier = new FplNotifier(mContext);
-        notifier.pushIsNewReminderSetNotification(notification);
+        notifier.postReminderSetNotification(notification);
     }
 }
