@@ -14,4 +14,4 @@ Once the privacy policy is changed, the effective date will be updated and you w
 
 ## Contact
 
-If you have any questions or suggestions about my privacy policy, do not hesitate to contact us at amoware-tech@gmail.com.
+If you have any questions or suggestions about my privacy policy, do not hesitate to contact us at amoware.tech@gmail.com.
