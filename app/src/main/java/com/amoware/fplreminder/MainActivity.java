@@ -40,6 +40,7 @@ import java.util.Locale;
  * Created by amoware on 2019-12-29.
  */
 public class MainActivity extends AppCompatActivity implements GameweeksTaskInterface {
+
     private FplReminder mFplReminder;
     private FplReminderDialog mDialog;
 
@@ -179,9 +180,13 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
 
     private void displayNotificationTimer(@Nullable Time time) {
         if (time != null && hoursTextView != null && minutesTextView != null) {
-            hoursTextView.setText(String.valueOf(time.getHours()));
-            minutesTextView.setText(String.valueOf(time.getMinutes()));
+            hoursTextView.setText(getZeroPaddedString(time.getHours()));
+            minutesTextView.setText(getZeroPaddedString(time.getMinutes()));
         }
+    }
+
+    private String getZeroPaddedString(int value) {
+        return value < 10 ? "0" + value : String.valueOf(value);
     }
 
     /**
@@ -250,4 +255,5 @@ public class MainActivity extends AppCompatActivity implements GameweeksTaskInte
     public void showNetworkUnavailableSnackbar() {
         showSnackbar(getString(R.string.snackbar_text_nointernet));
     }
+
 }

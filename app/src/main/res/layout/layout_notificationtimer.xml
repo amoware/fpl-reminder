@@ -12,7 +12,8 @@
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@id/notificationtimer_start_space"
+        app:layout_constraintEnd_toEndOf="@id/main_hours_value_textview"
+        app:layout_constraintStart_toStartOf="@id/main_hours_value_textview"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -60,7 +61,8 @@
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/main_hours_label_textview"
-        app:layout_constraintStart_toEndOf="@id/notificationtimer_end_space"
+        app:layout_constraintEnd_toEndOf="@id/main_minutes_value_textview"
+        app:layout_constraintStart_toStartOf="@id/main_minutes_value_textview"
         app:layout_constraintTop_toTopOf="@id/main_hours_label_textview" />
 
     <TextView
