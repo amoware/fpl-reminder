@@ -1,7 +1,6 @@
 package com.amoware.fplreminder.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import com.amoware.fplreminder.common.TypefaceUtil;
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Created by amoware on 2020-03-09.
