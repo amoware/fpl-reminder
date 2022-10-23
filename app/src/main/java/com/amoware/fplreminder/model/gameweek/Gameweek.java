@@ -1,6 +1,7 @@
 package com.amoware.fplreminder.gameweek;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +12,6 @@ import java.util.Date;
  * Created by amoware on 2019-12-29.
  */
 public class Gameweek {
-
     private static final String NAME_FIELD = "name";
     private static final String DEADLINE_FIELD = "deadlineTime";
 
@@ -27,9 +27,13 @@ public class Gameweek {
         this.deadlineTime = deadlineTime;
     }
 
-    public Gameweek(Gameweek gameweek) {
+    public Gameweek(@Nullable Gameweek gameweek) {
         this.name = gameweek != null ? gameweek.getName() : null;
         this.deadlineTime = gameweek != null ? new Date(gameweek.getDeadlineTime().getTime()) : null;
+    }
+
+    public static boolean isEmpty(@Nullable Gameweek gameweek) {
+        return gameweek == null;
     }
 
     public String getName() {
@@ -51,7 +55,7 @@ public class Gameweek {
     @NonNull
     @Override
     public String toString() {
-        return "Gameweek{name='" + name + "\', deadlineTime=" + deadlineTime + '}';
+        return "Gameweek{name='" + name + "', deadlineTime=" + deadlineTime + '}';
     }
 
     /*

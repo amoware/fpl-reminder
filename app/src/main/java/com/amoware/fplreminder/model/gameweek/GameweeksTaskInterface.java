@@ -1,4 +1,6 @@
-package com.amoware.fplreminder.gameweek;
+package com.amoware.fplreminder.model.gameweek;
+
+import com.amoware.fplreminder.gameweek.Gameweek;
 
 import java.util.List;
 

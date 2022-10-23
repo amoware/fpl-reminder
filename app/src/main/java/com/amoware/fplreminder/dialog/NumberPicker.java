@@ -30,6 +30,7 @@ public class NumberPicker extends android.widget.NumberPicker {
         super(context, attrs, defStyleAttr);
     }
 
+    @SuppressWarnings("unused")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public NumberPicker(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

@@ -8,7 +8,6 @@ import java.util.Arrays;
  * Created by amoware on 2020-03-30.
  */
 public class Notification {
-
     private Uri soundUri;
 
     private String contentTitle;

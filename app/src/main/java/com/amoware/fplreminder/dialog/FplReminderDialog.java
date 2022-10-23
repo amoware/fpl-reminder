@@ -1,7 +1,6 @@
 package com.amoware.fplreminder.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -18,6 +17,8 @@ import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
+import androidx.appcompat.app.AlertDialog;
+
 /**
  * Created by amoware on 2020-03-09.
  */
@@ -29,7 +30,7 @@ public class FplReminderDialog {
         void onTimeSelected(Time time);
     }
 
-    private FplReminder fplReminder;
+    private final FplReminder fplReminder;
     private Context context;
 
     private AlertDialog dialog;

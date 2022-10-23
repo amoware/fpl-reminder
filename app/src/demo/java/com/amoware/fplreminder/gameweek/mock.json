@@ -2,23 +2,25 @@
   "events": [
     {
       "name": "Gameweek 1",
-      "deadline_time": "2020-06-07T12:50:00Z"
+      "deadline_time": "2023-06-07T12:50:00Z"
     },
     {
       "name": "Gameweek 2",
-      "deadline_time": "2020-06-07T12:53:00Z"
+      "deadline_time": "2023-06-07T12:53:00Z"
     },
     {
       "name": "Gameweek 3",
-      "deadline_time": "2020-06-07T12:55:00Z"
+      "deadline_time": "2023-06-07T12:55:00Z"
     },
     {
       "name": "Gameweek 4",
-      "deadline_time": "2020-06-07T12:57:00Z"
+      "deadline_time": "2023-06-07T12:57:00Z"
     },
     {
       "name": "Gameweek 5",
-      "deadline_time": "2020-06-07T12:59:00Z"
+      "deadline_time": "2023-06-07T12:59:00Z"
     }
-  ]
+  ],
+  "shouldIgnoreMe": "Hello world!",
+  "shouldIgnoreMeTo": ["Hello world!"]
 }

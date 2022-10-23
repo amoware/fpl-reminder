@@ -1,6 +1,7 @@
 package com.amoware.fplreminder.common;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +61,7 @@ public class Time {
     }
 
     /* Parses and returns a Time object based on a json formatted string. */
+    @Nullable
     public static Time parseTime(String string) {
         try {
             JSONObject jsonObject = new JSONObject(string != null ? string : "");

@@ -1,37 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
     <string name="app_name">FPL Reminder</string>
 
-    <string name="dialog_title">Set a reminder</string>
-    <string name="dialog_text_intro">You will get a reminder %1$s gameweek deadline.</string>
-    <string name="dialog_text_hours">Hours</string>
-    <string name="dialog_text_minutes">Minutes</string>
-    <string name="dialog_button_setreminder">Set reminder</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_setreminder">Set reminder</string>
+    <string name="dialog_text_hours">Hours</string>
+    <string name="dialog_text_intro">You will get a reminder %1$s gameweek deadline.</string>
+    <string name="dialog_text_minutes">Minutes</string>
+    <string name="dialog_title">Set a reminder</string>
 
-    <string name="snackbar_text_soundon">Sound turned on for notifications</string>
-    <string name="snackbar_text_soundoff">Sound turned off for notifications</string>
-    <string name="snackbar_text_vibrationon">Vibration turned on for notifications</string>
-    <string name="snackbar_text_vibrationoff">Vibration turned off for notifications</string>
-    <string name="snackbar_text_nointernet">No internet connection. Try again later</string>
-    <string name="snackbar_text_nogameweeks">No gameweeks were found. Try again later</string>
-
-    <string name="overline_text_status_nogameweek">No upcoming gameweek</string>
-    <string name="overline_text_status_nodeadline">%1$s has no deadline</string>
-
-    <string name="notification_title_nointernet">No internet connection</string>
-    <string name="notification_text_nointernet">A new deadline wasn\'t set. Check your internet connection and try to reload by pressing the reload button in the app.</string>
-
+    <string name="main_disabled_label">Notifications disabled</string>
+    <string name="main_disabled_value">Notifications are disabled. We cannot let you know when a deadline occurs. Try activating them in your device\'s settings</string>
+    <string name="main_label_colon">:</string>
+    <string name="main_label_hours">Hours</string>
+    <string name="main_label_minutes">Minutes</string>
+    <string name="main_label_preferences">Notification preferences</string>
+    <string name="main_label_timer">Notification timer</string>
     <string name="main_text_beforedeadline">Before gameweek deadline</string>
+    <string name="main_text_sound">Sound</string>
+    <string name="main_text_vibration">Vibration</string>
+    <string name="main_title">Fantasy Premier League Reminder</string>
+    <string name="main_value_hours">0</string>
+    <string name="main_value_minutes">0</string>
 
-    <string name="progress_label_status">Fetching gameweeks&#8230;</string>
-
-    <string name="notification_title_reminderset">Reminder set</string>
-    <string name="notification_text_reminderset">Your next reminder is set to %1$s. The deadline for %2$s occurs at %3$s.</string>
-    <string name="notification_title_remindernotset">Reminder not set</string>
-    <string name="notification_text_nogameweeks">Reminder not set because there were no gameweeks to be found. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_nodeadline">Reminder not set because there were no upcoming gameweeks to be found. Try again later by pressing the reload button in the app.</string>
-    <string name="notification_title_reminder">Get your team ready</string>
+    <string name="notification_text_nogameweeks">Reminder not set because there were no gameweeks to be found. Try again later by pressing the reload button in the app.</string>
+    <string name="notification_text_nointernet">A new deadline wasn\'t set. Check your internet connection and try to reload by pressing the reload button in the app.</string>
+    <string name="notification_text_nullableDate">Reminder not set because of an unknown date error. Try again later by pressing the reload button in the app.</string>
     <string name="notification_text_reminder">Need to make team changes? This is your friendly reminder to do so %1$s.</string>
+    <string name="notification_text_reminderset">Your next reminder is set to %1$s. The deadline for %2$s occurs at %3$s.</string>
+    <string name="notification_title_nointernet">No internet connection</string>
+    <string name="notification_title_reminder">Get your team ready</string>
+    <string name="notification_title_remindernotset">Reminder not set</string>
+    <string name="notification_title_reminderset">Reminder set</string>
 
     <plurals name="numberOfHours">
         <item quantity="one">%d hour</item>
@@ -42,4 +43,16 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+
+    <string name="overline_text_status_nodeadline">%1$s has no deadline</string>
+    <string name="overline_text_status_nogameweek">No upcoming gameweek</string>
+
+    <string name="progress_label_status">Fetching gameweeks…</string>
+
+    <string name="snackbar_text_nogameweeks">No gameweeks were found. Try again later</string>
+    <string name="snackbar_text_nointernet">No internet connection. Try again later</string>
+    <string name="snackbar_text_soundoff">Sound turned off for notifications</string>
+    <string name="snackbar_text_soundon">Sound turned on for notifications</string>
+    <string name="snackbar_text_vibrationoff">Vibration turned off for notifications</string>
+    <string name="snackbar_text_vibrationon">Vibration turned on for notifications</string>
 </resources>

@@ -1,17 +1,18 @@
 package com.amoware.fplreminder.alarm;
 
+import static com.amoware.fplreminder.common.Constants.tagger;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.amoware.fplreminder.common.DateUtil;
 
 import java.util.Date;
-
-import static com.amoware.fplreminder.common.Constants.tagger;
 
 /**
  * Manages alarms. There are two type of alarms: one for notification to be shown to the user and
@@ -19,14 +20,13 @@ import static com.amoware.fplreminder.common.Constants.tagger;
  * Created by amoware on 2019-12-29.
  */
 public class AlarmsManager {
+    private final Context mContext;
 
     private final int ALARM_GAMEWEEK_ID = 0;
     private final int ALARM_REMINDER_ID = 1;
 
-    private Context context;
-
     public AlarmsManager(Context context) {
-        this.context = context;
+        mContext = context;
     }
 
     public void setAlarmForGameweekDeadline(Date date) {
@@ -40,23 +40,48 @@ public class AlarmsManager {
     /**
      * Sets an alarm to be triggered at a specific date. If an alarm (based on the id) already
      * exists, the existing alarm is overwritten by the new one.
+     *
      * @param date when the alarm to be triggered
-     * @param id unique id for the alarm
+     * @param id   unique id for the alarm
      */
     private void setAlarm(Date date, int id) {
         Log.d(tagger(getClass()), "Setting an alarm (id=" + id + ") at: " + date);
-        Class<? extends BroadcastReceiver> receiverClass = getReceiverClass(id);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (!DateUtil.hasOccurred(date) && receiverClass != null && alarmManager != null) {
-            Intent intent = new Intent(context, receiverClass);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+        Class<? extends BroadcastReceiver> receiverClass = getReceiverClass(id);
+        if (receiverClass == null) {
+            Log.e(tagger(getClass()), "receiverClass is null");
+            return;
         }
+
+        AlarmManager alarmManager = getAlarmManager();
+        if (alarmManager == null) {
+            Log.e(tagger(getClass()), "alarmManager is null");
+            return;
+        }
+
+        if (DateUtil.hasOccurred(date)) {
+            Log.w(tagger(getClass()), "Not setting alarm (id=" + id + "). " + date + " has already occurred");
+            return;
+        }
+
+        Intent intent = new Intent(mContext, receiverClass);
+        PendingIntent pendingIntent = getPendingIntent(id, intent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
+    }
+
+    private AlarmManager getAlarmManager() {
+        return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    private PendingIntent getPendingIntent(int id, Intent intent) {
+        final int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
+        return PendingIntent.getBroadcast(mContext, id, intent, flags);
     }
 
     /**
      * Gets one of the app's BroadcastReceiver classes based on an id that matches an alarm.
+     *
      * @param id unique id for the alarm
      * @return class that extends BroadcastReceiver
      */
@@ -69,5 +94,4 @@ public class AlarmsManager {
         }
         return receiverClass;
     }
-
 }
